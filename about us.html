@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/avif" href="/images/red.avif">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altf4.in</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding-top: 120px;
+        }
+
+        .top-header {
+            height: 120px;
+            background: #0b0b0b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* LEFT NAV */
+
+        .nav-left a {
+            color: #d6d6d6;
+            text-decoration: none;
+            margin-right: 40px;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        .nav-left a:hover {
+            color: white;
+        }
+
+        /* active page */
+
+        .nav-left .active {
+            color: white;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+        }
+
+        /* LOGO */
+
+        .nav-logo img {
+            width: 110px;
+            position: absolute;
+            left: 50%;
+            transform: translatex(-50%)translateY(-40%);
+        }
+
+        /* RIGHT ICONS */
+
+        .nav-right {
+            display: flex;
+            gap: 30px;
+            font-size: 22px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .nav-right i:hover {
+            color: #cfcfcf;
+        }
+
+
+
+        .Delivery-bar {
+            background-color: lightgray;
+            height: 50px;
+            top: 120px;
+            width: 100%;
+            left: 0;
+            z-index: 999;
+        }
+
+        .head {
+            color: black;
+            font-size: 20px;
+            text-align: center;
+            padding: 15px;
+        }
+
+        /* HERO */
+
+        .hero {
+            margin-top: 0;
+            padding-top: 0;
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .left-img {
+            width: 50%;
+            height: 100%;
+            background-image: url(images/2.jpg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .right-img {
+            width: 50%;
+            height: 100%;
+            background-image: url(images/3.jpg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .left-img::after,
+        .right-img::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .shop-button {
+            padding: 14px 40px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-family: sans-serif;
+            transition: 0.3s;
+        }
+
+        .shop-button:hover {
+            background: white;
+            color: black;
+        }
+
+        /* PRODUCTS */
+
+        .products {
+            background: #efefef;
+            padding: 60px 80px;
+        }
+
+        .products h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            font-family: sans-serif;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product a {
+            text-decoration: none;
+            color: black;
+            font-family: sans-serif;
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .product :hover {
+            text-decoration: underline;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .img2 {
+            opacity: 0;
+        }
+
+        .product-img:hover .img2 {
+            opacity: 1;
+        }
+
+        .product-img:hover .img1 {
+            opacity: 0;
+        }
+
+        .p_name {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .price {
+            margin-top: 8px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .footer {
+            background: #0b0b0b;
+            color: white;
+            text-align: center;
+            padding: 80px 20px 30px;
+            font-family: sans-serif;
+        }
+
+        .footer-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: #cfcfcf;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-instagram {
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        .footer-instagram a {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .footer-bottom a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        .about-section {
+            background: #e6e6e6;
+            padding: 100px 0;
+            font-family: sans-serif;
+        }
+
+        .about-title {
+            text-align: center;
+            font-size: 60px;
+            font-weight: 300;
+            margin-bottom: 60px;
+        }
+
+        .about-info {
+            width: 55%;
+            margin: 0 auto 60px auto;
+            color: #444;
+            line-height: 30px;
+            font-size: 18px;
+        }
+
+        .contact-form {
+            width: 55%;
+            margin: auto;
+        }
+
+        .row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .row input {
+            width: 50%;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid #999;
+            background: transparent;
+            font-size: 16px;
+            margin-bottom: 25px;
+            transition: 0.3s;
+        }
+
+        .contact-form input:hover,
+        .contact-form textarea:hover {
+            border: 1px solid black;
+            background: #f5f5f5;
+            transition: 0.3s;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .contact-form button {
+            background: black;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form button:hover {
+            background: #222;
+        }
+                /* SEARCH OVERLAY */
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+z-index:1000;
+}
+
+.overlay:target{
+opacity:1;
+visibility:visible;
+}
+
+.overlay-close{
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+cursor:pointer;
+}
+
+.search-box{
+position:relative;
+width:70%;
+max-width:900px;
+margin:80px auto;
+border:2px solid white;
+padding:12px 20px;
+display:flex;
+align-items:center;
+}
+
+.search-box input{
+flex:1;
+background:transparent;
+border:none;
+outline:none;
+color:white;
+font-size:18px;
+}
+
+.close-icon{
+color:white;
+font-size:24px;
+text-decoration:none;
+margin-left:20px;
+}
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="top-header">
+    
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+                <a href="catalog.html">Catalog</a>
+                <a href="contact.html">Contact</a>
+                <a href="about us.html" class="active">About Us</a>
+            </div>
+    
+            <div class="nav-logo">
+                <a href="index.html"><img src="images/red.avif" alt="logo"></a>
+            </div>
+    
+            <div class="nav-right">
+                <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+    
+        </div>
+    </header>
+    
+    
+    <!-- SEARCH OVERLAY -->
+    <div id="searchOverlay" class="overlay">
+    
+        <!-- transparent background close -->
+        <a href="#" class="overlay-close"></a>
+    
+        <div class="search-box">
+            <input type="text" placeholder="Search">
+            <a href="#" class="close-icon">✕</a>
+        </div>
+    
+    </div>
+    <div class="Delivery-bar">
+        <p class="head">Free Delivery On Orders Above ₹799</p>
+    </div>
+    <section class="about-section">
+        <h1 class="about-title">About us
+        </h1>
+        <div class="about-info">
+            <p>Legal Name - Harsh Kiran Salunkhe</p>
+            <p>https://www.instagram.com/alt.f4official/</p>
+        </div>
+        <form class="contact-form">
+            <div class="row">
+                <input type="text" placeholder="Name">
+                <input type="email" placeholder="Email *">
+            </div>
+            <input type="text" placeholder="Phone number">
+            <textarea placeholder="Comment"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+    <div class="footer">
+
+        <h2 class="footer-title">Policies</h2>
+
+        <div class="footer-links">
+            <a href="search.html">Search</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="refund-policy.html">Refund Policy</a>
+            <a href="Shipping-policy.html">Shipping Policy</a>
+        </div>
+
+        <div class="footer-instagram">
+            <a href="https://instagram.com/sahilmenghani69" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+
+        <div class="footer-bottom">
+            © 2026
+            <a href="index.html">AltF4</a> ·
+            <a href="privacy-policy.html">Privacy policy</a> ·
+            <a href="refund-policy.html">Refund policy</a> ·
+            <a href="terms of service.html">Terms of service</a> ·
+            <a href="contact-information.html">Contact information</a> ·
+            <a href="Shipping-policy.html">Shipping policy</a>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

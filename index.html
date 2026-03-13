@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Altf4.in</title>
+    <link rel="icon" type="image/avif" href="images/red.avif">
+    <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+img{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+body{
+font-family:sans-serif;
+padding-top:160px;
+}
+.top-header{
+height:120px;
+background:#0b0b0b;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 60px;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:1000;
+}
+
+/* LEFT NAV */
+
+.nav-left a{
+color:#d6d6d6;
+text-decoration:none;
+margin-right:40px;
+font-size:16px;
+}
+
+.nav-left a:hover{
+color:white;
+}
+
+.nav-left .active{
+color:white;
+border-bottom:2px solid white;
+padding-bottom:4px;
+}
+
+/* LOGO */
+
+.nav-logo img{
+width:110px;
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
+
+/* RIGHT ICONS */
+
+.nav-right{
+display:flex;
+gap:30px;
+font-size:22px;
+color:white;
+cursor:pointer;
+}
+
+.nav-right i:hover
+{
+    color: #cfcfcf;
+}
+
+
+.Delivery-bar{
+background:lightgray;
+height:40px;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+position:fixed;
+top:120px;
+left:0;
+z-index:999;
+text-align: center;
+}
+
+.head{
+font-size:18px;
+}
+
+.hero{
+display:flex;
+width:100%;
+min-height:100vh;
+position:relative;
+}
+
+.left-img,
+.right-img{
+width:50%;
+background-size:cover;
+background-position:center;
+position:relative;
+}
+
+.left-img{
+background-image:url(images/2.jpg);
+}
+
+.right-img{
+background-image:url(images/3.jpg);
+}
+
+.left-img::after,
+.right-img::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.25);
+}
+
+.hero-center{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+z-index:2;
+}
+
+.shop-button{
+padding:14px 40px;
+border:2px solid white;
+color:white;
+text-decoration:none;
+font-size:18px;
+transition:0.3s;
+}
+
+.shop-button:hover{
+background:white;
+color:black;
+}
+
+/* ===============================
+PRODUCT SECTION
+=============================== */
+
+.products{
+background:#efefef;
+padding:60px 80px;
+}
+
+.products h2{
+font-size:32px;
+margin-bottom:40px;
+}
+
+.product-container{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.product{
+text-align:center;
+}
+
+.product a{
+text-decoration:none;
+color:black;
+margin-top:15px;
+display:block;
+}
+
+.product:hover a{
+text-decoration:underline;
+}
+
+.product-img{
+width:100%;
+height:420px;
+position:relative;
+overflow:hidden;
+}
+
+.product-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+position:absolute;
+top:0;
+left:0;
+transition:0.3s;
+}
+
+.img2{
+opacity:0;
+}
+
+.product-img:hover .img1{
+opacity:0;
+}
+
+.product-img:hover .img2{
+opacity:1;
+}
+
+.p_name{
+margin-top:15px;
+font-size:16px;
+}
+
+.price{
+margin-top:8px;
+font-size:15px;
+}
+
+/* ===============================
+FOOTER
+=============================== */
+
+.footer{
+background:#0b0b0b;
+color:white;
+text-align:center;
+padding:80px 20px 30px;
+}
+
+.footer-title{
+font-size:28px;
+margin-bottom:25px;
+}
+
+.footer-links{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:40px;
+flex-wrap:wrap;
+}
+
+.footer-links a{
+color:#cfcfcf;
+text-decoration:none;
+font-size:14px;
+}
+
+.footer-links a:hover{
+color:white;
+}
+
+.footer-instagram{
+font-size:24px;
+margin-bottom:50px;
+}
+
+.footer-instagram a{
+color:white;
+}
+
+.footer-bottom{
+border-top:1px solid #222;
+padding-top:20px;
+font-size:13px;
+color:#aaa;
+}
+
+.footer-bottom a{
+color:#aaa;
+text-decoration:none;
+}
+
+.footer-bottom a:hover{
+color:white;
+}
+
+/* ===============================
+SEARCH OVERLAY
+=============================== */
+
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+z-index:1001;
+}
+
+.overlay:target{
+opacity:1;
+visibility:visible;
+}
+
+.overlay-close{
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+}
+
+.search-box{
+position:relative;
+width:70%;
+max-width:900px;
+margin:120px auto;
+border:2px solid white;
+padding:12px 20px;
+display:flex;
+align-items:center;
+}
+
+.search-box input{
+flex:1;
+background:transparent;
+border:none;
+outline:none;
+color:white;
+font-size:18px;
+}
+
+.close-icon{
+color:white;
+font-size:24px;
+text-decoration:none;
+margin-left:20px;
+}
+/* =========================
+MOBILE PHONES
+========================= */
+
+@media (max-width:600px){
+
+/* HEADER */
+
+.top-header{
+height:70px;
+padding:0 15px;
+}
+
+body{
+padding-top:110px;
+}
+
+/* hide desktop menu */
+
+.nav-left{
+display:none;
+}
+
+/* logo */
+
+.nav-logo img{
+width:80px;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+/* icons */
+
+.nav-right{
+gap:15px;
+font-size:18px;
+}
+
+/* DELIVERY BAR */
+
+.Delivery-bar{
+top:70px;
+height:40px;
+}
+
+.head{
+font-size:12px;
+padding:8px;
+}
+
+/* HERO */
+
+.hero{
+    position: relative;
+    display: flex;
+    height: 22vh;
+}
+
+.left-img,
+.right-img{
+width:50%;
+height:100%;
+background-size: cover;
+background-position: center;
+}
+.hero-images{
+    display: flex;
+    height: 100%;
+}
+.hero-img{
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* SHOP BUTTON */
+.shop-button{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+
+padding:14px 40px;
+color:white;
+text-decoration:none;
+font-size:18px;
+
+border:2px solid white;
+box-shadow:0 0 0 4px rgba(255,255,255,0.3);
+
+background:transparent;
+transition:0.3s;
+}
+.shop-button:hover{
+background:white;
+color:black;
+}
+/* PRODUCTS */
+
+.products{
+    padding:40px;
+}
+
+.products h2{
+font-size:22px;
+}
+
+/* 1 product per row */
+
+.product-container{
+grid-template-columns:1fr;
+gap:18px;
+}
+
+.product-img{
+height:300px;
+}
+
+.p_name{
+font-size:14px;
+}
+
+.price{
+font-size:13px;
+}
+
+/* FOOTER */
+
+.footer-links{
+flex-direction:column;
+gap:12px;
+}
+
+.footer-title{
+font-size:22px;
+}
+
+.search-box{
+width:90%;
+margin:120px auto;
+}
+
+}
+
+    </style>
+</head>
+
+<body>
+    
+    <header>
+    <div class="top-header">
+
+        <div class="nav-left">
+            <a href="index.html" class="active">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="contact.html">Contact</a>
+            <a href="about us.html">About Us</a>
+        </div>
+
+        <div class="nav-logo">
+            <a href="index.html"><img src="images/red.avif" alt="logo"></a>
+        </div>
+
+        <div class="nav-right">
+            <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <i class="fa-regular fa-user"></i>
+            <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- SEARCH OVERLAY -->
+<div id="searchOverlay" class="overlay">
+
+    <!-- transparent background close -->
+    <a href="#" class="overlay-close"></a>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search">
+        <a href="#" class="close-icon">✕</a>
+    </div>
+
+</div>
+    <div class="Delivery-bar">
+        <p class="head">Free Delivery On Orders Above ₹799</p>
+    </div>
+
+    <section class="hero">
+
+        <div class="left-img"></div>
+        <div class="right-img"></div>
+
+        <div class="hero-center">
+            <a href="catalog.html" class="shop-button">Shop Now</a>
+        </div>
+
+    </section>
+
+    <section class="products">
+
+        <h2>Gamers Drip</h2>
+
+        <div class="product-container">
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+            <div class="product">
+                <div class="product-img">
+                    <img src="images/1.jpg" class="img1">
+                    <a href="#"><img src="images/3.jpg" class="img2"></a>
+                </div>
+                <a href="#">GG-Black Double Zipper</a>
+                <p class="price">Rs. 1,299.00</p>
+            </div>
+        </div>
+
+    </section>
+    <div class="footer">
+
+        <h2 class="footer-title">Policies</h2>
+
+        <div class="footer-links">
+            <a href="search.html">Search</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="refund-policy.html">Refund Policy</a>
+            <a href="Shipping-policy.html">Shipping Policy</a>
+        </div>
+
+        <div class="footer-instagram">
+            <a href="https://instagram.com/sahilmenghani69" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+        <div class="footer-bottom">
+            © 2026
+            <a href="index.html">AltF4</a> ·
+            <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered by Shopify</a> · 
+            <a href="privacy-policy.html">Privacy policy</a> ·
+            <a href="refund-policy.html">Refund policy</a> ·
+            <a href="terms of service.html">Terms of service</a> ·
+            <a href="contact-information.html">Contact information</a> ·
+            <a href="Shipping-policy.html">Shipping policy</a> ·
+        </div>
+
+    </div>
+</body>
+</html>

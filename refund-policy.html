@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/avif" href="/images/red.avif">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altf4.in</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding-top: 120px;
+        }
+
+        .top-header {
+            height: 120px;
+            background: #0b0b0b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* LEFT NAV */
+
+        .nav-left a {
+            color: #d6d6d6;
+            text-decoration: none;
+            margin-right: 40px;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        .nav-left a:hover {
+            color: white;
+        }
+
+        /* active page */
+
+        .nav-left .active {
+            color: white;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+        }
+
+        /* LOGO */
+
+        .nav-logo img {
+            width: 110px;
+            position: absolute;
+            left: 50%;
+            transform: translatex(-50%)translateY(-40%);
+        }
+
+        /* RIGHT ICONS */
+
+        .nav-right {
+            display: flex;
+            gap: 30px;
+            font-size: 22px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .nav-right i:hover {
+            color: #cfcfcf;
+        }
+
+
+
+        .Delivery-bar {
+            background-color: lightgray;
+            height: 50px;
+            top: 120px;
+            width: 100%;
+            left: 0;
+            z-index: 999;
+        }
+        .footer {
+            background: #0b0b0b;
+            color: white;
+            text-align: center;
+            padding: 80px 20px 30px;
+            font-family: sans-serif;
+        }
+
+        .footer-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: #cfcfcf;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-instagram {
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        .footer-instagram a {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .footer-bottom a {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+        .head {
+            color: black;
+            font-size: 20px;
+            text-align: center;
+            padding: 15px;
+        }
+        .policy-section{
+background:#f5f5f5;
+padding:60px 20px 80px;
+font-family:sans-serif;
+}
+
+.policy-section h1{
+text-align:center;
+font-size:50px;
+font-weight:300;
+margin-bottom:50px;
+}
+
+.policy-container{
+max-width:700px;
+margin:auto;
+line-height:1.8;
+color:#444;
+}
+
+.policy-container h3{
+margin-top:25px;
+margin-bottom:10px;
+font-size:18px;
+font-weight:600;
+}
+
+.policy-container p{
+margin-bottom:15px;
+}
+
+.policy-container ol{
+margin-left:20px;
+margin-top:10px;
+}
+        /* SEARCH OVERLAY */
+        .overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+z-index:1000;
+}
+
+.overlay:target{
+opacity:1;
+visibility:visible;
+}
+
+.overlay-close{
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+cursor:pointer;
+}
+
+.search-box{
+position:relative;
+width:70%;
+max-width:900px;
+margin:80px auto;
+border:2px solid white;
+padding:12px 20px;
+display:flex;
+align-items:center;
+}
+
+.search-box input{
+flex:1;
+background:transparent;
+border:none;
+outline:none;
+color:white;
+font-size:18px;
+}
+
+.close-icon{
+color:white;
+font-size:24px;
+text-decoration:none;
+margin-left:20px;
+}
+        </style>
+        <body>
+            <header>
+                <div class="top-header">
+            
+                    <div class="nav-left">
+                        <a href="index.html" class="active">Home</a>
+                        <a href="catalog.html">Catalog</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="about us.html">About Us</a>
+                    </div>
+            
+                    <div class="nav-logo">
+                        <a href="index.html"><img src="images/red.avif" alt="logo"></a>
+                    </div>
+            
+                    <div class="nav-right">
+                        <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <i class="fa-regular fa-user"></i>
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+            
+                </div>
+            </header>
+            
+            
+            <!-- SEARCH OVERLAY -->
+            <div id="searchOverlay" class="overlay">
+            
+                <!-- transparent background close -->
+                <a href="#" class="overlay-close"></a>
+            
+                <div class="search-box">
+                    <input type="text" placeholder="Search">
+                    <a href="#" class="close-icon">✕</a>
+                </div>
+            
+            </div>
+            <div class="Delivery-bar">
+                <p class="head">Free Delivery On Orders Above ₹799</p>
+            </div>
+
+            <section class="policy-section">
+
+                <h1>Refund policy</h1>
+                
+                <div class="policy-container">
+                
+                <h3>No Return Policy</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                    </p>
+                    
+                    <p>
+                    Sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                    </p>
+                
+                <h3>Damaged Items</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                    </p>
+                    
+                    <p>
+                    Sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                    </p>
+                <ol>
+                <li>Your order number.</li>
+                <li>Clear photos of the damaged item.</li>
+                <li>A brief description of the issue.</li>
+                </ol>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                    </p>
+                    
+                    <p>
+                    Sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                        </p>
+                        
+                        <p>
+                        Sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                        </p>
+                </div>
+                
+                </section>
+
+        <div class="footer">
+
+<h2 class="footer-title">Policies</h2>
+
+<div class="footer-links">
+    <a href="search.html">Search</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="refund-policy.html">Refund Policy</a>
+    <a href="Shipping-policy.html">Shipping Policy</a>
+</div>
+
+<div class="footer-instagram">
+    <a href="https://instagram.com/sahilmenghani69" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+</div>
+<div class="footer-bottom">
+    © 2026
+            <a href="index.html">AltF4</a> ·
+    <a href="privacy-policy.html">Privacy policy</a> ·
+    <a href="refund-policy.html">Refund policy</a> ·
+    <a href="terms of service.html">Terms of service</a> ·
+    <a href="contact-information.html">Contact information</a> ·
+    <a href="Shipping-policy.html">Shipping policy</a>
+</div>
+
+</div>
+</body>
+</html>
