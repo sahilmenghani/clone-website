@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/avif" href="/images/red.avif">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Altf4.in</title>
-    <link rel="icon" type="image/avif" href="/images/red.avif">
+
     <style>
         * {
             margin: 0;
@@ -109,12 +109,80 @@ color:#cfcfcf;
             padding: 15px;
         }
 
+        /* HERO */
+
+        .hero {
+            margin-top: 0;
+            padding-top: 0;
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .left-img {
+            width: 50%;
+            height: 100%;
+            background-image: url(images/2.jpg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .right-img {
+            width: 50%;
+            height: 100%;
+            background-image: url(images/3.jpg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .left-img::after,
+        .right-img::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .shop-button {
+            padding: 14px 40px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-family: sans-serif;
+            transition: 0.3s;
+        }
+
+        .shop-button:hover {
+            background: white;
+            color: black;
+        }
+
+        /* PRODUCTS */
+
         .products {
             background: #efefef;
             padding: 60px 80px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+        }
+
+        .products h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            font-family: sans-serif;
         }
 
         .product-container {
@@ -132,7 +200,7 @@ color:#cfcfcf;
             text-align: center;
         }
 
-        .product:hover {
+        .product :hover {
             text-decoration: underline;
         }
 
@@ -153,6 +221,22 @@ color:#cfcfcf;
             left: 0;
         }
 
+        .img2 {
+            opacity: 0;
+        }
+
+        .product-img:hover .img2 {
+            opacity: 1;
+        }
+
+        .product-img:hover .img1 {
+            opacity: 0;
+        }
+
+        .p_name {
+            margin-top: 15px;
+            font-size: 16px;
+        }
 
         .price {
             margin-top: 8px;
@@ -217,99 +301,77 @@ color:#cfcfcf;
             border-bottom: 2px solid white;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f6f6f6;
-            margin: 0;
+        .about-section {
+            background: #e6e6e6;
+            padding: 100px 0;
+            font-family: sans-serif;
         }
 
-        .container {
-            width: 90%;
+        .about-title {
+            text-align: center;
+            font-size: 60px;
+            font-weight: 300;
+            margin-bottom: 60px;
+        }
+
+        .about-info {
+            width: 55%;
+            margin: 0 auto 60px auto;
+            color: #444;
+            line-height: 30px;
+            font-size: 18px;
+        }
+
+        .contact-form {
+            width: 55%;
             margin: auto;
         }
 
-        .title {
-            font-size: 50px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .product-top {
+        .row {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
+            gap: 30px;
+            margin-bottom: 25px;
         }
 
-        .filters span,
-        .sort span {
-            margin-right: 10px;
-            color: #444;
+        .row input {
+            width: 50%;
         }
 
-        select {
-            border: none;
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid #999;
             background: transparent;
-            font-size: 15px;
-            margin-right: 20px;
-            cursor: pointer;
-        }
-
-        .count {
-            color: #777;
-        }
-
-
-
-        .product img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            display: block;
-            transition: 0.3s ease;
-        }
-
-        .product:hover img {
-            transform: scale(1.05);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            margin: 60px 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .pagination a {
-            text-decoration: none;
-            color: #111;
-            font-size: 18px;
-            padding: 5px 8px;
-            position: relative;
-        }
-
-        .pagination a.active::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 2px;
-            background: #111;
-        }
-
-        .product-name {
-            text-align: center;
             font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin-top: 12px;
-            padding-bottom: 4px;
-            border-bottom: 1px solid transparent;
+            margin-bottom: 25px;
             transition: 0.3s;
+        }
+
+        .contact-form input:hover,
+        .contact-form textarea:hover {
+            border: 1px solid black;
+            background: #f5f5f5;
+            transition: 0.3s;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .contact-form button {
+            background: black;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
             cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form button:hover {
+            background: #222;
         }
                 /* SEARCH OVERLAY */
 .overlay{
@@ -365,6 +427,60 @@ font-size:24px;
 text-decoration:none;
 margin-left:20px;
 }
+/* CART EMPTY PAGE */
+
+.cart-empty{
+text-align:center;
+padding:120px 20px;
+font-family:sans-serif;
+}
+
+.cart-empty h1{
+font-size:48px;
+font-weight:300;
+margin-bottom:40px;
+color:#222;
+}
+
+/* continue button */
+
+.continue-btn{
+display:inline-block;
+background:black;
+color:white;
+padding:16px 45px;
+text-decoration:none;
+font-size:16px;
+margin-bottom:60px;
+box-shadow:0 4px 8px rgba(0,0,0,0.2);
+transition:0.3s;
+}
+
+.continue-btn:hover{
+background:#222;
+}
+
+/* login section */
+
+.login-box h2{
+font-size:30px;
+font-weight:300;
+margin-bottom:10px;
+}
+
+.login-box p{
+font-size:16px;
+color:#555;
+font-weight: 150;
+}
+
+.login-box a{
+color:black;
+text-decoration:none;
+}
+.login-box a:hover{
+    border-bottom: 2px solid black;
+}
     </style>
 </head>
 
@@ -374,9 +490,9 @@ margin-left:20px;
     
             <div class="nav-left">
                 <a href="index.html">Home</a>
-                <a href="catalog.html"  class="active">Catalog</a>
+                <a href="catalog.html">Catalog</a>
                 <a href="contact.html">Contact</a>
-                <a href="about us.html">About Us</a>
+                <a href="about us.html" class="active">About Us</a>
             </div>
     
             <div class="nav-logo">
@@ -391,7 +507,21 @@ margin-left:20px;
     
         </div>
     </header>
+    <div class="Delivery-bar">
+        <p class="head">Free Delivery On Orders Above ₹799</p>
+    </div>
+    <section class="cart-empty">
+
+        <h1>Your cart is empty</h1>
     
+        <a href="catalog.html" class="continue-btn">Continue shopping</a>
+    
+        <div class="login-box">
+            <h2>Have an account?</h2>
+            <p><a href="user login page.html">Log in</a> to check out faster.</p>
+        </div>
+    
+    </section>
     
     <!-- SEARCH OVERLAY -->
     <div id="searchOverlay" class="overlay">
@@ -405,81 +535,7 @@ margin-left:20px;
         </div>
     
     </div>
-    <div class="Delivery-bar">
-        <p class="head">Free Delivery On Orders Above ₹799</p>
-    </div>
-    <div class="container">
-
-        <h1 class="title">Products</h1>
-
-        <div class="product-top">
-
-            <div class="filters">
-                <span>Filter:</span>
-
-                <select>
-                    <option>Availability</option>
-                </select>
-
-                <select>
-                    <option>Price</option>
-                </select>
-
-            </div>
-
-            <div class="sort">
-
-                <span>Sort by:</span>
-
-                <select>
-                    <option>Alphabetically, A-Z</option>
-                </select>
-
-                <span class="count">20 products</span>
-
-            </div>
-
-        </div>
-
-
-        <div class="products">
-
-            <div class="product">
-                <img src="images/1.jpg">
-                <h3 class="product-name">Legend Acid Wash Hoodie</h3>
-                <p class="price">Rs. 1,299.00</p>
-            </div>
-
-            <div class="product">
-                <img src="images/paav gang/paav_112_3.jpg">
-                <h3 class="product-name">Paav Gang Tshirt</h3>
-                <p class="price">Rs. 899.00</p>
-            </div>
-
-            <div class="product">
-                <img src="images/acid/acid_1.jpg">
-                <h3 class="product-name">Top Fragger Acid Wash T Shirt</h3>
-
-                <p class="price">Rs. 1,299.00</p>
-            </div>
-            <div class="product">
-            <img src="images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg">
-            <h3 class="product-name">Oversized Box Fit Shirt-Brown</h3>
-
-            <p class="price">Rs. 999.00</p>
-        </div>
-        
-
-        </div>
-
-    </div>
-    <div class="pagination">
-        <a href="catalog.html"> < </a>
-        <a href="catalog.html">1</a>
-        <a href="catalog2.html" class="active">2</a>
-        
-    </div>
-    </div>
+    
     <div class="footer">
 
         <h2 class="footer-title">Policies</h2>
@@ -496,6 +552,7 @@ margin-left:20px;
                 <i class="fa-brands fa-instagram"></i>
             </a>
         </div>
+
         <div class="footer-bottom">
             © 2026
             <a href="index.html">AltF4</a> ·
@@ -508,6 +565,8 @@ margin-left:20px;
         </div>
 
     </div>
+
+
 </body>
 
 </html>

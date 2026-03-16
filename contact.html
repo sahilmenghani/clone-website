@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head><link rel="icon" type="image/avif" href="/images/red.avif">
+<head>
+    <link rel="icon" type="image/avif" href="/images/red.avif">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <meta charset="UTF-8">
@@ -15,8 +16,12 @@
             box-sizing: border-box;
         }
 
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            padding-top: 120px;
+            padding-top: 170px;
         }
 
         .top-header {
@@ -60,8 +65,9 @@
         .nav-logo img {
             width: 110px;
             position: absolute;
+            top: 50%;
             left: 50%;
-            transform: translatex(-50%)translateY(-40%);
+            transform: translate(-50%, -50%);
         }
 
         /* RIGHT ICONS */
@@ -78,22 +84,38 @@
             color: #cfcfcf;
         }
 
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-right a:visited {
+            color: white;
+        }
+
+        .nav-right a:hover {
+            color: #cfcfcf;
+        }
+
 
 
         .Delivery-bar {
-            background-color: lightgray;
+            background: lightgray;
             height: 50px;
-            top: 120px;
             width: 100%;
+            position: fixed;
+            top: 120px;
             left: 0;
             z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .head {
             color: black;
             font-size: 20px;
-            text-align: center;
-            padding: 15px;
+
         }
 
         /* HERO */
@@ -259,6 +281,7 @@
 
         .footer-links a:hover {
             color: white;
+            text-decoration: underline;
         }
 
         .footer-instagram {
@@ -284,95 +307,208 @@
 
         .footer-bottom a:hover {
             color: white;
+            border-bottom: 2px solid white;
         }
 
-        body {
-            margin: 0;
+        .about-section {
+            background: white;
+            padding: 100px 0;
             font-family: sans-serif;
-            background: #e6e6e6;
         }
 
-        /* SECTION */
-
-        .contact-section {
-            padding: 120px 0;
-        }
-
-        /* TITLE */
-
-        .contact-title {
+        .about-title {
             text-align: center;
-            font-size: 70px;
+            font-size: 60px;
             font-weight: 300;
-            margin-bottom: 30px;
+            margin-bottom: 60px;
         }
 
-        /* EMAIL TEXT */
-
-        .contact-info {
+        .about-info {
             width: 55%;
             margin: 0 auto 60px auto;
             color: #444;
+            line-height: 30px;
             font-size: 18px;
         }
-
-        /* FORM */
 
         .contact-form {
             width: 55%;
             margin: auto;
         }
 
-        /* ROW */
+        /* row for name + email */
 
         .row {
             display: flex;
             gap: 30px;
-            margin-bottom: 25px;
         }
 
-        .row input {
+        /* equal width */
+
+        .row .input-box {
             width: 50%;
         }
 
-        /* INPUT STYLE */
+        /* floating input */
 
-        .contact-form input,
-        .contact-form textarea {
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-box input:focus,
+        .input-box textarea:focus {
+            background: transparent;
+            border: 1px solid black;
+            box-shadow: 0 0 0 1px black;
+        }
+
+        .input-box input,
+        .input-box textarea {
             width: 100%;
-            padding: 18px;
-            border: 1px solid #888;
+            padding: 18px 12px;
+            border: 1px solid #999;
             background: transparent;
             font-size: 16px;
-            margin-bottom: 25px;
-            transition: all .3s ease;
-        }
-
-        /* HOVER EFFECT */
-
-        .contact-form input:hover,
-        .contact-form textarea:hover {
-            border: 1px solid black;
-            background: #f3f3f3;
-        }
-
-        /* CLICK EFFECT */
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
             outline: none;
-            border: 2px solid black;
-            background: white;
         }
 
-        /* TEXTAREA */
+        /* label */
 
-        .contact-form textarea {
-            height: 160px;
+        .input-box label {
+            position: absolute;
+            left: 12px;
+            top: 18px;
+            color: #666;
+            font-size: 16px;
+            pointer-events: none;
+            transition: 0.25s;
+            background: #e6e6e6;
+            padding: 0 5px;
+        }
+
+        /* label animation */
+
+        .input-box input:focus+label,
+        .input-box input:valid+label,
+        .input-box textarea:focus+label,
+        .input-box textarea:valid+label {
+            top: -10px;
+            font-size: 13px;
+            color: black;
+        }
+
+        /* textarea */
+
+        .input-box textarea {
+            height: 150px;
             resize: none;
         }
 
-        /* BUTTON */
+        /* SEARCH OVERLAY */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .overlay:target {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay-close {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .search-box {
+            position: relative;
+            width: 70%;
+            max-width: 900px;
+            margin: 80px auto;
+            border: 2px solid white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        .close-icon {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        /* FLOATING INPUT */
+
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-box input,
+        .input-box textarea {
+            width: 100%;
+            padding: 20px 12px;
+            border: 1px solid #999;
+            background: transparent;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* label */
+
+        .input-box label {
+            position: absolute;
+            left: 12px;
+            top: 20px;
+            color: #666;
+            font-size: 16px;
+            pointer-events: none;
+            transition: 0.25s;
+            background: white;
+            padding: 0 5px;
+        }
+
+        /* move label up */
+
+        .input-box input:focus+label,
+        .input-box input:valid+label,
+        .input-box textarea:focus+label,
+        .input-box textarea:valid+label {
+            top: -10px;
+            font-size: 13px;
+            color: black;
+            background: #efefef;
+        }
+
+        /* textarea */
+
+        .input-box textarea {
+            height: 150px;
+            resize: none;
+        }
 
         .contact-form button {
             background: black;
@@ -388,126 +524,531 @@
         .contact-form button:hover {
             background: #222;
         }
-                /* SEARCH OVERLAY */
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-opacity:0;
-visibility:hidden;
-transition:0.3s;
-z-index:1000;
+
+        /* ======================================================
+MOBILE MENU BUTTON
+Hidden on desktop
+====================================================== */
+
+        .mobile-menu-btn {
+
+            display: none;
+
+            font-size: 22px;
+            color: white;
+
+            text-decoration: none;
+
+        }
+
+
+        /* MOBILE MENU OVERLAY */
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #0b0b0b;
+            z-index: 2000;
+            display: none;
+        }
+
+        #mobileMenu:target {
+            display: block;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 100px;
+            text-align: left;
+        }
+
+        .menu-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        @media (max-width:768px) {
+
+            /* BODY */
+
+            body {
+                padding-top: 120px;
+
+            }
+
+        
+
+            /* SHOW MOBILE MENU BUTTON */
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            .nav-right .user-icon {
+                display: none;
+            }
+
+            .nav-right a {
+                color: white;
+                text-decoration: none;
+
+
+
+                display: flex;
+
+
+                -webkit-tap-highlight-color: transparent;
+            }
+            /* HEADER */
+
+            .top-header {
+                height: 80px;
+                padding: 0 20px;
+            }
+
+            /* hide left menu */
+
+            .nav-left {
+                display: none;
+            }
+
+            /* logo center */
+
+            .nav-logo img {
+                width: 85px;
+                top: 50%;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            /* icons */
+
+            .nav-right {
+                gap: 18px;
+                font-size: 20px;
+            }
+
+            /* DELIVERY BAR */
+
+            .Delivery-bar {
+                background-color: lightgray;
+                height: 50px;
+                top: 80px;
+                width: 100%;
+                left: 0;
+                z-index: 999;
+                position: fixed;
+            }
+
+            .head {
+                font-size: 16px;
+                padding: 10px;
+                font-weight: 500;
+            }
+
+            /* HERO SECTION */
+
+            .hero {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .left-img,
+            .right-img {
+                width: 100%;
+                height: 50vh;
+            }
+
+            /* SHOP BUTTON */
+
+            .shop-button {
+                font-size: 16px;
+                padding: 12px 30px;
+            }
+
+            /* PRODUCTS */
+
+            .products {
+                padding: 40px 20px;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .product-img {
+                height: 350px;
+            }
+
+            /* ABOUT SECTION */
+
+            .about-section {
+                padding: 60px 20px;
+                background: white;
+            }
+
+            .about-title {
+                font-size: 40px;
+            }
+
+            .about-info {
+                width: 100%;
+                font-size: 16px;
+                line-height: 26px;
+            }
+
+            /* CONTACT FORM */
+
+            .contact-form {
+                width: 100%;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .row .input-box {
+                width: 100%;
+            }
+
+            /* SEARCH BOX */
+
+            .search-box {
+                width: 90%;
+                margin: 120px auto;
+            }
+
+            /* FOOTER */
+
+            .footer {
+                padding: 60px 20px 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-instagram {
+                margin-bottom: 30px;
+            }
+
+            .footer-bottom {
+                font-size: 12px;
+                line-height: 22px;
+            }
+
+        }
+
+        /* ======================================================
+SEARCH OVERLAY
+Fullscreen search popup
+====================================================== */
+
+        /* SEARCH OVERLAY */
+        .search-overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+
+    background: rgba(0,0,0,4);   /* transparent dark layer */
+    backdrop-filter: blur(10PX);    /* blur background */
+
+    -webkit-backdrop-filter: blur(8px); /* safari support */
+
+    z-index:3000;
+    display:none;
+    padding-top:0;
 }
 
-.overlay:target{
-opacity:1;
-visibility:visible;
-}
+    
 
-.overlay-close{
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-cursor:pointer;
-}
+        /* open overlay */
+        #searchOverlay:target {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
 
-.search-box{
-position:relative;
-width:70%;
-max-width:900px;
-margin:80px auto;
-border:2px solid white;
-padding:12px 20px;
-display:flex;
-align-items:center;
-}
+        /* container */
 
-.search-box input{
-flex:1;
-background:transparent;
-border:none;
-outline:none;
-color:white;
-font-size:18px;
-}
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 90%;
+            max-width: 700px;
 
-.close-icon{
-color:white;
-font-size:24px;
-text-decoration:none;
-margin-left:20px;
-}
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+       
+
+        /* search box */
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        /* input */
+
+        .search-box input {
+            width: 100%;
+            height: 45px;
+            padding: 20px 45px 5px 15px;
+            background: #0b0b0b;
+            border: 2px solid white;
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+
+        /* label */
+
+        .search-box label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 16px;
+            pointer-events: none;
+            transition: 0.25s;
+            background: #0b0b0b;
+            padding: 0 4px;
+        }
+
+        .search-box input:focus+label,
+        .search-box input:valid+label {
+            top: -2px;
+            font-size: 12px;
+            color: white;
+        }
+
+        /* search button inside */
+
+        .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        .search-btn i {
+            color: white;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 45px;
+            padding: 0 45px 0 15px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        /* cancel button */
+
+
+        .search-cancel {
+            color: white;
+            font-size: 22px;
+        }
+
+        /* SHOW SEARCH */
+
+        .overlay:target {
+
+            opacity: 1;
+            visibility: visible;
+
+        }
+
+
+        /* CLICK AREA TO CLOSE SEARCH */
+
+        .overlay-close {
+
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            top: 0;
+            left: 0;
+
+        }
+
+
+        /* SEARCH BOX */
+
+        .search-box {
+
+            position: relative;
+
+            width: 70%;
+            max-width: 900px;
+
+            margin: 120px auto;
+
+            border: 2px solid white;
+
+            padding: 12px 20px;
+
+            display: flex;
+            align-items: center;
+
+        }
+
+
+        /* SEARCH INPUT */
+
+        .search-box input {
+
+            flex: 1;
+
+            background: transparent;
+            border: none;
+            outline: none;
+
+            color: white;
+            font-size: 18px;
+
+        }
+
+
+        /* CLOSE ICON */
+        .overlay-close {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .close-icon {
+
+            color: white;
+            font-size: 24px;
+
+            text-decoration: none;
+
+            margin-left: 20px;
+
+        }
     </style>
 </head>
 
 <body>
     <header>
         <div class="top-header">
-    
+
             <div class="nav-left">
-                <a href="index.html" class="active">Home</a>
+                <a href="index.html">Home</a>
                 <a href="catalog.html">Catalog</a>
-                <a href="contact.html">Contact</a>
+                <a href="contact.html" class="active">Contact</a>
                 <a href="about us.html">About Us</a>
             </div>
-    
+
             <div class="nav-logo">
                 <a href="index.html"><img src="images/red.avif" alt="logo"></a>
             </div>
-    
+
             <div class="nav-right">
                 <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-bag-shopping"></i>
+                <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
+                <a href="add2cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
             </div>
-    
+
         </div>
     </header>
-    
-    
+
+
     <!-- SEARCH OVERLAY -->
-    <div id="searchOverlay" class="overlay">
-    
-        <!-- transparent background close -->
+    <div id="searchOverlay" class="search-overlay">
         <a href="#" class="overlay-close"></a>
-    
-        <div class="search-box">
-            <input type="text" placeholder="Search">
-            <a href="#" class="close-icon">✕</a>
+        <div class="search-top">
+
+            <div class="search-container">
+
+                <div class="search-box">
+
+                    <input type="text" required>
+
+                    <label>Search</label>
+
+                    <button class="search-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                </div>
+
+                <a href="#" class="search-cancel">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+
+            </div>
+
         </div>
-    
+
     </div>
     <div class="Delivery-bar">
         <p class="head">Free Delivery On Orders Above ₹799</p>
     </div>
-    <section class="contact-section">
-
-        <h1 class="contact-title">Contact</h1>
-
-        <div class="contact-info">
+    <section class="about-section">
+        <h1 class="about-title">Contact
+        </h1>
+        <div class="about-info">
             <p>Email - supp.altf4@gmail.com</p>
         </div>
-
         <form class="contact-form">
 
             <div class="row">
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email *">
+
+                <div class="input-box">
+                    <input type="text" required>
+                    <label>Name</label>
+                </div>
+
+                <div class="input-box">
+                    <input type="email" required>
+                    <label>Email *</label>
+                </div>
+
             </div>
 
-            <input type="text" placeholder="Phone number">
+            <div class="input-box">
+                <input type="text" required>
+                <label>Phone number</label>
+            </div>
 
-            <textarea placeholder="Comment"></textarea>
+            <div class="input-box">
+                <textarea required></textarea>
+                <label>Comment</label>
+            </div>
 
             <button type="submit">Send</button>
 
         </form>
-
     </section>
     <div class="footer">
 
@@ -529,6 +1070,8 @@ margin-left:20px;
         <div class="footer-bottom">
             © 2026
             <a href="index.html">AltF4</a> ·
+            <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered
+                by Shopify</a> ·
             <a href="privacy-policy.html">Privacy policy</a> ·
             <a href="refund-policy.html">Refund policy</a> ·
             <a href="terms of service.html">Terms of service</a> ·

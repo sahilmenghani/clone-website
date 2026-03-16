@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="images/red.avif" type="image/avif">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* MOBILE MENU */
+
+        .menu-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0b0b0b;
+z-index:2000;
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+display:flex;
+flex-direction:column;
+}
+
+.menu-overlay:target{
+opacity:1;
+visibility:visible;
+}
+
+/* HEADER */
+
+.menu-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:25px;
+border-bottom:1px solid #222;
+position:relative;
+}
+
+.menu-logo{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+}
+
+.menu-logo img{
+width:90px;
+}
+
+.menu-close{
+color:white;
+font-size:26px;
+text-decoration:none;
+}
+
+.menu-icons{
+color:white;
+font-size:22px;
+display:flex;
+gap:20px;
+}
+
+/* LINKS */
+
+.menu-links{
+display:flex;
+flex-direction:column;
+padding:50px 25px;
+gap:30px;
+}
+
+.menu-links a{
+color:#d6d6d6;
+text-decoration:none;
+font-size:18px;
+font-family:sans-serif;
+}
+
+.menu-links a:hover{
+color:white;
+}
+
+/* BOTTOM */
+
+.menu-bottom{
+margin-top:auto;
+padding:25px;
+border-top:1px solid #222;
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+.menu-bottom a{
+color:#d6d6d6;
+text-decoration:none;
+font-size:16px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+.top-header{
+height:80px;
+background:#0b0b0b;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+}
+
+.mobile-menu-btn{
+position:absolute;
+left:20px;
+color:white;
+font-size:24px;
+text-decoration:none;
+}
+
+.nav-logo img{
+width:90px;
+}
+
+.nav-right{
+position:absolute;
+right:20px;
+color:white;
+display:flex;
+gap:20px;
+font-size:20px;
+}
+.menu-overlay.show{
+opacity:1;
+visibility:visible;
+}
+    </style>
+</head>
+<body>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobileMenu" class="menu-overlay">
+    
+    <div class="menu-header">
+    
+    <a href="index.html" class="menu-close">
+    <i class="fa-solid fa-xmark"></i>
+    </a>
+    
+    <div class="menu-logo">
+    <img src="images/red.avif">
+    </div>
+    
+    <div class="menu-icons">
+        <a href="user login page.html"> <i class="fa-regular fa-user"></i></a>
+    <a href="add2cart.html"> <i class="fa-solid fa-bag-shopping"></i></a>
+    </div>
+    
+    </div>
+    
+    <div class="menu-links">
+    <a href="index.html">Home</a>
+    <a href="catalog.html">Catalog</a>
+    <a href="contact.html">Contact</a>
+    <a href="about us.html">About Us</a>
+    </div>
+    
+    <div class="menu-bottom">
+    <a href="user login page.html"><i class="fa-regular fa-user"></i> Log in</a>
+    <a href="https://instagram.com"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+    
+    </div>
+    <script>
+        if (window.location.hash === "#mobileMenu") {
+          document.getElementById("mobileMenu").classList.add("show");
+        }
+        </script>
+    </body>
+</html>
