@@ -78,19 +78,19 @@
         .nav-right i:hover {
             color: #cfcfcf;
         }
-        .nav-right a{
-color:white;
-text-decoration:none;
-}
 
-.nav-right a:visited{
-color:white;
-}
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+        }
 
-.nav-right a:hover{
-color:#cfcfcf;
-}
+        .nav-right a:visited {
+            color: white;
+        }
 
+        .nav-right a:hover {
+            color: #cfcfcf;
+        }
 
 
         .Delivery-bar {
@@ -110,7 +110,6 @@ color:#cfcfcf;
         }
 
         .products {
-            background: #efefef;
             padding: 60px 80px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -132,13 +131,18 @@ color:#cfcfcf;
             text-align: center;
         }
 
-        .product:hover {
+        .product:hover .product-name {
             text-decoration: underline;
+        }
+
+        .product:hover .product-img img {
+            transform: scale(1.08);
+            cursor: pointer;
         }
 
         .product-img {
             width: 100%;
-            height: 420px;
+            height: 450px;
             object-fit: cover;
             position: relative;
             overflow: hidden;
@@ -158,6 +162,7 @@ color:#cfcfcf;
             margin-top: 8px;
             font-size: 15px;
             text-align: center;
+            text-decoration: none;
         }
 
         .footer {
@@ -263,14 +268,13 @@ color:#cfcfcf;
 
         .product img {
             width: 100%;
-            height: 420px;
+            height: 450px;
             object-fit: cover;
             display: block;
-            transition: 0.3s ease;
         }
 
         .product:hover img {
-            transform: scale(1.05);
+            transform: scale(0.2);
         }
 
         .pagination {
@@ -302,7 +306,7 @@ color:#cfcfcf;
 
         .product-name {
             text-align: center;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 500;
             letter-spacing: 1px;
             margin-top: 12px;
@@ -311,99 +315,105 @@ color:#cfcfcf;
             transition: 0.3s;
             cursor: pointer;
         }
-                /* SEARCH OVERLAY */
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-opacity:0;
-visibility:hidden;
-transition:0.3s;
-z-index:1000;
+
+        /* SEARCH OVERLAY */
+        .overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index:3000;
+
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
 }
 
 .overlay:target{
-opacity:1;
-visibility:visible;
+    opacity:1;
+    visibility:visible;
 }
 
-.overlay-close{
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-cursor:pointer;
-}
+        .overlay-close {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
 
-.search-box{
-position:relative;
-width:70%;
-max-width:900px;
-margin:80px auto;
-border:2px solid white;
-padding:12px 20px;
-display:flex;
-align-items:center;
-}
+        .search-box {
+            position: relative;
+            width: 70%;
+            max-width: 900px;
+            margin: 80px auto;
+            border: 2px solid white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+        }
 
-.search-box input{
-flex:1;
-background:transparent;
-border:none;
-outline:none;
-color:white;
-font-size:18px;
-}
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 18px;
+        }
 
-.close-icon{
-color:white;
-font-size:24px;
-text-decoration:none;
-margin-left:20px;
-}
+        .close-icon {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            margin-left: 20px;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <div class="top-header">
-    
+
             <div class="nav-left">
                 <a href="index.html">Home</a>
-                <a href="catalog.html"  class="active">Catalog</a>
+                <a href="catalog.html" class="active">Catalog</a>
                 <a href="contact.html">Contact</a>
                 <a href="about us.html">About Us</a>
             </div>
-    
+
             <div class="nav-logo">
                 <a href="index.html"><img src="images/red.avif" alt="logo"></a>
             </div>
-    
+
             <div class="nav-right">
                 <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
                 <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
                 <a href="add2cart.html"> <i class="fa-solid fa-bag-shopping"></i></a>
             </div>
-    
+
         </div>
     </header>
-    
-    
+
+
     <!-- SEARCH OVERLAY -->
     <div id="searchOverlay" class="overlay">
-    
+
         <!-- transparent background close -->
         <a href="#" class="overlay-close"></a>
-    
+
         <div class="search-box">
             <input type="text" placeholder="Search">
             <a href="#" class="close-icon">✕</a>
         </div>
-    
+
     </div>
     <div class="Delivery-bar">
         <p class="head">Free Delivery On Orders Above ₹799</p>
@@ -445,40 +455,93 @@ margin-left:20px;
         <div class="products">
 
             <div class="product">
-                <img src="images/1.jpg">
-                <h3 class="product-name">Legend Acid Wash Hoodie</h3>
-                <p class="price">Rs. 1,299.00</p>
-            </div>
 
+                <div class="product-img">
+                    <img src="images/AFK HOODIE/3_7b3dc114-3a1d-4c61-8c78-067e3d58991b.jpg">
+                </div>
+
+                <h3 class="product-name">AFK HOODIE</h3>
+                <p class="price">Rs. 1,299.00</p>
+
+            </div>
             <div class="product">
-                <img src="images/paav gang/paav_112_3.jpg">
-                <h3 class="product-name">Paav Gang Tshirt</h3>
+
+                <div class="product-img">
+                    <img src="images/brown/brown2.jpg">
+                </div>
+
+                <h3 class="product-name">Alt F4 Oversized Tshirt Brown </h3>
+                <p class="price">Rs. 599.00</p>
+
+            </div>
+            <div class="product">
+
+                <div class="product-img">
+                    <img src="images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg">
+                </div>
+
+                <h3 class="product-name">Alt F4 Sky Blue Hoodie </h3>
+                <p class="price">Rs. 1,299.00</p>
+
+            </div>
+            <div class="product">
+
+                <div class="product-img">
+                    <img src="images/navy-blue/2.jpg">
+                </div>
+
+                <h3 class="product-name">Alt F4 Oversized Tshirt-Navy Blue </h3>
+                <p class="price">Rs. 699.00</p>
+
+            </div>
+            <div class="product">
+
+                <div class="product-img">
+                    <img src="images/green/green1.jpg">
+                </div>
+
+                <h3 class="product-name">Clutch Master Oversized Tshirt</h3>
+                <p class="price">Rs. 599.00</p>
+
+            </div>
+            <div class="product">
+
+                <div class="product-img">
+                    <img src="images/GGEZ/ggez_1.jpg">
+                </div>
+
+                <h3 class="product-name">GGEZ Oversized Black Tshirt</h3>
+                <p class="price">Rs. 999.00</p>
+
+            </div>
+            <div class="product">
+
+                <div class="product-img">
+                    <img src="images/goat/23.jpg">
+                </div>
+
+                <h3 class="product-name">Goated Sweatpants</h3>
                 <p class="price">Rs. 899.00</p>
-            </div>
 
-            <div class="product">
-                <img src="images/acid/acid_1.jpg">
-                <h3 class="product-name">Top Fragger Acid Wash T Shirt</h3>
-
-                <p class="price">Rs. 1,299.00</p>
             </div>
             <div class="product">
-            <img src="images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg">
-            <h3 class="product-name">Oversized Box Fit Shirt-Brown</h3>
 
-            <p class="price">Rs. 999.00</p>
+                <div class="product-img">
+                    <img src="images/headshot/12.jpg">
+                </div>
+
+                <h3 class="product-name">HeadShot Oversized Tshirt-Grey</h3>
+                <p class="price">Rs. 899.00</p>
+
+            </div>
+
         </div>
-        
-
+        <div class="pagination">
+            <a href="catalog.html"><</a>
+            <a href="catalog.html">1</a>
+            <a href="catalog2.html" class="active">2</a>
+            
         </div>
-
-    </div>
-    <div class="pagination">
-        <a href="catalog.html"> < </a>
-        <a href="catalog.html">1</a>
-        <a href="catalog2.html" class="active">2</a>
-        
-    </div>
     </div>
     <div class="footer">
 
@@ -499,7 +562,8 @@ margin-left:20px;
         <div class="footer-bottom">
             © 2026
             <a href="index.html">AltF4</a> ·
-            <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered by Shopify</a> ·
+            <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered
+                by Shopify</a> ·
             <a href="privacy-policy.html">Privacy policy</a> ·
             <a href="refund-policy.html">Refund policy</a> ·
             <a href="terms of service.html">Terms of service</a> ·

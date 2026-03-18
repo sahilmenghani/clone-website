@@ -255,12 +255,38 @@
         .product-images {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 10px;
+        }
+
+        /* FIRST IMAGE (big full width) */
+        .product-images .img-box:nth-child(1) {
+            grid-column: 1 / 3;
+            height: 750px;
+            width: 550px;
+            margin-left: 45px;
+        }
+
+        /* BOTTOM 2 IMAGES */
+        .product-images .img-box:nth-child(2) {
+            height: 750px;
+          
+            width: 350px;
+        }
+
+        .product-images .img-box:nth-child(3) {
+            height: 750px;
+            
+            width: 350px;
+        }
+
+        /* HIDE EXTRA IMAGES (important for exact look) */
+        .product-images .img-box:nth-child(n+4) {
+            display: none;
         }
 
         .product-images img {
             width: 100%;
-            height: 400px;
+            height: 500px;
             margin-bottom: 20px;
             cursor: pointer;
         }
@@ -277,7 +303,10 @@
         .product p:hover {
             text-decoration: underline;
         }
-
+        .nav-left .active {
+            color: black;
+            border-bottom: 2px solid white;
+        }
         /* FULLSCREEN */
 
         .gallery {
@@ -311,9 +340,7 @@
             z-index: 3000;
         }
 
-        .product-images img:last-child {
-            grid-column: 1/3;
-        }
+
 
         /* RIGHT INFO */
 
@@ -321,7 +348,7 @@
             letter-spacing: 3px;
             color: #777;
             display: block;
-            margin-top: 30px;
+            margin-top: 50px;
         }
 
         .product-info h1 {
@@ -341,6 +368,16 @@
             margin-bottom: 30px;
         }
 
+        .ship {
+            text-decoration: underline;
+            cursor: pointer;
+            color: black;
+        }
+
+        .ship a:visited {
+            color: black;
+        }
+
         /* SIZE */
 
         .size-title {
@@ -355,7 +392,7 @@
         }
 
         .size {
-            border: 2px solid #999;
+            border: 5px solid #999;
             padding: 12px 22px;
             border-radius: 40px;
             cursor: pointer;
@@ -484,6 +521,54 @@
         .share i {
             margin-right: 8px;
         }
+
+        .img-box {
+            position: relative;
+            width: 100%;
+            /* adjust */
+            height: 600px;
+            overflow: hidden;
+        }
+
+        /* Image */
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+
+        /* Zoom icon */
+        .zoom-icon {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+
+            width: 40px;
+            height: 40px;
+
+            background: white;
+            color: black;
+
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
+            cursor: pointer;
+
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        /* Show on hover */
+        .img-box:hover .zoom-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
     </style>
 </head>
 
@@ -515,13 +600,36 @@
         <!-- LEFT IMAGES -->
 
         <div class="product-images">
-
-            <img src="images/1.jpg" onclick="openGallery(0)">
-            <img src="images/2.jpg" onclick="openGallery(1)">
-            <img src="images/3.jpg" onclick="openGallery(2)">
-            <img src="images/1.jpg" onclick="openGallery(3)">
-            <img src="images/2.jpg" onclick="openGallery(4)">
-            <img src="images/3.jpg" onclick="openGallery(5)">
+            <div class="img-box">
+                <img src="images/1.jpg" onclick="openGallery(0)">
+                <div class="zoom-icon">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="images/1.jpg" onclick="openGallery(1)">
+                <div class="zoom-icon">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="images/1.jpg" onclick="openGallery(2)">
+                <div class="zoom-icon">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="images/1.jpg" onclick="openGallery(3)">
+                <div class="zoom-icon">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="images/1.jpg" onclick="openGallery(4)">
+                <div class="zoom-icon">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
         </div>
 
 
@@ -554,7 +662,8 @@
 
             <p class="price">Rs. 899.00</p>
 
-            <p class="shipping">Shipping calculated at checkout.</p>
+            <p class="shipping"><span class="ship"><a href="Shipping-policy.html"> Shipping </a></span>calculated at
+                checkout.</p>
 
 
             <p class="size-title">Size</p>
@@ -693,7 +802,27 @@
 
     </div>
     <script>
+        const sizes = document.querySelectorAll(".size");
 
+
+sizes.forEach(size => {
+    size.addEventListener("click", () => {
+        sizes.forEach(s => s.classList.remove("active"));
+        size.classList.add("active");
+
+        selectedSize = size.innerText;
+    });
+});
+        let selectedSize = "S"; // default
+
+sizes.forEach(size => {
+    size.addEventListener("click", () => {
+        sizes.forEach(s => s.classList.remove("active"));
+        size.classList.add("active");
+
+        selectedSize = size.innerText;
+    });
+});
         let qty = 1;
 
         function inc() {
@@ -711,34 +840,39 @@
 
         function openGallery(index) {
 
-            document.getElementById("gallery").style.display = "block";
+            gallery.style.display = "block";
 
-            let container = document.getElementById("galleryContainer");
-            let images = container.children;
-
-            images[index].scrollIntoView();
+            const imageHeight = container.children[0].offsetHeight;
+            gallery.scrollTop = index * imageHeight;
 
         }
 
         function closeGallery() {
             document.getElementById("gallery").style.display = "none";
         }
-
+        document.querySelector(".cart-btn").addEventListener("click", () => {
+    alert("Added size: " + selectedSize);
+});
 
         /* infinite scroll */
-
         const gallery = document.getElementById("gallery");
+        const container = document.getElementById("galleryContainer");
 
+        // duplicate images
+        container.innerHTML += container.innerHTML;
         gallery.addEventListener("scroll", function () {
 
-            if (gallery.scrollTop + gallery.clientHeight >= gallery.scrollHeight) {
+            const scrollHeight = container.scrollHeight / 2;
 
-                gallery.scrollTop = 0;
-
+            if (gallery.scrollTop >= scrollHeight) {
+                gallery.scrollTop -= scrollHeight; // reset smoothly
             }
 
-        }
-        )
+            if (gallery.scrollTop <= 0) {
+                gallery.scrollTop += scrollHeight; // for reverse scroll
+            }
+
+        });
         function shareProduct() {
 
             if (navigator.share) {
@@ -756,9 +890,7 @@
 
             }
 
-        }
-        ;
-
+        };
     </script>
 
 
