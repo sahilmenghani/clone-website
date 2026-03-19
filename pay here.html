@@ -567,6 +567,16 @@ text-decoration:none;
     text-decoration: underline;
     color: black;
 }
+.paisa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+.paisa img{
+   width: 250px;
+   height: auto; 
+}
     </style>
 </head>
 
@@ -597,31 +607,9 @@ text-decoration:none;
         <p class="head">Free Delivery On Orders Above ₹799</p>
     </div>
 
-    <div id="emptyCart" class="empty-cart">
-        <h1>Your cart is empty</h1>
-    
-        <button onclick="window.location.href='catalog.html'">
-            Continue shopping
-        </button>
-    
-        <div class="login-box">
-            <h2>Have an account?</h2>
-            <p><a href="user login page.html">Log in</a> to check out faster.</p>
-        </div>
-    </div>
-    <div class="cart-page">
-
-        <h1 id="cartTitle">Your cart</h1>
-    
-        <div id="cartItems"></div>
-    
-        <div class="cartSummary" id="cartSummary">
-            <h2>Estimated total: ₹<span id="grandTotal">0</span></h2>
-            <a href="pay here.html"><button class="checkout-btn">Check out</button></a>
-        </div>
-    
-    </div>
-    
+   <div class="paisa">
+    <img src="images/pay me.jpeg" alt="">
+   </div>
     <!-- SEARCH OVERLAY -->
     <div id="searchOverlay" class="overlay">
     
@@ -664,112 +652,7 @@ text-decoration:none;
         </div>
 
     </div>
-    <script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function addToCart(product) {
-
-    let existing = cart.find(item =>
-        item.name === product.name && item.size === product.size
-    );
-
-    if (existing) {
-        existing.qty += 1;   // ✅ increase qty
-    } else {
-        cart.push({
-            ...product,
-            qty: 1
-        });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-function renderCart() {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const container = document.getElementById("cartItems");
-    const emptyDiv = document.getElementById("emptyCart");
-    const summary = document.getElementById("cartSummary");
-    const title = document.getElementById("cartTitle");
-
-    // ✅ EMPTY CART
-    if (cart.length === 0) {
-        emptyDiv.style.display = "block";
-
-        container.style.display = "none";
-        summary.style.display = "none";
-        title.style.display = "none";
-
-        return;
-    }
-
-    // ✅ HAS ITEMS
-    emptyDiv.style.display = "none";
-    container.style.display = "block";
-    summary.style.display = "block";
-    title.style.display = "block";
-
-    container.innerHTML = "";
-
-    let grandTotal = 0;
-
-    cart.forEach((item, index) => {
-
-        const total = (item.price || 0) * item.qty;
-        grandTotal += total;
-
-        container.innerHTML += `
-            <div class="cart-item">
-
-                <img src="${item.image}">
-
-                <div class="cart-info">
-                    <h3>${item.name}</h3>
-                    <p>Rs. ${item.price}</p>
-                    <p>Size: ${item.size}</p>
-                </div>
-
-                <div class="qty-box">
-                    <button onclick="dec(${index})">-</button>
-                    <span>${item.qty}</span>
-                    <button onclick="inc(${index})">+</button>
-                </div>
-
-                <div>
-                    Rs. ${total}
-                    <span class="remove" onclick="removeItem(${index})">🗑</span>
-                </div>
-
-            </div>
-        `;
-    });
-
-    document.getElementById("grandTotal").innerText = grandTotal;
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-}
-renderCart();
-function inc(index) {
-    cart[index].qty++;
-    renderCart();
-}
-
-function dec(index) {
-    if (cart[index].qty > 1) {
-        cart[index].qty--;
-    } else {
-        removeItem(index);
-    }
-    renderCart();
-}
-
-function removeItem(index) {
-    cart.splice(index, 1);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
-}
-console.log(cart);
-        </script>
     </body>
 
 </html>
