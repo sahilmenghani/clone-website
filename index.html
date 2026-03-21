@@ -23,6 +23,26 @@ GLOBAL RESET
             display: block;
         }
 
+        /* Remove blue highlight on click (mobile) */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Remove blue outline on click (desktop) */
+        a,
+        button,
+        input,
+        textarea {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Optional: remove focus border but keep accessibility */
+        a:focus,
+        button:focus {
+            outline: none;
+        }
+
         /* ======================================
 BODY
 ====================================== */
@@ -167,11 +187,11 @@ HERO
         /* HERO BUTTON */
         .hero-center {
             margin-top: 25vh;
-           position: relative;
-           left: 50%;
-           transform: translate(-50%);
-           text-align: center;
-           z-index: 2;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%);
+            text-align: center;
+            z-index: 2;
         }
 
         .shop-button {
@@ -225,14 +245,14 @@ PRODUCTS
         /* PRODUCT IMAGE */
         .product-img {
             width: 100%;
-           aspect-ratio: 4/5;
+            aspect-ratio: 4/5;
             position: relative;
             overflow: hidden;
         }
 
         .product-img img {
             width: 100%;
-           aspect-ratio: 4/5;
+            aspect-ratio: 4/5;
             object-fit: cover;
             position: absolute;
             top: 0;
@@ -327,20 +347,22 @@ SEARCH OVERLAY
 ====================================== */
         .search-overlay {
             position: fixed;
-            top: 0;
+            top: 120px;
+            /* ONLY header height (PC) */
             left: 0;
             width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
+            height: calc(100vh - 120px);
+
+            background: transparent;
+            backdrop-filter: blur(10px);
+            /* no dark background */
             z-index: 3000;
+
             display: none;
         }
 
-        #searchOverlay:target {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
+
+     
 
         .search-top {
             background: #0b0b0b;
@@ -367,11 +389,14 @@ SEARCH OVERLAY
         .search-box input {
             width: 100%;
             height: 45px;
-            padding: 20px 45px 5px 15px;
-            background: #0b0b0b;
+            padding: 20px 45px 5px 0px;
+
+            background: transparent;
+            border: none;
             border: 2px solid white;
+            /* hidden by default */
+
             color: white;
-            outline: none;
             font-size: 16px;
         }
 
@@ -386,13 +411,15 @@ SEARCH OVERLAY
             transition: 0.25s;
             background: #0b0b0b;
             padding: 0 4px;
+            background: transparent;
         }
 
         .search-box input:focus+label,
         .search-box input:valid+label {
-            top: -2px;
+            top: -1px;
             font-size: 12px;
             color: white;
+            background-color: transparent;
         }
 
         .search-btn {
@@ -410,33 +437,127 @@ SEARCH OVERLAY
             color: white;
             font-size: 22px;
         }
-        .mobile-menu{
-            display: none;
+
+        
+
+        #mobileMenu:target~.menu-overlay {
+            display: block;
         }
+
+        #mobileMenu:target~.menu-overlay .mobile-menu {
+            display: flex;
+        }
+
         /* ======================================
 MOBILE MENU OVERLAY - FIXED
 ====================================== */
         .menu-overlay {
             position: fixed;
-            top: 0;
+            top: 120px;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: calc(100vh - 120px);
+            /* FIXED */
+
             background: #0b0b0b;
-            z-index: 2000;
-            display: none;
-            padding-top: 120px;
+            z-index: 999;
+            /* BELOW HEADER */
+
+            transform: translateX(-100%);
+            transition: 0.4s ease;
+
+            display: flex;
+            flex-direction: column;
         }
 
-        #mobileMenu:target ~ .menu-overlay,
-        #mobileMenu:target .menu-overlay {
-            display: block;
+        .menu-overlay.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu a {
+            opacity: 1;
+            transform: translateX(-20px);
+            transition: 0.3s;
+        }
+
+        .menu-overlay.active .mobile-menu a {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* TOP BAR */
+        .mobile-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 22px;
+        }
+
+        .mobile-logo img {
+            width: 80px;
+        }
+
+        .mobile-icons {
+            display: flex;
+            gap: 15px;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* MENU LINKS */
+
+
+        .mobile-menu a {
+            padding: 18px 20px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #111;
+        }
+
+        .mobile-menu a.active {
+            background: #111;
+            color: white;
+        }
+
+        .mobile-menu a:hover {
+            background: #111;
+            color: white;
+        }
+
+        /* BOTTOM SECTION */
+        .mobile-bottom {
+            margin-top: auto;
+            margin-bottom: 50px;
+            width: 100%;
+            padding: 20px;
+            border-top: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-bottom a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .mobile-menu {
-            max-width: 300px;
-            margin: 0 auto;
+            width: 100%;
             padding: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         .mobile-menu-close {
@@ -469,17 +590,20 @@ MOBILE MENU OVERLAY - FIXED
             color: white;
             border-bottom: 2px solid white;
         }
-        .mobile-menu-btn{
-display:none;
-font-size:28px;
-color:white;
-text-decoration:none;
-position:absolute;
-left:20px;
-}
-.strip{
-font-size: 12px;
-}
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            position: absolute;
+            left: 20px;
+        }
+
+        .strip {
+            font-size: 12px;
+        }
+
         /* ======================================
 MOBILE RESPONSIVE
 ====================================== */
@@ -487,6 +611,14 @@ MOBILE RESPONSIVE
             body {
                 padding-top: 110px;
             }
+
+            .search-overlay {
+        top: 105px;
+        height: calc(100vh - 105px);
+
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+    }
 
             .top-header {
                 height: 70px;
@@ -593,21 +725,45 @@ MOBILE RESPONSIVE
                 padding: 20px 10px;
             }
         }
-        .fa-bars{
+
+        .fa-bars {
             color: white;
             font-size: 30px;
+        }
+
+        .menu-overlay {
+            top: 70px;
+            /* mobile header height */
+            height: calc(100vh - 70px);
         }
     </style>
 </head>
 
 <body>
+    <!-- SEARCH OVERLAY -->
+    <div id="searchOverlay" class="search-overlay" onclick="closeSearch(event)">
 
-  
+        <div class="search-top"></div>
+
+        <div class="search-container" onclick="event.stopPropagation()">
+
+            <!-- INPUT -->
+            <div class="search-box">
+                <input type="text" required>
+                <label>Search</label>
+
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- HEADER -->
     <div class="top-header">
-        <a href="#mobileMenu" class="mobile-menu-btn">
-            <i class="fa-solid fa-bars"></i>
+        <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+            <i id="menuIcon" class="fa-solid fa-bars"></i>
         </a>
 
         <div class="nav-left">
@@ -622,29 +778,38 @@ MOBILE RESPONSIVE
         </div>
 
         <div class="nav-right">
-            <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="javascript:void(0)" onclick="openSearch()">
+    <i class="fa-solid fa-magnifying-glass"></i>
+</a>
             <a href="user login page.html"><i class="fa-regular fa-user user-icon"></i></a>
             <a href="add2cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
         </div>
     </div>
+    <div id="mobileMenu"></div>
 
-    <!-- MOBILE MENU OVERLAY -->
-    <div class="menu-overlay">
-        <a href="#" class="mobile-menu-close">
-            <i class="fa-solid fa-times"></i>
-        </a>
+    <div class="menu-overlay" id="menuOverlay">
+
+
+
+        <!-- MENU -->
         <div class="mobile-menu">
-            <div class="mobile-nav">
-                <a href="index.html" class="active">Home</a>
-                <a href="catalog.html">Catalog</a>
-                <a href="contact.html">Contact</a>
-                <a href="about us.html">About Us</a>
-                <a href="user login page.html">Account</a>
-                <a href="add2cart.html">Cart</a>
-            </div>
+            <a class="active" href="index.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="contact.html">Contact</a>
+            <a href="about us.html">About Us</a>
         </div>
-    </div>
 
+        <!-- BOTTOM -->
+        <div class="mobile-bottom">
+            <a href="user login page.html">
+                <i class="fa-regular fa-user"></i> Log in
+            </a>
+            <a href="https://instagram.com/sahilmenghani69">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+
+    </div>
     <!-- DELIVERY -->
     <div class="Delivery-bar">
         <p class="head">Free Delivery On Orders Above ₹799</p>
@@ -700,7 +865,9 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg" class="img1">
-                    <a href="product.html?id=5"><img src="images/brown-shirt/UniversalUpscaler_82ff40ef-bbfc-4bc8-8b88-d6202401f365.jpg" class="img2"></a>
+                    <a href="product.html?id=5"><img
+                            src="images/brown-shirt/UniversalUpscaler_82ff40ef-bbfc-4bc8-8b88-d6202401f365.jpg"
+                            class="img2"></a>
                 </div>
                 <a href="#">Oversized Box Fit Shirt-Brown</a>
                 <p class="price">Rs. 999.00</p>
@@ -716,7 +883,8 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/goat/23 (1).jpg" class="img1">
-                    <a href="product.html?id=7"><img src="images/goat/1_1c851f70-491f-4f5c-bcfc-c42f84fc7859.jpg" class="img2"></a>
+                    <a href="product.html?id=7"><img src="images/goat/1_1c851f70-491f-4f5c-bcfc-c42f84fc7859.jpg"
+                            class="img2"></a>
                 </div>
                 <a href="#">GOATED Sweatpants</a>
                 <p class="price">Rs. 899.00</p>
@@ -751,7 +919,7 @@ MOBILE RESPONSIVE
                     <a href="product.html?id=11"><img src="images/paav gang/paav_112_1.jpg" class="img2"></a>
                 </div>
                 <a href="#">Paav Gang Tshirt</a>
-                <p class="price"><s class="strip">Rs. 999.00  </s>Rs. 799.00</p>
+                <p class="price"><s class="strip">Rs. 999.00 </s>Rs. 799.00</p>
             </div>
             <div class="product">
                 <div class="product-img">
@@ -764,7 +932,8 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/AFK HOODIE/3_7b3dc114-3a1d-4c61-8c78-067e3d58991b.jpg" class="img1">
-                    <a href="product.html?id=13"><img src="images/AFK HOODIE/1_0f62ae86-3000-44ae-bc80-c5e781719040.jpg" class="img2"></a>
+                    <a href="product.html?id=13"><img src="images/AFK HOODIE/1_0f62ae86-3000-44ae-bc80-c5e781719040.jpg"
+                            class="img2"></a>
                 </div>
                 <a href="#">AFK HOODIE</a>
                 <p class="price"><s class="strip">Rs.1,599.00</s>Rs. 1,299.00</p>
@@ -772,7 +941,8 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg" class="img1">
-                    <a href="product.html?id=14"><img src="images/sky blue hoodie/5_f2333b23-1bd3-41d3-9a8e-b40aecfb813a.jpg" class="img2"></a>
+                    <a href="product.html?id=14"><img
+                            src="images/sky blue hoodie/5_f2333b23-1bd3-41d3-9a8e-b40aecfb813a.jpg" class="img2"></a>
                 </div>
                 <a href="#">Alt F4 Sky Blue Hoodie</a>
                 <p class="price">Rs. 1,299.00</p>
@@ -783,12 +953,13 @@ MOBILE RESPONSIVE
                     <a href="product.html?id=15"><img src="images/goatie/goatimerch11.jpg" class="img2"></a>
                 </div>
                 <a href="#">G.O.A.T Gamer Sweatshirt Blue - PRE ORDER | Limited Edition</a>
-                <p class="price"><s class="strip">Rs. 1,800  </s>Rs. 1,499.00</p>
+                <p class="price"><s class="strip">Rs. 1,800 </s>Rs. 1,499.00</p>
             </div>
             <div class="product">
                 <div class="product-img">
                     <img src="images/zipper/1_7578b4e9-81bc-437d-bca3-71362fde6f5c.jpg" class="img1">
-                    <a href="product.html?id=16"><img src="images/zipper/5_1cde6b99-e94e-4196-a594-717ea96f899f.jpg" class="img2"></a>
+                    <a href="product.html?id=16"><img src="images/zipper/5_1cde6b99-e94e-4196-a594-717ea96f899f.jpg"
+                            class="img2"></a>
                 </div>
                 <a href="#">GG - Black Double Zipper</a>
                 <p class="price">Rs. 1,499.00</p>
@@ -796,7 +967,8 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/speed run/1_7f2eb942-d43e-425b-9c26-8b545c06fcbf.jpg" class="img1">
-                    <a href="product.html?id=17"><img src="images/speed run/2_fe6fef41-e142-4004-89ef-d289447250b8.jpg" class="img2"></a>
+                    <a href="product.html?id=17"><img src="images/speed run/2_fe6fef41-e142-4004-89ef-d289447250b8.jpg"
+                            class="img2"></a>
                 </div>
                 <a href="#">Speed Run - Beige Hoodie</a>
                 <p class="price">Rs. 1,299.00</p>
@@ -804,7 +976,8 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/acid wash/1.jpg" class="img1">
-                    <a href="product.html?id=18"><img src="images/acid wash/5_33e22a3a-3d89-43a4-90fd-51b36d00a7e2 (1).jpg" class="img2"></a>
+                    <a href="product.html?id=18"><img
+                            src="images/acid wash/5_33e22a3a-3d89-43a4-90fd-51b36d00a7e2 (1).jpg" class="img2"></a>
                 </div>
                 <a href="#">Legend Acid Wash Hoodie</a>
                 <p class="price">Rs. 1,499.00</p>
@@ -812,7 +985,8 @@ MOBILE RESPONSIVE
             <div class="product">
                 <div class="product-img">
                     <img src="images/wasd/1_12b83826-259d-46ae-ad97-6b397ace2e04.jpg" class="img1">
-                    <a href="product.html?id=19"><img src="images/wasd/3_a093b622-a86a-4eba-9726-baccf574a0df.jpg" class="img2"></a>
+                    <a href="product.html?id=19"><img src="images/wasd/3_a093b622-a86a-4eba-9726-baccf574a0df.jpg"
+                            class="img2"></a>
                 </div>
                 <a href="#">WASD White Hoodie</a>
                 <p class="price">Rs. 1,299.00</p>
@@ -854,7 +1028,48 @@ MOBILE RESPONSIVE
             <a href="Shipping-policy.html">Shipping policy</a> ·
         </div>
     </div>
+    <script>
+        function openSearch() {
+    document.getElementById("searchOverlay").style.display = "flex";
+}
 
+function closeSearch(e) {
+    document.getElementById("searchOverlay").style.display = "none";
+}
+        let scrollPosition = 0;
+
+        function toggleMenu(e) {
+            const menu = document.getElementById("menuOverlay");
+            const icon = document.getElementById("menuIcon");
+            const delivery = document.querySelector(".Delivery-bar");
+
+            menu.classList.toggle("active");
+
+            if (menu.classList.contains("active")) {
+                // SAVE SCROLL POSITION
+                scrollPosition = window.scrollY;
+
+                // LOCK BODY (prevents scroll jump)
+                document.body.style.position = "fixed";
+                document.body.style.top = `-${scrollPosition}px`;
+                document.body.style.width = "100%";
+
+                icon.classList.replace("fa-bars", "fa-xmark");
+                delivery.style.display = "none";
+
+            } else {
+                // RESTORE SCROLL POSITION
+                document.body.style.position = "";
+                document.body.style.top = "";
+                document.body.style.width = "";
+
+                window.scrollTo(0, scrollPosition);
+
+                icon.classList.replace("fa-xmark", "fa-bars");
+                delivery.style.display = "flex";
+            }
+        }
+    </script>
 </body>
 
 </html>

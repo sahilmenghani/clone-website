@@ -4,384 +4,807 @@
 <head>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <link rel="stylesheet" href="header.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Altf4.in</title>
     <link rel="icon" type="image/avif" href="/images/red.avif">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+   /* =========================
+RESET & GLOBAL
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3); /* dark blur background */
+    backdrop-filter: blur(3px);
+    display: none;
+    z-index: 2001;
+}
 
-        body {
-            padding-top: 120px;
-        }
+.filter-overlay.active {
+    display: block;
+}
+.filter-panel {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+    transition: right 0.3s ease;
+    z-index: 2001;
+}
 
-        .top-header {
-            height: 120px;
-            background: #0b0b0b;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 60px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
+.filter-panel.open {
+    right: 0;
+}
 
-        /* LEFT NAV */
+@keyframes slideIn {
+    from { right: -300px; }
+    to { right: 0; }
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 
-        .nav-left a {
-            color: #d6d6d6;
-            text-decoration: none;
-            margin-right: 40px;
-            font-family: sans-serif;
-            font-size: 16px;
-        }
+a, button, input, textarea {
+    outline: none;
+    box-shadow: none;
+}
 
-        .nav-left a:hover {
-            color: white;
-        }
+a:focus, button:focus {
+    outline: none;
+}
+html,body{
+    overflow-x: hidden;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #f6f6f6;
+    padding-top: 160px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px; /* tighter spacing like screenshot */
+    margin: 60px 0 ;
+    font-family: Arial, sans-serif;
+}
 
-        /* active page */
+.pagination a {
+    text-decoration: none;
+    color: #111;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 5px 8px;
+    position: relative;
+}
 
-        .nav-left .active {
-            color: white;
-            border-bottom: 2px solid white;
-            padding-bottom: 4px;
-        }
+.pagination a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background: #111;
+}
+    
+/* =========================
+HEADER
+========================= */
+.top-header {
+    height: 120px;
+    background: #0b0b0b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
 
-        /* LOGO */
+/* LEFT NAV */
+.nav-left a {
+    color: #d6d6d6;
+    text-decoration: none;
+    margin-right: 40px;
+    font-size: 16px;
+}
 
-        .nav-logo img {
-            width: 110px;
-            position: absolute;
-            left: 50%;
-            transform: translatex(-50%)translateY(-40%);
-        }
+.nav-left a:hover {
+    color: white;
+}
 
-        /* RIGHT ICONS */
+.nav-left .active {
+    color: white;
+    border-bottom: 2px solid white;
+}
 
-        .nav-right {
-            display: flex;
-            gap: 30px;
-            font-size: 22px;
-            color: white;
-            cursor: pointer;
-        }
+/* LOGO */
+.nav-logo img {
+    width: 110px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
-        .nav-right i:hover {
-            color: #cfcfcf;
-        }
+/* RIGHT ICONS */
+.nav-right {
+    display: flex;
+    gap: 30px;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+}
 
-        .nav-right a {
-            color: white;
-            text-decoration: none;
-        }
+.nav-right a {
+    color: white;
+    text-decoration: none;
+}
 
-        .nav-right a:visited {
-            color: white;
-        }
+.nav-right a:hover {
+    color: #cfcfcf;
+}
 
-        .nav-right a:hover {
-            color: #cfcfcf;
-        }
+/* HIDE USER ICON IN MOBILE */
+.nav-right .user-icon, 
+.nav-right .fa-regular.fa-user {
+    display: inline-block;
+}
 
+/* MOBILE MENU BUTTON */
+.mobile-menu-btn {
+    display: none;
+    font-size: 28px;
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    left: 20px;
+    z-index: 2001;
+}
 
-        .Delivery-bar {
-            background-color: lightgray;
-            height: 50px;
-            top: 120px;
-            width: 100%;
-            left: 0;
-            z-index: 999;
-        }
+/* =========================
+DELIVERY BAR
+========================= */
+.Delivery-bar {
+    background: lightgray;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 120px;
+    left: 0;
+    z-index: 999;
+    text-align: center;
+}
 
-        .head {
-            color: black;
-            font-size: 20px;
-            text-align: center;
-            padding: 15px;
-        }
-
-        .products {
-            padding: 60px 80px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .product-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .product a {
-            text-decoration: none;
-            color: black;
-            font-family: sans-serif;
-            display: block;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .product:hover .product-name {
-            text-decoration: underline;
-        }
-
-        .product:hover .product-img img {
-            transform: scale(1.08);
-            cursor: pointer;
-        }
-
-        .product-img {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+.head {
+    font-size: 18px;
+    text-align: center;
+}
+.title {
+    text-align: left;
+    font-size: 64px;
+    font-weight: 200;
+    padding-top: 50px;
+    margin-left: 90px;
+    letter-spacing: -1px;
+}
+/* Filter Button */
+.filter-btn {
+    display: none;
+    padding: 10px 15px;
+    background: #111;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
 
 
-        .price {
-            margin-top: 8px;
-            font-size: 13px;
-            text-align: center;
-            text-decoration: none;
-        }
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
 
-        .footer {
-            background: #0b0b0b;
-            color: white;
-            text-align: center;
-            padding: 80px 20px 30px;
-            font-family: sans-serif;
-        }
+.filter-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
 
-        .footer-title {
-            font-size: 28px;
-            margin-bottom: 25px;
-        }
+.filter-header .close-filter {
+    cursor: pointer;
+    font-size: 22px;
+}
 
-        .footer-links {
+.filter-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter-body a {
+    text-decoration: none;
+    color: #111;
+    font-size: 16px;
+}
+
+.filter-body label {
+    font-size: 14px;
+    margin-top: 10px;
+}
+select {
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: #111;
+    cursor: pointer;
+}
+.container {
+    max-width: 1300px;
+    margin: auto;
+    padding: 0 70px;
+}
+.filter-body select {
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.filter-footer {
+    margin-top: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-footer a {
+    color: #111;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.filter-footer button {
+    background: #111;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+/* =========================
+PRODUCT GRID
+========================= */
+.products {
+    display: grid;
+    gap: 20px;
+    /* Desktop: 4 columns */
+    grid-template-columns: repeat(4, 1fr);
+    padding: 60px 80px;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.product a {
+    text-decoration: none;
+    color: black;
+    font-family: sans-serif;
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.product:hover .product-name {
+    text-decoration: underline;
+}
+
+.product:hover .product-img img {
+    transform: scale(1.08);
+    cursor: pointer;
+}
+
+.product-img {
+    width: 100%;
+    aspect-ratio: 4/5; /* keeps height proportional */
+    overflow: hidden;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+
+.product-name {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    margin-top: 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.price {
+    margin-top: 8px;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* =========================
+FOOTER
+========================= */
+.footer {
+    background: #0b0b0b;
+    width: 100%;
+    padding: 80px 20px 30px;
+    text-align: center;
+}
+
+.footer-title {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.footer-links {
+    
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #cfcfcf;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.footer-instagram {
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+.footer-instagram a {
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid #222;
+    padding-top: 20px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.footer-bottom a {
+    color: #aaa;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+/* =========================
+SEARCH OVERLAY
+========================= */
+.search-overlay {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 120px);
+    background: transparent;
+    backdrop-filter: blur(10px);
+    z-index: 3000;
+    display: none;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    max-width: 700px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+}
+
+.search-box input {
+    width: 100%;
+    height: 45px;
+    padding: 20px 45px 5px 0;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 16px;
+}
+
+.search-box label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.25s;
+}
+
+.search-box input:focus + label,
+.search-box input:valid + label {
+    top: -1px;
+    font-size: 12px;
+    color: white;
+}
+
+.search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
+
+.search-cancel {
+    color: white;
+    font-size: 22px;
+}
+
+/* =========================
+MOBILE MENU
+========================= */
+.menu-overlay {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 120px);
+    background: #0b0b0b;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-overlay.active {
+    transform: translateX(0);
+}
+
+.mobile-menu {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu a {
+    padding: 18px 20px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #111;
+    opacity: 1;
+    transform: translateX(-20px);
+    transition: 0.3s;
+}
+
+.menu-overlay.active .mobile-menu a {
+    transform: translateX(0);
+}
+
+.mobile-menu a.active {
+    background: #111;
+    color: white;
+}
+
+.mobile-menu a:hover {
+    background: #111;
+    color: white;
+}
+
+.mobile-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #222;
+}
+
+.mobile-bottom {
+    margin-top: auto;
+    margin-bottom: 50px;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-bottom a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-menu-close {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    z-index: 2001;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.mobile-nav a {
+    color: #d6d6d6;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a.active {
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+/* =========================
+MOBILE RESPONSIVE
+========================= */
+
+    @media(max-width:900px) {
+
+.container {
+    padding: 0 12px; /* very important for side spacing */
+}
+
+.products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; /* tighter like reference */
+    padding: 20px 0; /* remove side padding */
+}
+
+.product {
+    text-align: center;
+}
+
+.product-img {
+    width: 100%;
+    aspect-ratio: 3/4; /* closer to your reference */
+    overflow: hidden;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-name {
+    font-size: 12px;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+
+.price {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+    body {
+        padding-top: 110px;
+    }
+    
+
+
+    .product:hover .product-name {
+        text-decoration: none;
+    }
+
+    .product:hover .product-img img {
+        transform: none;
+        cursor: pointer;
+    }
+   
+
+    .top-header {
+        height: 70px;
+        padding: 0 15px;
+    }
+
+    .nav-left {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-logo img {
+        width: 80px;
+    }
+
+    .nav-right {
+        gap: 10px;
+        font-size: 20px;
+        margin-right: 10px;
+    }
+
+    .nav-right .user-icon,
+    .nav-right .fa-regular.fa-user {
+        display: none !important;
+    }
+
+    .Delivery-bar {
+        top: 70px;
+        height: 35px;
+    }
+
+    .head {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+    .filter-btn {
+        display: inline-block;
+    }
+
+    .product-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+}
+
+/* LEFT SIDE */
+.filter-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #111;
+}
+
+.filter-left i {
+    font-size: 18px;
+}
+
+/* RIGHT SIDE */
+.product-count {
+    font-size: 14px;
+    color: #666;
+}
+
+
+    .footer {
+        padding: 60px 20px 30px;
+        
+    }
+
+    .footer-links {
             display: flex;
             justify-content: center;
             gap: 30px;
             margin-bottom: 40px;
+            flex-wrap: wrap;
         }
 
-        .footer-links a {
-            color: #cfcfcf;
-            text-decoration: none;
-            font-size: 14px;
-        }
+    .footer-title {
+        font-size: 22px;
+        text-align: center;
+        color: white;
+        padding-bottom: 10px;
+    }
 
-        .footer-links a:hover {
-            color: white;
-            border-bottom: 2px solid white;
-        }
+    .footer-bottom {
+        text-align: center;
+        font-size: 11px;
+        line-height: 1.8;
+        padding: 20px 10px;
+    }
 
-        .footer-instagram {
-            font-size: 24px;
-            margin-bottom: 50px;
-        }
+    .search-overlay {
+        top: 105px;
+        height: calc(100vh - 105px);
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+    }
 
-        .footer-instagram a {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #222;
-            padding-top: 20px;
-            font-size: 13px;
-            color: #aaa;
-        }
-
-        .footer-bottom a {
-            color: #aaa;
-            text-decoration: none;
-        }
-
-        .footer-bottom a:hover {
-            color: white;
-            border-bottom: 2px solid white;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f6f6f6;
-            margin: 0;
-        }
-
-        .container {
-            width: 90%;
-            margin: auto;
-        }
-
-        .title {
-            font-size: 50px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .product-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .filters span,
-        .sort span {
-            margin-right: 10px;
-            color: #444;
-        }
-
-        select {
-            border: none;
-            background: transparent;
-            font-size: 15px;
-            margin-right: 20px;
-            cursor: pointer;
-        }
-
-        .count {
-            color: #777;
-        }
-
-
-
-        .product img {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .product:hover img {
-            transform: scale(0.2);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            margin: 60px 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .pagination a {
-            text-decoration: none;
-            color: #111;
-            font-size: 18px;
-            padding: 5px 8px;
-            position: relative;
-        }
-
-        .pagination a.active::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 2px;
-            background: #111;
-        }
-
-        .product-name {
-            text-align: center;
-            font-size: 13px;
-            font-weight: 100;
-            letter-spacing: 1px;
-            margin-top: 12px;
-            padding-bottom: 4px;
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        /* SEARCH OVERLAY */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            z-index: 3000;
-
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-
-        .overlay:target {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .overlay-close {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            cursor: pointer;
-        }
-
-        .search-box {
-            position: relative;
-            width: 70%;
-            max-width: 900px;
-            margin: 80px auto;
-            border: 2px solid white;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: white;
-            font-size: 18px;
-        }
-
-        .close-icon {
-            color: white;
-            font-size: 24px;
-            text-decoration: none;
-            margin-left: 20px;
-        }
+    .menu-overlay {
+        top: 70px;
+        height: calc(100vh - 70px);
+    }
+}
     </style>
 </head>
 
 <body>
+    <!-- SEARCH OVERLAY -->
+    <div id="searchOverlay" class="search-overlay" onclick="closeSearch(event)">
+        <div class="search-container" onclick="event.stopPropagation()">
+
+            <!-- INPUT -->
+            <div class="search-box">
+                <input type="text" required>
+                <label>Search</label>
+
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="top-header">
-
+            <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </a>
             <div class="nav-left">
                 <a href="index.html">Home</a>
                 <a href="catalog.html" class="active">Catalog</a>
@@ -394,27 +817,42 @@
             </div>
 
             <div class="nav-right">
-                <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="javascript:void(0)" onclick="openSearch()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
                 <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
                 <a href="add2cart.html"> <i class="fa-solid fa-bag-shopping"></i></a>
             </div>
 
         </div>
     </header>
+    <div id="mobileMenu"></div>
+
+    <div class="menu-overlay" id="menuOverlay">
 
 
-    <!-- SEARCH OVERLAY -->
-    <div id="searchOverlay" class="overlay">
 
-        <!-- transparent background close -->
-        <a href="#" class="overlay-close"></a>
+        <!-- MENU -->
+        <div class="mobile-menu">
+            <a class="active" href="index.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="contact.html">Contact</a>
+            <a href="about us.html">About Us</a>
+        </div>
 
-        <div class="search-box">
-            <input type="text" placeholder="Search">
-            <a href="#" class="close-icon">✕</a>
+        <!-- BOTTOM -->
+        <div class="mobile-bottom">
+            <a href="user login page.html">
+                <i class="fa-regular fa-user"></i> Log in
+            </a>
+            <a href="https://instagram.com/sahilmenghani69">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
         </div>
 
     </div>
+
+
     <div class="Delivery-bar">
         <p class="head">Free Delivery On Orders Above ₹799</p>
     </div>
@@ -422,157 +860,170 @@
 
         <h1 class="title">Products</h1>
 
+        <!-- Filter Button for Mobile -->
         <div class="product-top">
-
-            <div class="filters">
-                <span>Filter:</span>
-
-                <select>
-                    <option>Availability</option>
-                </select>
-
-                <select>
-                    <option>Price</option>
-                </select>
-
+    
+            <div class="filter-left" onclick="openFilter()">
+                <i class="fa-solid fa-sliders"></i>
+                <span>Filter and sort</span>
             </div>
-
-            <div class="sort">
-
-                <span>Sort by:</span>
-
-                <select>
-                    <option>Alphabetically, A-Z</option>
-                </select>
-
-                <span class="count">20 products</span>
-
-            </div>
-
+        
+            <span class="count" id="productCount"></span>
         </div>
 
+<!-- Filter Panel -->
+<div class="filter-overlay" id="filterOverlay">
 
+    <div class="filter-panel" onclick="event.stopPropagation()">
+        
+        <div class="filter-header">
+            <h3>Filter and sort</h3>
+            <span class="close-filter" onclick="closeFilter()">&times;</span>
+        </div>
+
+        <div class="filter-body">
+            <a href="#">Availability →</a>
+            <a href="#">Price →</a>
+
+            <label>Sort by:</label>
+            <select onchange="sortProducts(this.value)">
+                <option value="az">Alphabetically, A-Z</option>
+                <option value="za">Alphabetically, Z-A</option>
+                <option value="low">Price, low to high</option>
+                <option value="high">Price, high to low</option>
+            </select>
+        </div>
+
+        <div class="filter-footer">
+            <a href="#">Remove all</a>
+            <button onclick="closeFilter()">Apply</button>
+        </div>
+
+    </div>
+
+</div>
+        
         <div class="products">
 
             <div class="product">
+                <a href="product.html?id=13">
+                    <div class="product-img">
+                        <img src="images/AFK HOODIE/3_7b3dc114-3a1d-4c61-8c78-067e3d58991b.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=13"><img src="images/AFK HOODIE/3_7b3dc114-3a1d-4c61-8c78-067e3d58991b.jpg">
-                </div>
-
-                <h3 class="product-name">AFK HOODIE</h3></a>
-                <p class="price">Rs. 1,299.00</p>
-
+                    <h3 class="product-name">AFK HOODIE</h3>
+                    <p class="price">Rs. 1,299.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=3">
+                    <div class="product-img">
+                        <img src="images/brown/brown2.jpg">
+                    </div>
 
-                <div class="product-img">
-                   <a href="product.html?id=3"> <img src="images/brown/brown2.jpg">
-                </div>
-
-                <h3 class="product-name">Alt F4 Oversized Tshirt Brown </h3></a>
-                <p class="price">Rs. 599.00</p>
-
+                    <h3 class="product-name">Alt F4 Oversized Tshirt Brown </h3>
+                    <p class="price">Rs. 599.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=14">
+                    <div class="product-img">
+                        <img src="images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg">
+                    </div>
 
-                <div class="product-img">
-                   <a href="product.html?id=14"> <img src="images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg">
-                </div>
-
-                <h3 class="product-name">Alt F4 Sky Blue Hoodie </h3></a>
-                <p class="price">Rs. 1,299.00</p>
-
+                    <h3 class="product-name">Alt F4 Sky Blue Hoodie </h3>
+                    <p class="price">Rs. 1,299.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=6">
+                    <div class="product-img">
+                        <img src="images/navy-blue/2.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=6"><img src="images/navy-blue/2.jpg">
-                </div>
-
-                <h3 class="product-name">Alt F4 Oversized Tshirt-Navy Blue </h3></a>
-                <p class="price">Rs. 699.00</p>
-
+                    <h3 class="product-name">Alt F4 Oversized Tshirt-Navy Blue </h3>
+                    <p class="price">Rs. 699.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=2">
+                    <div class="product-img">
+                        <img src="images/green/green1.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=2"><img src="images/green/green1.jpg">
-                </div>
-
-                <h3 class="product-name">Clutch Master Oversized Tshirt</h3></a>
-                <p class="price">Rs. 599.00</p>
-
+                    <h3 class="product-name">Clutch Master Oversized Tshirt</h3>
+                    <p class="price">Rs. 599.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=4">
+                    <div class="product-img">
+                        <img src="images/GGEZ/ggez_1.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=4"><img src="images/GGEZ/ggez_1.jpg">
-                </div>
-
-                <h3 class="product-name">GGEZ Oversized Black Tshirt</h3></a>
-                <p class="price">Rs. 999.00</p>
-
+                    <h3 class="product-name">GGEZ Oversized Black Tshirt</h3>
+                    <p class="price">Rs. 999.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=7">
+                    <div class="product-img">
+                        <img src="images/goat/23.jpg">
+                    </div>
 
-                <div class="product-img">
-                   <a href="product.html?id=7"> <img src="images/goat/23.jpg">
-                </div>
-
-                <h3 class="product-name">Goated Sweatpants</h3></a>
-                <p class="price">Rs. 899.00</p>
-
+                    <h3 class="product-name">Goated Sweatpants</h3>
+                    <p class="price">Rs. 899.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=8">
+                    <div class="product-img">
+                        <img src="images/headshot/12.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=8"><img src="images/headshot/12.jpg">
-                </div>
-
-                <h3 class="product-name">HeadShot Oversized Tshirt-Grey</h3></a>
-                <p class="price">Rs. 899.00</p>
-
+                    <h3 class="product-name">HeadShot Oversized Tshirt-Grey</h3>
+                    <p class="price">Rs. 899.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=1">
+                    <div class="product-img">
+                        <img src="images/acid/acid_1.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=1"><img src="images/acid/acid_1.jpg">
-                </div>
-
-                <h3 class="product-name">Top Fragger Acid Wash T Shirt</h3></a>
-                <p class="price">Rs. 899.00</p>
-
+                    <h3 class="product-name">Top Fragger Acid Wash T Shirt</h3>
+                    <p class="price">Rs. 899.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=5">
+                    <div class="product-img">
+                        <img src="images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=5"><img src="images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg">
-                </div>
-
-                <h3 class="product-name">Oversized Box Fit Shirt-Brown</h3></a>
-                <p class="price">Rs. 999.00</p>
-
+                    <h3 class="product-name">Oversized Box Fit Shirt-Brown</h3>
+                    <p class="price">Rs. 999.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=9">
+                    <div class="product-img">
+                        <img src="images/one more/7.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=9"><img src="images/one more/7.jpg">
-                </div>
-
-                <h3 class="product-name">One More Game Sweatpants</h3></a>
-                <p class="price">Rs. 699.00</p>
-
+                    <h3 class="product-name">One More Game Sweatpants</h3>
+                    <p class="price">Rs. 699.00</p>
+                </a>
             </div>
             <div class="product">
+                <a href="product.html?id=10">
+                    <div class="product-img">
+                        <img src="images/viper/viper_9_8bc275f0-6bbf-4bfd-8ca3-f369f575443a.jpg">
+                    </div>
 
-                <div class="product-img">
-                    <a href="product.html?id=10"><img src="images/viper/viper_9_8bc275f0-6bbf-4bfd-8ca3-f369f575443a.jpg">
-                </div>
-
-                <h3 class="product-name">Viper Puffed Oversized Tshirt <br>(Limited Edition)</h3></a>
-                <p class="price">Rs. 899.00</p>
-
+                    <h3 class="product-name">Viper Puffed Oversized Tshirt <br>(Limited Edition)</h3>
+                    <p class="price">Rs. 899.00</p>
+                </a>
             </div>
 
         </div>
@@ -581,36 +1032,103 @@
             <a href="catalog2.html">2</a>
             <a href="catalog2.html">></a>
         </div>
+        
     </div>
     <div class="footer">
+        <div class="footer-content">
+            <h2 class="footer-title">Policies</h2>
 
-        <h2 class="footer-title">Policies</h2>
+            <div class="footer-links">
+                <a href="search.html">Search</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="refund-policy.html">Refund Policy</a>
+                <a href="Shipping-policy.html">Shipping Policy</a>
+            </div>
 
-        <div class="footer-links">
-            <a href="search.html">Search</a>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="refund-policy.html">Refund Policy</a>
-            <a href="Shipping-policy.html">Shipping Policy</a>
+            <div class="footer-instagram">
+                <a href="https://instagram.com/sahilmenghani69" target="_blank">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+            <div class="footer-bottom">
+                © 2026
+                <a href="index.html">AltF4</a> ·
+                <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered
+                    by Shopify</a> ·
+                <a href="privacy-policy.html">Privacy policy</a> ·
+                <a href="refund-policy.html">Refund policy</a> ·
+                <a href="terms of service.html">Terms of service</a> ·
+                <a href="contact-information.html">Contact information</a> ·
+                <a href="Shipping-policy.html">Shipping policy</a>
+            </div>
+
         </div>
-
-        <div class="footer-instagram">
-            <a href="https://instagram.com/sahilmenghani69" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-        </div>
-        <div class="footer-bottom">
-            © 2026
-            <a href="index.html">AltF4</a> ·
-            <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered
-                by Shopify</a> ·
-            <a href="privacy-policy.html">Privacy policy</a> ·
-            <a href="refund-policy.html">Refund policy</a> ·
-            <a href="terms of service.html">Terms of service</a> ·
-            <a href="contact-information.html">Contact information</a> ·
-            <a href="Shipping-policy.html">Shipping policy</a>
-        </div>
-
     </div>
+    <script>
+     const filterOverlay = document.getElementById('filterOverlay');
+     const filterPanel = document.querySelector('.filter-panel');
+
+// OPEN FILTER
+function openFilter() {
+    filterOverlay.classList.add('active');
+    filterPanel.classList.add('open');
+}
+
+// CLOSE FILTER
+function closeFilter() {
+    filterOverlay.classList.remove('active');
+    filterPanel.classList.remove('open');
+}
+
+// CLICK OUTSIDE TO CLOSE
+filterOverlay.addEventListener('click', function(e) {
+    if (e.target === filterOverlay) {
+        closeFilter();
+    }
+});
+
+// SORT FUNCTION
+function sortProducts(type) {
+    const container = document.querySelector('.products');
+    let products = Array.from(container.querySelectorAll('.product'));
+
+    products.sort((a, b) => {
+        const nameA = a.querySelector('.product-name').innerText.toLowerCase();
+        const nameB = b.querySelector('.product-name').innerText.toLowerCase();
+
+        const priceA = parseInt(a.querySelector('.price').innerText.replace(/[^0-9]/g, ""));
+        const priceB = parseInt(b.querySelector('.price').innerText.replace(/[^0-9]/g, ""));
+
+        switch(type) {
+            case "az":
+                return nameA.localeCompare(nameB);
+
+            case "za":
+                return nameB.localeCompare(nameA);
+
+            case "low":
+                return priceA - priceB;
+
+            case "high":
+                return priceB - priceA;
+        }
+    });
+
+    container.innerHTML = "";
+    products.forEach(p => container.appendChild(p));
+}
+
+// PRODUCT COUNT
+function updateProductCount() {
+    const count = document.querySelectorAll('.product').length;
+    document.getElementById("productCount").innerText = count + " products";
+}
+document.querySelector('.filter-panel').addEventListener('click', function(e){
+    e.stopPropagation();
+});
+// RUN ON LOAD
+updateProductCount();
+    </script>
 </body>
 
 </html>
