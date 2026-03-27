@@ -2,1086 +2,642 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/avif" href="/images/red.avif">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Altf4.in</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        a {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            padding-top: 170px;
-        }
-
-        .top-header {
-            height: 120px;
-            background: #0b0b0b;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 60px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        /* LEFT NAV */
-
-        .nav-left a {
-            color: #d6d6d6;
-            text-decoration: none;
-            margin-right: 40px;
-            font-family: sans-serif;
-            font-size: 16px;
-        }
-
-        .nav-left a:hover {
-            color: white;
-        }
-
-        /* active page */
-
-        .nav-left .active {
-            color: white;
-            border-bottom: 2px solid white;
-            padding-bottom: 4px;
-        }
-
-        /* LOGO */
-
-        .nav-logo img {
-            width: 110px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* RIGHT ICONS */
-
-        .nav-right {
-            display: flex;
-            gap: 30px;
-            font-size: 22px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .nav-right i:hover {
-            color: #cfcfcf;
-        }
-
-        .nav-right a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .nav-right a:visited {
-            color: white;
-        }
-
-        .nav-right a:hover {
-            color: #cfcfcf;
-        }
-
-
-
-        .Delivery-bar {
-            background: lightgray;
-            height: 50px;
-            width: 100%;
-            position: fixed;
-            top: 120px;
-            left: 0;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .head {
-            color: black;
-            font-size: 20px;
-
-        }
-
-        /* HERO */
-
-        .hero {
-            margin-top: 0;
-            padding-top: 0;
-            position: relative;
-            display: flex;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .left-img {
-            width: 50%;
-            height: 100%;
-            background-image: url(images/2.jpg);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .right-img {
-            width: 50%;
-            height: 100%;
-            background-image: url(images/3.jpg);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .left-img::after,
-        .right-img::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.25);
-        }
-
-        .hero-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-
-        .shop-button {
-            padding: 14px 40px;
-            border: 2px solid white;
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-family: sans-serif;
-            transition: 0.3s;
-        }
-
-        .shop-button:hover {
-            background: white;
-            color: black;
-        }
-
-        /* PRODUCTS */
-
-        .products {
-            background: #efefef;
-            padding: 60px 80px;
-        }
-
-        .products h2 {
-            font-size: 32px;
-            margin-bottom: 40px;
-            font-family: sans-serif;
-        }
-
-        .product-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .product a {
-            text-decoration: none;
-            color: black;
-            font-family: sans-serif;
-            display: block;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .product :hover {
-            text-decoration: underline;
-        }
-
-        .product-img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .img2 {
-            opacity: 0;
-        }
-
-        .product-img:hover .img2 {
-            opacity: 1;
-        }
-
-        .product-img:hover .img1 {
-            opacity: 0;
-        }
-
-        .p_name {
-            margin-top: 15px;
-            font-size: 16px;
-        }
-
-        .price {
-            margin-top: 8px;
-            font-size: 15px;
-            text-align: center;
-        }
-
-        .footer {
-            background: #0b0b0b;
-            color: white;
-            text-align: center;
-            padding: 80px 20px 30px;
-            font-family: sans-serif;
-        }
-
-        .footer-title {
-            font-size: 28px;
-            margin-bottom: 25px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .footer-links a {
-            color: #cfcfcf;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .footer-instagram {
-            font-size: 24px;
-            margin-bottom: 50px;
-        }
-
-        .footer-instagram a {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #222;
-            padding-top: 20px;
-            font-size: 13px;
-            color: #aaa;
-        }
-
-        .footer-bottom a {
-            color: #aaa;
-            text-decoration: none;
-        }
-
-        .footer-bottom a:hover {
-            color: white;
-            border-bottom: 2px solid white;
-        }
-
-        .about-section {
-            background: white;
-            padding: 100px 0;
-            font-family: sans-serif;
-        }
-
-        .about-title {
-            text-align: center;
-            font-size: 60px;
-            font-weight: 300;
-            margin-bottom: 60px;
-        }
-
-        .about-info {
-            width: 55%;
-            margin: 0 auto 60px auto;
-            color: #444;
-            line-height: 30px;
-            font-size: 18px;
-        }
-
-        .contact-form {
-            width: 55%;
-            margin: auto;
-        }
-
-        /* row for name + email */
-
-        .row {
-            display: flex;
-            gap: 30px;
-        }
-
-        /* equal width */
-
-        .row .input-box {
-            width: 50%;
-        }
-
-        /* floating input */
-
-        .input-box {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .input-box input:focus,
-        .input-box textarea:focus {
-            background: transparent;
-            border: 1px solid black;
-            box-shadow: 0 0 0 1px black;
-        }
-
-        .input-box input,
-        .input-box textarea {
-            width: 100%;
-            padding: 18px 12px;
-            border: 1px solid #999;
-            background: transparent;
-            font-size: 16px;
-            outline: none;
-        }
-
-        /* label */
-
-        .input-box label {
-            position: absolute;
-            left: 12px;
-            top: 18px;
-            color: #666;
-            font-size: 16px;
-            pointer-events: none;
-            transition: 0.25s;
-            background: #e6e6e6;
-            padding: 0 5px;
-        }
-
-        /* label animation */
-
-        .input-box input:focus+label,
-        .input-box input:valid+label,
-        .input-box textarea:focus+label,
-        .input-box textarea:valid+label {
-            top: -10px;
-            font-size: 13px;
-            color: black;
-        }
-
-        /* textarea */
-
-        .input-box textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        /* SEARCH OVERLAY */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-            z-index: 1000;
-        }
-
-        .overlay:target {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .overlay-close {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            cursor: pointer;
-        }
-
-        .search-box {
-            position: relative;
-            width: 70%;
-            max-width: 900px;
-            margin: 80px auto;
-            border: 2px solid white;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: white;
-            font-size: 18px;
-        }
-
-        .close-icon {
-            color: white;
-            font-size: 24px;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-
-        /* FLOATING INPUT */
-
-        .input-box {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .input-box input,
-        .input-box textarea {
-            width: 100%;
-            padding: 20px 12px;
-            border: 1px solid #999;
-            background: transparent;
-            font-size: 16px;
-            outline: none;
-        }
-
-        /* label */
-
-        .input-box label {
-            position: absolute;
-            left: 12px;
-            top: 20px;
-            color: #666;
-            font-size: 16px;
-            pointer-events: none;
-            transition: 0.25s;
-            background: white;
-            padding: 0 5px;
-        }
-
-        /* move label up */
-
-        .input-box input:focus+label,
-        .input-box input:valid+label,
-        .input-box textarea:focus+label,
-        .input-box textarea:valid+label {
-            top: -10px;
-            font-size: 13px;
-            color: black;
-            background: #efefef;
-        }
-
-        /* textarea */
-
-        .input-box textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        .contact-form button {
-            background: black;
-            color: white;
-            border: none;
-            padding: 16px 45px;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            transition: .3s;
-        }
-
-        .contact-form button:hover {
-            background: #222;
-        }
-
-        /* ======================================================
-MOBILE MENU BUTTON
-Hidden on desktop
-====================================================== */
-
-        .mobile-menu-btn {
-
-            display: none;
-
-            font-size: 22px;
-            color: white;
-
-            text-decoration: none;
-
-        }
-
-
-        /* MOBILE MENU OVERLAY */
-
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #0b0b0b;
-            z-index: 2000;
-            display: none;
-        }
-
-        #mobileMenu:target {
-            display: block;
-        }
-
-        .menu-links {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-top: 100px;
-            text-align: left;
-        }
-
-        .menu-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
-        }
-
-        @media (max-width:768px) {
-
-            /* BODY */
-
-            body {
-                padding-top: 120px;
-
-            }
-
-        
-
-            /* SHOW MOBILE MENU BUTTON */
-
-            .mobile-menu-btn {
-                display: block;
-            }
-            .nav-right .user-icon {
-                display: none;
-            }
-
-            .nav-right a {
-                color: white;
-                text-decoration: none;
-
-
-
-                display: flex;
-
-
-                -webkit-tap-highlight-color: transparent;
-            }
-            /* HEADER */
-
-            .top-header {
-                height: 80px;
-                padding: 0 20px;
-            }
-
-            /* hide left menu */
-
-            .nav-left {
-                display: none;
-            }
-
-            /* logo center */
-
-            .nav-logo img {
-                width: 85px;
-                top: 50%;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            /* icons */
-
-            .nav-right {
-                gap: 18px;
-                font-size: 20px;
-            }
-
-            /* DELIVERY BAR */
-
-            .Delivery-bar {
-                background-color: lightgray;
-                height: 50px;
-                top: 80px;
-                width: 100%;
-                left: 0;
-                z-index: 999;
-                position: fixed;
-            }
-
-            .head {
-                font-size: 16px;
-                padding: 10px;
-                font-weight: 500;
-            }
-
-            /* HERO SECTION */
-
-            .hero {
-                flex-direction: column;
-                height: auto;
-            }
-
-            .left-img,
-            .right-img {
-                width: 100%;
-                height: 50vh;
-            }
-
-            /* SHOP BUTTON */
-
-            .shop-button {
-                font-size: 16px;
-                padding: 12px 30px;
-            }
-
-            /* PRODUCTS */
-
-            .products {
-                padding: 40px 20px;
-            }
-
-            .product-container {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .product-img {
-                height: 350px;
-            }
-
-            /* ABOUT SECTION */
-
-            .about-section {
-                padding: 60px 20px;
-                background: white;
-            }
-
-            .about-title {
-                font-size: 40px;
-            }
-
-            .about-info {
-                width: 100%;
-                font-size: 16px;
-                line-height: 26px;
-            }
-
-            /* CONTACT FORM */
-
-            .contact-form {
-                width: 100%;
-            }
-
-            .row {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .row .input-box {
-                width: 100%;
-            }
-
-            /* SEARCH BOX */
-
-            .search-box {
-                width: 90%;
-                margin: 120px auto;
-            }
-
-            /* FOOTER */
-
-            .footer {
-                padding: 60px 20px 20px;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .footer-instagram {
-                margin-bottom: 30px;
-            }
-
-            .footer-bottom {
-                font-size: 12px;
-                line-height: 22px;
-            }
-
-        }
-
-        /* ======================================================
-SEARCH OVERLAY
-Fullscreen search popup
-====================================================== */
-
-        /* SEARCH OVERLAY */
-        .search-overlay{
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100vh;
-
-    background: rgba(0,0,0,4);   /* transparent dark layer */
-    backdrop-filter: blur(10PX);    /* blur background */
-
-    -webkit-backdrop-filter: blur(8px); /* safari support */
-
-    z-index:3000;
-    display:none;
-    padding-top:0;
+<link rel="icon" type="image/avif" href="/images/red.avif">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Altf4.in</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+a{-webkit-tap-highlight-color:transparent;}
+
+body{padding-top:170px;}
+
+.top-header{
+height:120px;
+background:#0b0b0b;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 60px;
+position:fixed;
+width:100%;
+top:0;
+left:0;
+z-index:1000;
 }
 
-    
+/* NAV LEFT */
+.nav-left a{
+color:#d6d6d6;
+text-decoration:none;
+margin-right:40px;
+font-family:sans-serif;
+font-size:16px;
+}
+.nav-left a:hover{color:white;}
+.nav-left .active{
+color:white;
+border-bottom:2px solid white;
+padding-bottom:4px;
+}
 
-        /* open overlay */
-        #searchOverlay:target {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
+/* LOGO */
+.nav-logo img{
+width:110px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
 
-        /* container */
+/* RIGHT ICONS */
+.nav-right{
+display:flex;
+gap:30px;
+font-size:22px;
+color:white;
+}
+.nav-right a{color:white;text-decoration:none;}
+.nav-right a:hover{color:#cfcfcf;}
 
-        .search-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 90%;
-            max-width: 700px;
+/* DELIVERY BAR */
+.Delivery-bar{
+background:lightgray;
+height:50px;
+width:100%;
+position:fixed;
+top:120px;
+z-index:999;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.head{color:black;font-size:20px;}
 
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+/* MOBILE MENU */
+.menu-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0b0b0b;
+    z-index: 2000;
 
-       
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+    transform: translateX(-100%); /* hidden left */
+    opacity: 0;
 
-        /* search box */
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
 
-        .search-box {
-            position: relative;
-            flex: 1;
-        }
+.menu-overlay.active{
+    transform: translateX(0); /* slide in */
+    opacity: 1;
+}
 
-        /* input */
+.menu-top{
+    padding: 15px 20px;
+    position: relative;
+}
+.menu-logo{
+    position: absolute;
+    left: 50%;
+    top: 15px;
+    transform: translateX(-50%);
+}
 
-        .search-box input {
-            width: 100%;
-            height: 45px;
-            padding: 20px 45px 5px 15px;
-            background: #0b0b0b;
-            border: 2px solid white;
-            color: white;
-            outline: none;
-            font-size: 16px;
-        }
+.menu-logo img{
+    width: 70px;
+}
 
-        /* label */
-
-        .search-box label {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #aaa;
-            font-size: 16px;
-            pointer-events: none;
-            transition: 0.25s;
-            background: #0b0b0b;
-            padding: 0 4px;
-        }
-
-        .search-box input:focus+label,
-        .search-box input:valid+label {
-            top: -2px;
-            font-size: 12px;
-            color: white;
-        }
-
-        /* search button inside */
-
-        .search-btn {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-        }
-
-        .search-btn i {
-            color: white;
-        }
-
-        .search-box input {
-            width: 100%;
-            height: 45px;
-            padding: 0 45px 0 15px;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            border-radius: 4px;
-        }
-
-        /* cancel button */
+/* CLOSE BUTTON */
 
 
-        .search-cancel {
-            color: white;
-            font-size: 22px;
-        }
+.close-btn{
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 22px;
+    z-index: 10;
+}
 
-        /* SHOW SEARCH */
+/* DELIVERY BAR */
+.menu-delivery{
+background:lightgray;
+color:black;
+text-align:center;
+padding:12px;
+font-size:14px;
+}
+.menu-icons{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    display: flex;
+    gap: 18px;
+    font-size: 20px;
+}
+/* LINKS CENTER */
+.menu-links{
+    margin-top: 80px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .overlay:target {
+.menu-links{
+    margin-top: 80px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* THIS pushes bottom down */
+}
+.menu-links a:first-child{
+    background: #111;
+}
+/* BOTTOM */
+.menu-bottom{
+    padding: 20px;
+    border-top: 1px solid #111;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-            opacity: 1;
-            visibility: visible;
+.menu-bottom a{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* SEARCH */
+.search-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:rgba(0,0,0,0.95);
+z-index:3000;
+display:none;
+}
+#searchOverlay:target{
+display:flex;
+align-items:flex-start;
+justify-content:center;
+}
 
-        }
+.search-container{
+display:flex;
+gap:10px;
+width:90%;
+max-width:700px;
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+}
 
+.search-box input{
+width:100%;
+height:45px;
+padding:0 45px 0 15px;
+background:#0b0b0b;
+border:2px solid white;
+color:white;
+}
+/* CONTACT SECTION */
+.about-section {
+    background: white;
+    padding: 100px 0;
+    font-family: sans-serif;
+}
 
-        /* CLICK AREA TO CLOSE SEARCH */
+.about-title {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 300;
+    margin-bottom: 60px;
+}
 
-        .overlay-close {
+.about-info {
+    width: 55%;
+    margin: 0 auto 60px auto;
+    color: #444;
+    line-height: 30px;
+    font-size: 18px;
+}
 
-            position: absolute;
+.contact-form {
+    width: 55%;
+    margin: auto;
+}
 
-            width: 100%;
-            height: 100%;
+.row {
+    display: flex;
+    gap: 30px;
+}
 
-            top: 0;
-            left: 0;
+.row .input-box {
+    width: 50%;
+}
 
-        }
+.input-box {
+    position: relative;
+    margin-bottom: 25px;
+}
 
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    padding: 20px 12px;
+    border: 1px solid #999;
+    background: transparent;
+    font-size: 16px;
+    outline: none;
+}
 
-        /* SEARCH BOX */
+.input-box input:focus,
+.input-box textarea:focus {
+    border: 1px solid black;
+    box-shadow: 0 0 0 1px black;
+}
 
-        .search-box {
+.input-box label {
+    position: absolute;
+    left: 12px;
+    top: 20px;
+    color: #666;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.25s;
+    background: white;
+    padding: 0 5px;
+}
 
-            position: relative;
+.input-box input:focus + label,
+.input-box input:valid + label,
+.input-box textarea:focus + label,
+.input-box textarea:valid + label {
+    top: -10px;
+    font-size: 13px;
+    color: black;
+    background: #efefef;
+}
 
-            width: 70%;
-            max-width: 900px;
+.input-box textarea {
+    height: 150px;
+    resize: none;
+}
 
-            margin: 120px auto;
+.contact-form button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 16px 45px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+}
 
-            border: 2px solid white;
+.contact-form button:hover {
+    background: #222;
+}
 
-            padding: 12px 20px;
+/* FOOTER */
+.footer {
+    background: #0b0b0b;
+    color: white;
+    text-align: center;
+    padding: 80px 20px 30px;
+    font-family: sans-serif;
+}
 
-            display: flex;
-            align-items: center;
+.footer-title {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
 
-        }
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
 
+.footer-links a {
+    color: #cfcfcf;
+    text-decoration: none;
+    font-size: 14px;
+}
 
-        /* SEARCH INPUT */
+.footer-links a:hover {
+    color: white;
+    text-decoration: underline;
+}
 
-        .search-box input {
+.footer-instagram {
+    font-size: 24px;
+    margin-bottom: 50px;
+}
 
-            flex: 1;
+.footer-instagram a {
+    color: white;
+}
 
-            background: transparent;
-            border: none;
-            outline: none;
+.footer-bottom {
+    border-top: 1px solid #222;
+    padding-top: 20px;
+    font-size: 13px;
+    color: #aaa;
+}
 
-            color: white;
-            font-size: 18px;
+.footer-bottom a {
+    color: #aaa;
+    text-decoration: none;
+}
 
-        }
+.footer-bottom a:hover {
+    color: white;
+    border-bottom: 2px solid white;
+}
 
+/* MOBILE FIX */
+@media(max-width:768px){
 
-        /* CLOSE ICON */
-        .overlay-close {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+.about-section {
+    padding: 60px 20px;
+}
 
-        .close-icon {
+.about-title {
+    font-size: 40px;
+}
 
-            color: white;
-            font-size: 24px;
+.about-info {
+    width: 100%;
+    font-size: 16px;
+    line-height: 26px;
+}
 
-            text-decoration: none;
+.contact-form {
+    width: 100%;
+}
 
-            margin-left: 20px;
+.row {
+    flex-direction: column;
+    gap: 0;
+}
 
-        }
-    </style>
+.row .input-box {
+    width: 100%;
+}
+
+.footer-links {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer {
+    padding: 60px 20px 20px;
+}
+
+.footer-bottom {
+    font-size: 12px;
+}
+}
+/* MOBILE */
+@media(max-width:768px){
+
+body{padding-top:120px;}
+
+.top-header{
+height:80px;
+padding:0 20px;
+}
+
+.mobile-menu-btn{
+display:block;
+position:absolute;
+left:20px;
+top:50%;
+transform:translateY(-50%);
+font-size:24px;
+color:white;
+z-index:2001;
+}
+
+.nav-left{display:none;}
+
+.nav-logo img{width:85px;}
+
+.nav-right{
+position:absolute;
+right:20px;
+top:50%;
+transform:translateY(-50%);
+gap:18px;
+font-size:20px;
+}
+
+.nav-right .fa-user{display:none !important;}
+.nav-right a:first-child{margin-right:-20px;}
+
+.Delivery-bar{top:80px;}
+
+.head{font-size:16px;}
+}
+</style>
 </head>
 
 <body>
-    <header>
-        <div class="top-header">
 
-            <div class="nav-left">
-                <a href="index.html">Home</a>
-                <a href="catalog.html">Catalog</a>
-                <a href="contact.html" class="active">Contact</a>
-                <a href="about us.html">About Us</a>
-            </div>
+<header>
+<div class="top-header">
 
-            <div class="nav-logo">
-                <a href="index.html"><img src="images/red.avif" alt="logo"></a>
-            </div>
+<a href="javascript:void(0)" class="mobile-menu-btn" onclick="openMenu()">
+<i class="fa-solid fa-bars"></i>
+</a>
 
-            <div class="nav-right">
-                <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
-                <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
-                <a href="add2cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-            </div>
+<div class="nav-left">
+<a href="index.html">Home</a>
+<a href="catalog.html">Catalog</a>
+<a href="contact.html" class="active">Contact</a>
+<a href="about us.html">About Us</a>
+</div>
 
-        </div>
-    </header>
+<div class="nav-logo">
+<a href="index.html"><img src="images/red.avif"></a>
+</div>
 
+<div class="nav-right">
+<a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+<a href="user login page.html"><i class="fa-regular fa-user"></i></a>
+<a href="add2cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+</div>
 
-    <!-- SEARCH OVERLAY -->
-    <div id="searchOverlay" class="search-overlay">
-        <a href="#" class="overlay-close"></a>
-        <div class="search-top">
+</div>
+</header>
+<div class="top-header">
+    <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+        <i id="menuIcon" class="fa-solid fa-bars"></i>
+    </a>
 
-            <div class="search-container">
-
-                <div class="search-box">
-
-                    <input type="text" required>
-
-                    <label>Search</label>
-
-                    <button class="search-btn">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-
-                </div>
-
-                <a href="#" class="search-cancel">
-                    <i class="fa-solid fa-xmark"></i>
-                </a>
-
-            </div>
-
-        </div>
-
+    <div class="nav-left">
+        <a href="index.html" class="active">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="contact.html">Contact</a>
+        <a href="about us.html">About Us</a>
     </div>
-    <div class="Delivery-bar">
-        <p class="head">Free Delivery On Orders Above ₹799</p>
+
+    <div class="nav-logo">
+        <a href="index.html"><img src="images/red.avif"></a>
     </div>
-    <section class="about-section">
-        <h1 class="about-title">Contact
-        </h1>
-        <div class="about-info">
-            <p>Email - supp.altf4@gmail.com</p>
-        </div>
-        <form class="contact-form">
 
-            <div class="row">
+    <div class="nav-right">
+        <a href="javascript:void(0)" onclick="openSearch()">
+<i class="fa-solid fa-magnifying-glass"></i>
+</a>
+        <a href="user login page.html"><i class="fa-regular fa-user user-icon"></i></a>
+        <a href="add2cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+    </div>
+</div>
+<div id="mobileMenu"></div>
 
-                <div class="input-box">
-                    <input type="text" required>
-                    <label>Name</label>
-                </div>
+<div class="menu-overlay" id="menuOverlay">
 
-                <div class="input-box">
-                    <input type="email" required>
-                    <label>Email *</label>
-                </div>
 
-            </div>
 
+    <!-- MENU -->
+    <div class="mobile-menu">
+        <a class="active" href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="contact.html">Contact</a>
+        <a href="about us.html">About Us</a>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="mobile-bottom">
+        <a href="user login page.html">
+            <i class="fa-regular fa-user"></i> Log in
+        </a>
+        <a href="https://instagram.com/sahilmenghani69">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+
+</div>
+<!-- DELIVERY -->
+<div class="Delivery-bar">
+    <p class="head">Free Delivery On Orders Above ₹799</p>
+</div>
+
+<section class="about-section">
+    <h1 class="about-title">Contact</h1>
+
+    <div class="about-info">
+        <p>Email - supp.altf4@gmail.com</p>
+    </div>
+
+    <form class="contact-form">
+
+        <div class="row">
             <div class="input-box">
                 <input type="text" required>
-                <label>Phone number</label>
+                <label>Name</label>
             </div>
 
             <div class="input-box">
-                <textarea required></textarea>
-                <label>Comment</label>
+                <input type="email" required>
+                <label>Email *</label>
             </div>
-
-            <button type="submit">Send</button>
-
-        </form>
-    </section>
-    <div class="footer">
-
-        <h2 class="footer-title">Policies</h2>
-
-        <div class="footer-links">
-            <a href="search.html">Search</a>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="refund-policy.html">Refund Policy</a>
-            <a href="Shipping-policy.html">Shipping Policy</a>
         </div>
 
-        <div class="footer-instagram">
-            <a href="https://instagram.com/sahilmenghani69" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
+        <div class="input-box">
+            <input type="text" required>
+            <label>Phone number</label>
         </div>
 
-        <div class="footer-bottom">
-            © 2026
-            <a href="index.html">AltF4</a> ·
-            <a href="https://www.shopify.com/in?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore">Powered
-                by Shopify</a> ·
-            <a href="privacy-policy.html">Privacy policy</a> ·
-            <a href="refund-policy.html">Refund policy</a> ·
-            <a href="terms of service.html">Terms of service</a> ·
-            <a href="contact-information.html">Contact information</a> ·
-            <a href="Shipping-policy.html">Shipping policy</a>
+        <div class="input-box">
+            <textarea required></textarea>
+            <label>Comment</label>
         </div>
 
+        <button type="submit">Send</button>
+
+    </form>
+</section>
+<div class="footer">
+
+    <h2 class="footer-title">Policies</h2>
+
+    <div class="footer-links">
+        <a href="search.html">Search</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="Shipping-policy.html">Shipping Policy</a>
     </div>
 
+    <div class="footer-instagram">
+        <a href="https://instagram.com/sahilmenghani69" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+
+    <div class="footer-bottom">
+        © 2026
+        <a href="index.html">AltF4</a> ·
+        <a href="#">Powered by Shopify</a> ·
+        <a href="privacy-policy.html">Privacy policy</a>
+    </div>
+
+</div>
+<!-- JS -->
+<script>
+    function openSearch() {
+document.getElementById("searchOverlay").classList.add("active");
+}
+
+function closeSearch() {
+document.getElementById("searchOverlay").classList.remove("active");
+}
+    let scrollPosition = 0;
+
+    function toggleMenu() {
+const menu = document.getElementById("menuOverlay");
+const icon = document.getElementById("menuIcon");
+const delivery = document.querySelector(".Delivery-bar");
+
+menu.classList.toggle("active");
+
+if (menu.classList.contains("active")) {
+    scrollPosition = window.scrollY;
+
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = "100%";
+
+    icon.classList.replace("fa-bars", "fa-xmark");
+    delivery.style.display = "none";
+} else {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+
+    window.scrollTo(0, scrollPosition);
+
+    icon.classList.replace("fa-xmark", "fa-bars");
+    delivery.style.display = "flex";
+}
+}
+</script>
 
 </body>
-
 </html>
