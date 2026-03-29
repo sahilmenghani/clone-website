@@ -29,36 +29,45 @@ RESET & GLOBAL
         }
 
         .filter-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(3px);
-            display: none;
-            z-index: 2001;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-        .filter-overlay.active {
-            display: block;
-        }
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+
+    z-index: 2001;
+}
+
+.filter-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
 
         .filter-panel {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100%;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-        }
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
 
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+}
 
-        .filter-panel.open {
-            right: 0;
-        }
+.filter-panel.open {
+    transform: translateX(0);
+}
+
 
         @keyframes slideIn {
             from {
@@ -358,10 +367,12 @@ DELIVERY BAR
 }
 /* RIGHT SIDE */
 .right-filters {
-    display: flex;
+    position: relative;
+        display: flex;
     align-items: center;
     gap: 20px;
 }
+
 .desktop-filter span {
     color: #666;
     font-size: 14px;
@@ -377,9 +388,18 @@ DELIVERY BAR
 /* SORT DROPDOWN CLEAN */
 .right-filters select {
     border: none;
+    outline: none;
     background: transparent;
     font-size: 14px;
     color: #111;
+    cursor: pointer;
+
+    /* REMOVE DEFAULT BROWSER STYLE */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding-right: 20px; /* space for arrow */
 }
 
         /* DROPDOWN */
@@ -717,10 +737,11 @@ FOOTER
         .footer-title {
             font-size: 28px;
             margin-bottom: 25px;
+            color: white;
         }
 
         .footer-links {
-
+            display: flex;
             justify-content: center;
             gap: 30px;
             margin-bottom: 40px;
@@ -844,29 +865,66 @@ SEARCH OVERLAY
 MOBILE MENU
 ========================= */
 .menu-overlay {
-    position: fixed;
-    top: 120px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 120px);
-    background: #0b0b0b;
-    z-index: 999;
-
-    transform: translateX(-100%);
-    opacity: 0;
-    transition: transform 0.4s ease, opacity 0.3s ease;
-}
-
-.menu-overlay.active {
-    transform: translateX(0);
-    opacity: 1;
-}
-        .mobile-menu {
+            position: fixed;
+            top: 120px;
+            left: 0;
             width: 100%;
-            padding: 20px;
+            height: calc(100vh - 120px);
+            /* FIXED */
+
+            background: #0b0b0b;
+            z-index: 999;
+            /* BELOW HEADER */
+
+            transform: translateX(-100%);
+            transition: 0.4s ease;
+
             display: flex;
             flex-direction: column;
         }
+
+        .menu-overlay.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu a {
+            opacity: 1;
+            transform: translateX(-20px);
+            transition: 0.3s;
+        }
+
+        .menu-overlay.active .mobile-menu a {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* TOP BAR */
+        .mobile-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 22px;
+        }
+
+        .mobile-logo img {
+            width: 80px;
+        }
+
+        .mobile-icons {
+            display: flex;
+            gap: 15px;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* MENU LINKS */
+
 
         .mobile-menu a {
             padding: 18px 20px;
@@ -874,13 +932,6 @@ MOBILE MENU
             text-decoration: none;
             font-size: 18px;
             border-bottom: 1px solid #111;
-            opacity: 1;
-            transform: translateX(-20px);
-            transition: 0.3s;
-        }
-
-        .menu-overlay.active .mobile-menu a {
-            transform: translateX(0);
         }
 
         .mobile-menu a.active {
@@ -893,14 +944,7 @@ MOBILE MENU
             color: white;
         }
 
-        .mobile-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            border-bottom: 1px solid #222;
-        }
-
+        /* BOTTOM SECTION */
         .mobile-bottom {
             margin-top: auto;
             margin-bottom: 50px;
@@ -921,6 +965,14 @@ MOBILE MENU
             gap: 10px;
         }
 
+        .mobile-menu {
+            width: 100%;
+            padding: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
         .mobile-menu-close {
             position: absolute;
             top: 30px;
@@ -930,16 +982,7 @@ MOBILE MENU
             text-decoration: none;
             z-index: 2001;
         }
-        .mobile-menu a {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 0.4s ease;
-}
 
-.menu-overlay.active .mobile-menu a {
-    opacity: 1;
-    transform: translateX(0);
-}
         .mobile-nav {
             display: flex;
             flex-direction: column;
@@ -960,6 +1003,15 @@ MOBILE MENU
             color: white;
             border-bottom: 2px solid white;
         }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            position: absolute;
+            left: 20px;
+        }
         .product-top {
     display: none;
 }
@@ -978,7 +1030,7 @@ MOBILE RESPONSIVE
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
                 /* tighter like reference */
-                padding: 20px 0;
+                padding: 20px 16px;
                 /* remove side padding */
             }
 
@@ -1207,8 +1259,8 @@ MOBILE RESPONSIVE
 
         <!-- MENU -->
         <div class="mobile-menu">
-            <a class="active" href="index.html">Home</a>
-            <a href="catalog.html">Catalog</a>
+            <a  href="index.html">Home</a>
+            <a href="catalog.html"class="active">Catalog</a>
             <a href="contact.html">Contact</a>
             <a href="about us.html">About Us</a>
         </div>
@@ -1255,12 +1307,12 @@ MOBILE RESPONSIVE
                         <!-- OPTIONS -->
                         <label>
                             <input type="checkbox" class="availability-check" value="in">
-                            In stock (18)
+                            In stock (<span id="inStockCount">0</span>)
                         </label>
                 
                         <label>
                             <input type="checkbox" class="availability-check" value="out">
-                            Out of stock (4)
+                            Out of stock (<span id="outStockCount">0</span>)
                         </label>
                 
                     </div>
@@ -1379,11 +1431,13 @@ MOBILE RESPONSIVE
                     </div>
         
                     <label>
-                        <input type="checkbox" class="availability-check"> In stock (18)
+                        <input type="checkbox" class="availability-check" value="in">
+                        In stock (<span id="inStockCountMobile">0</span>)
                     </label>
-        
+                    
                     <label>
-                        <input type="checkbox" class="availability-check"> Out of stock (4)
+                        <input type="checkbox" class="availability-check" value="out">
+                        Out of stock (<span id="outStockCountMobile">0</span>)
                     </label>
         
                     <div class="filter-footer">
@@ -1411,7 +1465,7 @@ MOBILE RESPONSIVE
 
     <div class="products">
 
-        <div class="product" data-price="1299" data-stock="in">
+        <div class="product" data-price="1299" data-stock="out">
             <a href="product.html?id=13">
                 <div class="product-img">
                     <img src="images/AFK HOODIE/3_7b3dc114-3a1d-4c61-8c78-067e3d58991b.jpg">
@@ -1431,7 +1485,7 @@ MOBILE RESPONSIVE
                 <p class="price">Rs. 599.00</p>
             </a>
         </div>
-        <div class="product" data-price="1299" data-stock="in">
+        <div class="product" data-price="1299" data-stock="out">
             <a href="product.html?id=14">
                 <div class="product-img">
                     <img src="images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg">
@@ -1571,7 +1625,23 @@ MOBILE RESPONSIVE
         </div>
     </div>
     <script>
+        function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
 
+    // Close all other dropdowns
+    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+        if (menu.id !== id) menu.classList.remove("active");
+    });
+    document.addEventListener("click", function (e) {
+    if (!e.target.closest(".dropdown")) {
+        document.querySelectorAll(".dropdown-menu").forEach(menu => {
+            menu.classList.remove("active");
+        });
+    }
+});
+    // Toggle current
+    dropdown.classList.toggle("active");
+}
         /* =========================
         DROPDOWN
         ========================= */
@@ -1692,6 +1762,7 @@ MOBILE RESPONSIVE
                 if (selectedStock.length > 0 && !selectedStock.includes(stock)) show = false;
         
                 product.style.display = show ? "" : "none";
+                updateStockCounts();
             });
         
             updateProductCount();
@@ -1796,6 +1867,30 @@ function toggleMenu() {
         deliveryBar.style.display = "flex";
     }
 }
+function updateStockCounts() {
+    const products = document.querySelectorAll(".product");
+
+    let inStock = 0;
+    let outStock = 0;
+
+    products.forEach(product => {
+        const stock = product.dataset.stock;
+
+        if (product.style.display !== "none") {
+            if (stock === "in") inStock++;
+            if (stock === "out") outStock++;
+        }
+    });
+
+    // DESKTOP
+    document.getElementById("inStockCount").innerText = inStock;
+    document.getElementById("outStockCount").innerText = outStock;
+
+    // MOBILE
+    document.getElementById("inStockCountMobile").innerText = inStock;
+    document.getElementById("outStockCountMobile").innerText = outStock;
+}
+updateStockCounts();
         </script>
 </body>
 

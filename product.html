@@ -14,10 +14,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            padding-top: 170px;
+            padding-top: 160px;
         }
 
         .top-header {
@@ -62,7 +63,8 @@
             width: 110px;
             position: absolute;
             left: 50%;
-            transform: translatex(-50%)translateY(-40%);
+            transform: translate(-50%, -50%);
+            top: 50%;
         }
 
         /* RIGHT ICONS */
@@ -73,6 +75,7 @@
             font-size: 22px;
             color: white;
             cursor: pointer;
+            align-items: center;
         }
 
         .nav-right i:hover {
@@ -95,13 +98,16 @@
 
 
         .Delivery-bar {
-            background-color: lightgray;
-            height: 50px;
+            background: lightgray;
+            height: 40px;
             width: 100%;
             position: fixed;
             top: 120px;
             left: 0;
             z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .head {
@@ -115,6 +121,7 @@
             margin-top: 30px;
             background: #0b0b0b;
             color: white;
+            width: 100%;
             text-align: center;
             padding: 80px 20px 30px;
             font-family: sans-serif;
@@ -314,7 +321,7 @@
         }
 
         .nav-left .active {
-            color: black;
+            color: white;
             border-bottom: 2px solid white;
         }
 
@@ -332,16 +339,18 @@
             overflow-y: scroll;
             cursor: zoom-out;
         }
-        .gallery-container{
+
+        .gallery-container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         .gallery-container img {
             width: 100%;
             height: auto;
             object-fit: contain;
-            
+
         }
 
         /* close button */
@@ -754,12 +763,329 @@
             text-decoration: underline;
             cursor: pointer;
         }
-    </style>
+
+       
+/* ======================================
+MOBILE MENU OVERLAY
+====================================== */
+
+.menu-overlay {
+    position: fixed;
+    top: 70px; /* mobile header height */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    background: #0b0b0b;
+    z-index: 999;
+
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-overlay.active {
+    transform: translateX(0);
+}
+
+/* MENU LINKS */
+.mobile-menu {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu a {
+    padding: 18px 20px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #111;
+
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: 0.3s;
+}
+
+.menu-overlay.active .mobile-menu a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobile-menu a.active {
+    background: #111;
+    color: white;
+}
+
+.mobile-menu a:hover {
+    background: #111;
+    color: white;
+}
+
+/* BOTTOM SECTION */
+.mobile-bottom {
+    margin-top: auto;
+    margin-bottom: 50px;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #222;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-bottom a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+       
+
+
+    
+        .mobile-menu-btn {
+            display: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+        }
+        @media(max-width:900px) {
+
+body {
+    padding-top: 110px;
+}
+
+/* HEADER (keep your current style) */
+.top-header {
+    height: 70px;
+    padding: 0 15px;
+}
+
+.nav-left {
+    display: none;
+}
+.mobile-menu-btn {
+                display: block;
+            }
+.nav-logo img {
+                width: 80px;
+            }
+.nav-right {
+                gap: 10px;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+
+.nav-right .user-icon {
+                display: none;
+            }
+
+/* DELIVERY BAR */
+.Delivery-bar {
+                top: 70px;
+                height: 35px;
+            }
+
+.head {
+                font-size: 14px;
+                padding: 0 10px;
+            }
+
+/* =========================
+   PRODUCT PAGE FIX 🔥
+========================= */
+
+.product-page {
+    grid-template-columns: 1fr;  /* STACK */
+    gap: 30px;
+    padding: 0 15px;
+}
+
+/* IMAGES */
+.product-images {
+        display: flex !important;   /* FORCE override */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .product-images::-webkit-scrollbar {
+        display: none;
+    }
+    .img-box {
+        min-width: 100% !important;   /* VERY IMPORTANT */
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+    }
+    .img-box img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+    }
+/* PRODUCT INFO */
+.product-info {
+    position: relative;
+    top: 0;
+    padding: 10px 5px;
+}
+
+.product-info h1 {
+    font-size: 26px;
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 18px;
+}
+
+.shipping {
+    font-size: 13px;
+}
+
+/* SIZE BUTTONS */
+.sizes {
+    gap: 10px;
+}
+
+.size {
+    padding: 10px 16px;
+    font-size: 14px;
+}
+
+/* QUANTITY */
+.qty-box {
+    width: 130px;
+    padding: 10px 15px;
+}
+
+/* BUTTONS 🔥 */
+.cart-btn,
+.buy-btn {
+    padding: 14px;
+    font-size: 14px;
+}
+
+/* PRODUCT DETAILS */
+.product-details p {
+    font-size: 14px;
+}
+
+/* =========================
+   RECOMMENDED 🔥
+========================= */
+
+.recommend-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+    gap: 15px;
+}
+
+.product-img {
+    height: auto;
+}
+
+.p_name {
+    font-size: 14px;
+}
+
+/* =========================
+   FOOTER 🔥
+========================= */
+
+.footer {
+                padding: 60px 20px 30px;
+            }
+
+.footer-links {
+                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+.footer-title {
+    font-size: 22px;
+}
+
+.footer-bottom {
+                text-align: center;
+                font-size: 11px;
+                line-height: 1.8;
+                padding: 20px 10px;
+            }
+
+    .product-images-slider {
+        overflow: hidden;
+        width: 100%;
+    }
+.product-images img {
+        height: auto !important;
+    }
+    .product-images {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .product-images::-webkit-scrollbar {
+        display: none;
+    }
+
+    .img-box {
+        min-width: 100%;
+        height: auto;
+        scroll-snap-align: start;
+        flex-shrink: 0;
+    }
+
+    .img-box img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+    }
+    .slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.slider-dots span {
+    width: 8px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 50%;
+}
+
+.slider-dots .active {
+    background: black;
+}
+
+.menu-overlay {
+            top: 70px;
+            /* mobile header height */
+            height: calc(100vh - 70px);
+        }  
+        }
+            </style>
 </head>
 
 <body>
     <header>
+        <!-- HEADER -->
         <div class="top-header">
+            <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+                <i id="menuIcon" class="fa-solid fa-bars"></i>
+            </a>
 
             <div class="nav-left">
                 <a href="index.html">Home</a>
@@ -769,13 +1095,33 @@
             </div>
 
             <div class="nav-logo">
-                <a href="index.html"><img src="images/red.avif" alt="logo"></a>
+                <a href="index.html"><img src="images/red.avif"></a>
             </div>
 
             <div class="nav-right">
                 <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
-                <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
+                <a href="user login page.html"><i class="fa-regular fa-user user-icon"></i></a>
                 <a href="add2cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+            </div>
+        </div>
+        <div id="mobileMenu"></div>
+
+        <div class="menu-overlay" id="menuOverlay">
+
+            <div class="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="catalog.html">Catalog</a>
+                <a href="contact.html">Contact</a>
+                <a href="about us.html">About Us</a>
+            </div>
+
+            <div class="mobile-bottom">
+                <a href="user login page.html">
+                    <i class="fa-regular fa-user"></i> Log in
+                </a>
+                <a href="https://instagram.com/sahilmenghani69">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
             </div>
 
         </div>
@@ -783,8 +1129,10 @@
     <div class="product-page">
 
         <!-- LEFT IMAGES -->
-
-        <div class="product-images">
+        <div class="product-images-slider">
+            <div class="product-images" id="slider">
+                
+        
             <div class="img-box">
                 <img src="images/acid/acid_1.jpg" onclick="openGallery(0)">
                 <div class="zoom-icon">
@@ -808,11 +1156,14 @@
                 <div class="zoom-icon">
                     <i class="fa-solid fa-magnifying-glass-plus"></i>
                 </div>
-            </div>
+        
 
         </div>
 
-
+<!-- JS will inject images here -->
+</div>
+</div>
+<div class="slider-dots" id="dots"></div>
         <!-- FULLSCREEN GALLERY -->
 
         <div id="gallery" class="gallery">
@@ -1236,10 +1587,10 @@
         // MAIN IMAGE
         const productImagesContainer = document.querySelector(".product-images");
 
-productImagesContainer.innerHTML = "";
+        productImagesContainer.innerHTML = "";
 
-productData.images.forEach((img, index) => {
-    productImagesContainer.innerHTML += `
+        productData.images.forEach((img, index) => {
+            productImagesContainer.innerHTML += `
         <div class="img-box">
             <img src="${img}" onclick="openGallery(${index})">
             <div class="zoom-icon">
@@ -1247,7 +1598,7 @@ productData.images.forEach((img, index) => {
             </div>
         </div>
     `;
-});
+        });
         document.querySelectorAll(".img-box").forEach((box, index) => {
             if (productData.images[index]) {
                 box.style.display = "block";
@@ -1302,25 +1653,25 @@ productData.images.forEach((img, index) => {
         ======================== */
         const gallery = document.getElementById("gallery");
 
-    
+
 
 
         function openGallery(index) {
-    gallery.style.display = "block";
+            gallery.style.display = "block";
 
-    const images = galleryContainer.querySelectorAll("img");
+            const images = galleryContainer.querySelectorAll("img");
 
-    if (images[index]) {
-        images[index].scrollIntoView({
-            behavior: "instant",
-            block: "start"
-        });
-    }
-}
-function closeGallery() {
-    gallery.style.display = "none";
-    gallery.scrollTop = 0; // reset scroll
-}
+            if (images[index]) {
+                images[index].scrollIntoView({
+                    behavior: "instant",
+                    block: "start"
+                });
+            }
+        }
+        function closeGallery() {
+            gallery.style.display = "none";
+            gallery.scrollTop = 0; // reset scroll
+        }
         function loadRecommended() {
             const grid = document.getElementById("recommendGrid");
 
@@ -1455,7 +1806,35 @@ function closeGallery() {
                 alert("Sharing not supported");
             }
         }
+        let scrollPosition = 0;
 
+        function toggleMenu() {
+            const menu = document.getElementById("menuOverlay");
+            const icon = document.getElementById("menuIcon");
+            const delivery = document.querySelector(".Delivery-bar");
+
+            menu.classList.toggle("active");
+
+            if (menu.classList.contains("active")) {
+                scrollPosition = window.scrollY;
+
+                document.body.style.position = "fixed";
+                document.body.style.top = `-${scrollPosition}px`;
+                document.body.style.width = "100%";
+
+                icon.classList.replace("fa-bars", "fa-xmark");
+                delivery.style.display = "none";
+            } else {
+                document.body.style.position = "";
+                document.body.style.top = "";
+                document.body.style.width = "";
+
+                window.scrollTo(0, scrollPosition);
+
+                icon.classList.replace("fa-xmark", "fa-bars");
+                delivery.style.display = "flex";
+            }
+        }
         /* ========================
         INIT
         ======================== */
@@ -1466,6 +1845,24 @@ function closeGallery() {
         setTimeout(() => {
             closePopup();
         }, 10000);
+        const slider = document.getElementById("slider");
+const dotsContainer = document.getElementById("dots");
+
+function createDots() {
+    dotsContainer.innerHTML = "";
+    productData.images.forEach((_, i) => {
+        dotsContainer.innerHTML += `<span ${i === 0 ? 'class="active"' : ''}></span>`;
+    });
+}
+
+function updateDots() {
+    const index = Math.round(slider.scrollLeft / slider.clientWidth);
+    document.querySelectorAll("#dots span").forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+    });
+}
+createDots();
+slider.addEventListener("scroll", updateDots);
     </script>
 
 </body>
