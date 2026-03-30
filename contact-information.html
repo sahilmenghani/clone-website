@@ -20,7 +20,7 @@
             min-height: 100vh;
         }
         body {
-            padding-top: 120px;
+            padding-top: 160px;
         }
 
         .top-header {
@@ -96,20 +96,27 @@ color:#cfcfcf;
 
 
 
-        .Delivery-bar {
-            background-color: lightgray;
-            height: 50px;
-            top: 120px;
-            width: 100%;
-            left: 0;
-            z-index: 999;
-        }
+.Delivery-bar {
+    background-color: lightgray;
+    height: 40px;
+    width: 100%;
+
+    position: absolute;   /* IMPORTANT */
+    top: 120px;
+    left: 0;
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
         .footer {
             background: #0b0b0b;
             color: white;
             text-align: center;
             padding: 80px 20px 30px;
             font-family: sans-serif;
+           
         }
 
         .footer-title {
@@ -241,12 +248,203 @@ font-size:24px;
 text-decoration:none;
 margin-left:20px;
 }
+/* MOBILE MENU BUTTON */
+.mobile-menu-btn {
+    display: none;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* MENU OVERLAY */
+.menu-overlay {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    background: #0b0b0b;
+    z-index: 999;
+
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-overlay.active {
+    transform: translateX(0);
+}
+
+/* MENU LINKS */
+.mobile-menu {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu a {
+    padding: 18px 20px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #111;
+
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: 0.3s;
+}
+
+.menu-overlay.active .mobile-menu a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobile-menu a.active,
+.mobile-menu a:hover {
+    background: #111;
+    color: white;
+}
+
+/* BOTTOM */
+.mobile-bottom {
+    margin-top: auto;
+    margin-bottom: 50px;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid #222;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-bottom a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+@media (max-width: 900px) {
+
+body {
+    padding-top: 90px;
+}
+
+/* HEADER */
+.top-header {
+    height: 70px;
+    padding: 0 15px;
+}
+
+.nav-left {
+    display: none; /* hide desktop menu */
+}
+
+.nav-logo img {
+    width: 80px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+
+.nav-right {
+                gap: 10px;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+/* DELIVERY BAR */
+.Delivery-bar {
+    height: 35px;
+    top: 70px;
+}
+
+.head {
+    font-size: 14px;
+    padding: 8px;
+}
+
+/* CONTACT SECTION */
+.contact-section {
+    padding: 120px 15px 120px;
+}
+
+.contact-section h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.contact-container {
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* FOOTER */
+.footer {
+    padding: 60px 20px 30px;
+}
+
+.footer-links {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-title {
+    font-size: 22px;
+}
+
+.footer-bottom {
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+}
+.nav-right .user-icon{
+    display: none;
+}
+.nav-left {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
         </style>
 </head>
 <body>
     <header>
+        
         <div class="top-header">
-    
+            <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+                <i id="menuIcon" class="fa-solid fa-bars"></i>
+            </a>
+            
+            <div class="menu-overlay" id="menuOverlay">
+            
+                <div class="mobile-menu">
+                    <a href="index.html">Home</a>
+                    <a href="catalog.html">Catalog</a>
+                    <a href="contact.html" class="active">Contact</a>
+                    <a href="about us.html">About Us</a>
+                </div>
+            
+                <div class="mobile-bottom">
+                    <a href="user login page.html">
+                        <i class="fa-regular fa-user"></i> Log in
+                    </a>
+                    <a href="https://instagram.com/sahilmenghani69">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            
+            </div>
             <div class="nav-left">
                 <a href="index.html">Home</a>
                 <a href="catalog.html">Catalog</a>
@@ -260,7 +458,7 @@ margin-left:20px;
     
             <div class="nav-right">
                 <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
-                <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
+                <a href="user login page.html"><i class="fa-regular fa-user user-icon"></i></a>
                 <a href="add2cart.html"> <i class="fa-solid fa-bag-shopping"></i></a>
             </div>
     
@@ -324,5 +522,36 @@ margin-left:20px;
                 <a href="Shipping-policy.html" class="active">Shipping policy</a>
             </div>
         </div>
+        <script>
+            let scrollPosition = 0;
+            
+            function toggleMenu() {
+                const menu = document.getElementById("menuOverlay");
+                const icon = document.getElementById("menuIcon");
+                const delivery = document.querySelector(".Delivery-bar");
+            
+                menu.classList.toggle("active");
+            
+                if (menu.classList.contains("active")) {
+                    scrollPosition = window.scrollY;
+            
+                    document.body.style.position = "fixed";
+                    document.body.style.top = `-${scrollPosition}px`;
+                    document.body.style.width = "100%";
+            
+                    icon.classList.replace("fa-bars", "fa-xmark");
+                    delivery.style.display = "none";
+                } else {
+                    document.body.style.position = "";
+                    document.body.style.top = "";
+                    document.body.style.width = "";
+            
+                    window.scrollTo(0, scrollPosition);
+            
+                    icon.classList.replace("fa-xmark", "fa-bars");
+                    delivery.style.display = "flex";
+                }
+            }
+            </script>
 </body>
 </html>

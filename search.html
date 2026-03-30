@@ -101,6 +101,7 @@ color:#cfcfcf;
             width: 100%;
             left: 0;
             z-index: 999;
+            position: absolute;
         }
 
         .footer {
@@ -131,6 +132,7 @@ color:#cfcfcf;
 
         .footer-links a:hover {
             color: white;
+            border-bottom: 2px solid white;
         }
 
         .footer-links .active {
@@ -261,12 +263,186 @@ color:#cfcfcf;
             text-decoration: none;
             margin-left: 20px;
         }
+        /* HAMBURGER BUTTON */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 22px;
+    left: 15px;
+    z-index: 1100;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* MENU OVERLAY */
+.menu-overlay {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: #0b0b0b;
+    z-index: 999;
+
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-overlay.active {
+    transform: translateX(0);
+}
+
+/* MENU LINKS */
+.mobile-menu {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu a {
+    padding: 18px 15px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #111;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+    background: #111;
+    color: white;
+}
+.mobile-bottom {
+    margin-top: auto;
+    padding: 20px;
+    border-top: 1px solid #222;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-bottom a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* MOBILE FIX */
+@media (max-width: 900px) {
+
+    body {
+        padding-top: 105px;
+    }
+
+    .top-header {
+        height: 70px;
+        padding: 0 15px;
+    }
+
+    .nav-left {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-logo img {
+        width: 80px;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .nav-right {
+        gap: 10px;
+        font-size: 20px;
+    }
+
+    .nav-right .fa-user {
+        display: none;
+    }
+
+    .Delivery-bar {
+        height: 35px;
+        position: absolute;
+        top: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .head {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    /* SEARCH SECTION */
+    .search-box {
+        width: 90%;
+        margin: 40px auto;
+    }
+
+    /* FOOTER */
+    .footer {
+                padding: 60px 20px 30px;
+            }
+
+            .footer-links {
+                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-title {
+                font-size: 22px;
+            }
+
+            .footer-bottom {
+                text-align: center;
+                font-size: 11px;
+                line-height: 1.8;
+                padding: 20px 10px;
+            }
+            .mobile-bottom {
+    margin-bottom: 50px;
+}
+}
     </style>
 
 <body>
     <header>
         <div class="top-header">
-
+            <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+                <i id="menuIcon" class="fa-solid fa-bars"></i>
+            </a>
+            
+            <div class="menu-overlay" id="menuOverlay">
+            
+                <div class="mobile-menu">
+                    <a href="index.html">Home</a>
+                    <a href="catalog.html">Catalog</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="about us.html">About Us</a>
+                </div>
+                <div class="mobile-bottom">
+                    <a href="user login page.html">
+                        <i class="fa-regular fa-user"></i> Login
+                    </a>
+                
+                    <a href="https://instagram.com/sahilmenghani69" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
             <div class="nav-left">
                 <a href="index.html" class="active">Home</a>
                 <a href="catalog.html">Catalog</a>
@@ -344,6 +520,20 @@ color:#cfcfcf;
         </div>
 
     </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menuOverlay");
+            const icon = document.getElementById("menuIcon");
+        
+            menu.classList.toggle("active");
+        
+            if (menu.classList.contains("active")) {
+                icon.classList.replace("fa-bars", "fa-xmark");
+            } else {
+                icon.classList.replace("fa-xmark", "fa-bars");
+            }
+        }
+        </script>
 </body>
 
 </html>

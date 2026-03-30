@@ -124,10 +124,11 @@ color:#cfcfcf;
         }
 
         .footer-links a {
-            color: #cfcfcf;
-            text-decoration: none;
-            font-size: 14px;
-        }
+    position: relative;
+    color: #cfcfcf;
+    text-decoration: none;
+    font-size: 14px;
+}
 
         .footer-links a:hover {
             color: white;
@@ -262,12 +263,210 @@ color:#cfcfcf;
             text-decoration: none;
             margin-left: 20px;
         }
-    </style>
+        .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 22px;
+    left: 15px;
+    z-index: 1100;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
 
+/* OVERLAY */
+.menu-overlay {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: #0b0b0b;
+    z-index: 999;
+
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-overlay.active {
+    transform: translateX(0);
+}
+
+/* LINKS */
+.mobile-menu {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu a {
+    padding: 18px 15px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #111;
+
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: 0.3s;
+}
+
+.menu-overlay.active .mobile-menu a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+    background: #111;
+    color: white;
+}
+
+/* BOTTOM */
+.mobile-bottom {
+            margin-top: auto;
+            margin-bottom: 50px;
+            width: 100%;
+            padding: 20px;
+            border-top: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-bottom a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* MOBILE VIEW */
+@media (max-width: 900px) {
+
+/* BODY SPACING (HEADER + DELIVERY FIX) */
+body {
+    padding-top: 105px; /* 70px header + 35px delivery */
+}
+
+/* HEADER */
+.top-header {
+    height: 70px;
+    padding: 0 15px;
+}
+
+.nav-left {
+    display: none; /* hide desktop menu */
+}
+.mobile-menu-btn {
+        display: block;
+    }
+.nav-logo img {
+    width: 80px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-right {
+                gap: 10px;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+
+/* DELIVERY BAR */
+.Delivery-bar {
+    height: 35px;
+    position: absolute;
+    top: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.head {
+    font-size: 14px;
+    padding: 8px;
+}
+
+/* POLICY SECTION */
+.policy-section {
+    padding: 40px 15px 80px;
+}
+
+.policy-section h1 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.policy-container {
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.policy-container h2 {
+    font-size: 18px;
+    margin-top: 25px;
+}
+
+/* FOOTER */
+.footer {
+                padding: 60px 20px 30px;
+            }
+
+            .footer-links {
+                gap: 15px;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-title {
+                font-size: 22px;
+            }
+
+            .footer-bottom {
+                text-align: center;
+                font-size: 11px;
+                line-height: 1.8;
+                padding: 20px 10px;
+            }
+.nav-right .user-icon{
+    display: none;
+}
+}
+    </style>
+</head>
 <body>
     <header>
         <div class="top-header">
-
+            <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
+                <i id="menuIcon" class="fa-solid fa-bars"></i>
+            </a>
+            
+            <div class="menu-overlay" id="menuOverlay">
+            
+                <div class="mobile-menu">
+                    <a href="index.html">Home</a>
+                    <a href="catalog.html">Catalog</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="about us.html">About Us</a>
+                </div>
+            
+                <div class="mobile-bottom">
+                    <a href="user login page.html">
+                        <i class="fa-regular fa-user"></i> Log in
+                    </a>
+                    <a href="https://instagram.com/sahilmenghani69">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            
+            </div>
             <div class="nav-left">
                 <a href="index.html" class="active">Home</a>
                 <a href="catalog.html">Catalog</a>
@@ -281,7 +480,7 @@ color:#cfcfcf;
 
             <div class="nav-right">
                 <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
-                <a href="user login page.html"><i class="fa-regular fa-user"></i></a>
+                <a href="user login page.html"><i class="fa-regular fa-user user-icon"></i></a>
                 <a href="add2cart.html"> <i class="fa-solid fa-bag-shopping"></i></a>
             </div>
 
@@ -465,6 +664,37 @@ color:#cfcfcf;
         </div>
 
     </div>
+    <script>
+        let scrollPosition = 0;
+        
+        function toggleMenu() {
+            const menu = document.getElementById("menuOverlay");
+            const icon = document.getElementById("menuIcon");
+            const delivery = document.querySelector(".Delivery-bar");
+        
+            menu.classList.toggle("active");
+        
+            if (menu.classList.contains("active")) {
+                scrollPosition = window.scrollY;
+        
+                document.body.style.position = "fixed";
+                document.body.style.top = `-${scrollPosition}px`;
+                document.body.style.width = "100%";
+        
+                icon.classList.replace("fa-bars", "fa-xmark");
+                
+            } else {
+                document.body.style.position = "";
+                document.body.style.top = "";
+                document.body.style.width = "";
+        
+                window.scrollTo(0, scrollPosition);
+        
+                icon.classList.replace("fa-xmark", "fa-bars");
+                
+            }
+        }
+        </script>
 </body>
 
 </html>

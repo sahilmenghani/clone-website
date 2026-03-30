@@ -62,7 +62,7 @@ BODY
         /* ======================================
 HEADER
 ====================================== */
-        .top-header {
+.top-header {
             height: 120px;
             background: #0b0b0b;
             display: flex;
@@ -70,12 +70,13 @@ HEADER
             justify-content: space-between;
             padding: 0 60px;
             position: fixed;
+            width: 100%;
             top: 0;
             left: 0;
-            width: 100%;
             z-index: 1000;
         }
 
+ 
         /* LEFT NAV */
         .nav-left a {
             color: #d6d6d6;
@@ -146,7 +147,7 @@ DELIVERY BAR
             left: 0;
             z-index: 999;
             text-align: center;
-            position: fixed;
+            
         }
 
         .head {
@@ -669,7 +670,7 @@ MOBILE RESPONSIVE
             /* HERO */
             .hero {
                 flex-direction: row;
-                height: 130vh;
+                height: 100vh;
             }
 
             .left-img,
@@ -686,7 +687,7 @@ MOBILE RESPONSIVE
             }
 
             .hero-center {
-                top: 19%;
+                top: 25%;
             }
 
             .shop-button {
@@ -696,10 +697,10 @@ MOBILE RESPONSIVE
 
             /* PRODUCTS */
             .products {
-                position: relative;
-                margin-top: -600px;
-                padding: 40px 20px;
-            }
+    position: relative;   /* IMPORTANT */
+    margin-top: -400px;   /* adjust if needed */
+    padding: 40px 20px;
+}
 
             .product-container {
                 grid-template-columns: repeat(1, 1fr);
@@ -1090,6 +1091,20 @@ MOBILE RESPONSIVE
                 delivery.style.display = "flex";
             }
         }
+        let lastScroll = 0;
+
+window.addEventListener("scroll", () => {
+    const header = document.querySelector(".top-header");
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > 50) {
+        header.classList.add("shrink");
+    } else {
+        header.classList.remove("shrink");
+    }
+
+    lastScroll = currentScroll;
+});
     </script>
 </body>
 
