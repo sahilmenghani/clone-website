@@ -18,14 +18,15 @@ GLOBAL RESET
             -webkit-tap-highlight-color: transparent;
         }
 
-        html,
-        body {
+        html{
             overflow-x: hidden;
             margin: 0;
             padding: 0;
         }
-
         body {
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
             overflow-y: scroll;
         }
 
@@ -617,7 +618,7 @@ MOBILE MENU OVERLAY - FIXED
         /* ======================================
 MOBILE RESPONSIVE
 ====================================== */
-        @media(max-width:767px) {
+        @media(max-width:768px) {
             body {
                 padding-top: 110px;
             }
@@ -744,7 +745,7 @@ MOBILE RESPONSIVE
                 line-height: 1.8;
                 padding: 20px 10px;
             }
-        }
+        
 
         .fa-bars {
             color: white;
@@ -756,49 +757,55 @@ MOBILE RESPONSIVE
             /* mobile header height */
             height: calc(100vh - 70px);
         }
-
-        /* ======================================
-TABLET RESPONSIVE (768px - 1024px)
-====================================== */
-        
-        @media (min-width:768px) and (max-width:1024px) {
-
-            .products {
-                padding: 0;
-                margin-top: 0;
-                border-radius: 0;
-            }
-
-            .product-container {
-                grid-template-columns: 1fr;
-                gap: 0;
-                /* remove gaps so it feels like full sections */
-            }
-
-            .product {
-                margin: 0;
-            }
-
-            .product-img {
-                width: 100vw;
-                height: 100vh;
-                /* REAL full height (fixes Samsung issue) */
-
-            }
-
-            .product-img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            /* optional but makes it feel CLEAN */
-            .product a,
-            .price {
-                padding: 10px 20px;
-            }
-
         }
+/* ======================================
+TABLET FULL SCREEN PRODUCT FIX
+====================================== */
+@media (min-width:768px) and (max-width:1024px) {
+
+body {
+    padding-top: 0;
+}
+
+.products {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+.product-container {
+    display: block; /* 🔥 REMOVE GRID COMPLETELY */
+}
+
+.product {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.product-img {
+    width: 100%;
+    height: 100vh; /* 🔥 TRUE FULL SCREEN */
+   
+}
+
+.product-img img {
+    position: absolute; /* 🔥 FIX */
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover;
+
+}
+
+.product a,
+.price {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+}
+}
     </style>
 </head>
 
