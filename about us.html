@@ -10,9 +10,7 @@
     <title>Altf4.in</title>
     <link rel="icon" type="image/avif" href="/images/red.avif">
     <style>
-        /* =========================
-RESET & GLOBAL
-========================= */
+        /*RESET & GLOBAL*/
         * {
             margin: 0;
             padding: 0;
@@ -38,21 +36,25 @@ RESET & GLOBAL
         button:focus {
             outline: none;
         }
-
+        body::-webkit-scrollbar {
+    display: none;
+}
         html,
         body {
             overflow-x: hidden;
         }
-
+        /* PREVENT BACKGROUND SCROLL */
+        body.no-scroll {
+    position: fixed;
+    width: 100%;
+}
         body {
             font-family: Arial, sans-serif;
             background: #f6f6f6;
             padding-top: 160px;
         }
 
-        /* =========================
-PAGINATION
-========================= */
+        /*PAGINATION*/
         .pagination {
             display: flex;
             justify-content: center;
@@ -81,84 +83,121 @@ PAGINATION
             background: #111;
         }
 
-        /* =========================
-SEARCH OVERLAY
-========================= */
-        .search-overlay {
-            position: fixed;
-            top: 120px;
-            left: 0;
-            width: 100%;
-            height: calc(100vh - 120px);
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: none;
-        }
+      /*SEARCH OVERLAY*/
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 5000;
+}
 
-        .search-container {
-            max-width: 900px;
-            margin: 40px auto;
-            color: white;
-        }
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
 
-        .search-header {
-            display: flex;
-            align-items: center;
-            border: 1px solid #555;
-            padding: 12px;
-        }
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 90%;
+    max-width: 700px;
+    margin-top: 20px;
+}
 
-        .search-header input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 18px;
-        }
+/* INPUT BOX */
+.search-box {
+    position: relative;
+    flex: 1;
+}
 
-        .search-icons {
-            display: flex;
-            gap: 15px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.search-box input {
+    width: 100%;
+    height: 50px;
+    padding: 18px 45px 5px 15px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 16px;
+}
 
-        .search-title {
-            margin-top: 25px;
-            font-size: 12px;
-            color: #888;
-        }
+/* LABEL */
+.search-box label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.25s;
+    padding: 0 6px;
+}
 
-        .product-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 18px;
-            cursor: pointer;
-        }
+/* ACTIVE STATE */
+.search-box input:focus + label,
+.search-box input:valid + label {
+    top: -1px;
+    font-size: 12px;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
+}
 
-        .product-item img {
-            width: 55px;
-            height: 55px;
-            object-fit: cover;
-        }
+/* SEARCH ICON */
+.search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
 
-        .product-item:hover {
-            opacity: 0.7;
-        }
+/* CLOSE BUTTON */
+.search-cancel {
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
 
-        .search-footer {
-            margin-top: 25px;
-            padding-top: 10px;
-            border-top: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            cursor: pointer;
-            color: #ccc;
-        }
-/* =========================
-ABOUT SECTION
-========================= */
+/* PRODUCT RESULTS */
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+}
+
+.product-item img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+
+.product-item span {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.product-item:hover {
+    background: #111;
+}
+/* ABOUT SECTION*/
 .about-section {
     background: white;
     padding: 100px 0;
@@ -180,9 +219,7 @@ ABOUT SECTION
     font-size: 18px;
 }
 
-/* =========================
-CONTACT FORM (ABOUT PAGE)
-========================= */
+/* CONTACT FORM (ABOUT PAGE)*/
 .contact-form {
     width: 55%;
     margin: auto;
@@ -269,9 +306,7 @@ CONTACT FORM (ABOUT PAGE)
 .contact-form button:hover {
     background: #222;
 }
-        /* =========================
-HEADER
-========================= */
+        /* HEADER*/
         .top-header {
             height: 120px;
             background: #0b0b0b;
@@ -342,9 +377,7 @@ HEADER
             z-index: 2001;
         }
 
-        /* =========================
-DELIVERY BAR
-========================= */
+        /*DELIVERY BAR */
         .Delivery-bar {
             background: lightgray;
             height: 40px;
@@ -359,9 +392,7 @@ DELIVERY BAR
             text-align: center;
         }
 
-        /* =========================
-FOOTER
-========================= */
+        /* FOOTER*/
         .footer {
             background: #0b0b0b;
             width: 100%;
@@ -420,9 +451,7 @@ FOOTER
             border-bottom: 2px solid white;
         }
 
-        /* =========================
-MOBILE MENU
-========================= */
+        /*MOBILE MENU*/
         .menu-overlay {
             position: fixed;
             top: 120px;
@@ -496,7 +525,7 @@ MOBILE MENU
             align-items: center;
             gap: 10px;
         }
-
+      
         /* =========================
 MOBILE RESPONSIVE
 ========================= */
@@ -556,13 +585,7 @@ MOBILE RESPONSIVE
                 padding: 20px 10px;
             }
 
-            .search-overlay {
-                top: 105px;
-                height: calc(100vh - 105px);
-                background: rgba(0, 0, 0, 0.2);
-                backdrop-filter: blur(10px);
-            }
-
+            
             .menu-overlay {
                 top: 70px;
                 height: calc(100vh - 70px);
@@ -601,36 +624,26 @@ MOBILE RESPONSIVE
 
 <body>
     <!-- SEARCH OVERLAY -->
-    <div id="searchOverlay" class="search-overlay">
-
-        <div class="search-container">
-
-            <!-- TOP INPUT -->
-            <div class="search-header">
-                <input type="text" id="searchInput" placeholder="Search">
-
-                <div class="search-icons">
-                    <i class="fa-solid fa-xmark" id="clearSearch"></i>
+    <div id="searchOverlay" class="search-overlay" onclick="closeSearch(event)">
+<div class="search-container" onclick="event.stopPropagation()">
+        <div class="search-box">
+            <input type="text" id="searchInput" required autocomplete="off">
+                <label>Search</label>
+                <div id="resultsContainer" style="
+    position:absolute;
+    top:60px;
+    left:0;
+    width:100%;
+    background:black;
+    border:1px solid #333;
+    z-index:6000;
+">          </div>
+            <button class="search-btn">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <i class="fa-solid fa-xmark" id="closeSearch"></i>
-                </div>
+            </button>
             </div>
-
-            <!-- RESULTS -->
-            <div class="search-results">
-                <p class="search-title">PRODUCTS</p>
-                <div id="resultsContainer"></div>
-            </div>
-
-            <!-- FOOTER -->
-            <div class="search-footer" id="searchFooter">
-                <span id="searchText">Search for ""</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </div>
-
         </div>
-
-    </div>
+        </div>
     <header>
         <div class="top-header">
             <a href="javascript:void(0)" class="mobile-menu-btn" onclick="toggleMenu()">
@@ -660,9 +673,6 @@ MOBILE RESPONSIVE
     <div id="mobileMenu"></div>
 
     <div class="menu-overlay" id="menuOverlay">
-
-
-
         <!-- MENU -->
         <div class="mobile-menu">
             <a href="index.html">Home</a>
@@ -730,7 +740,7 @@ MOBILE RESPONSIVE
             <h2 class="footer-title">Policies</h2>
 
             <div class="footer-links">
-                <a href="search.html">Search</a>
+                <a href="terms of service.html">Terms of Service</a>
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="refund-policy.html">Refund Policy</a>
                 <a href="Shipping-policy.html">Shipping Policy</a>
@@ -756,409 +766,289 @@ MOBILE RESPONSIVE
         </div>
     </div>
     <script>
-
+        let scrollY = 0;
+    
+        // DROPDOWN
+        
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);
-
+        
             document.querySelectorAll(".dropdown-menu").forEach(menu => {
                 if (menu.id !== id) menu.classList.remove("active");
             });
-
+        
             dropdown.classList.toggle("active");
-        } document.addEventListener("click", function (e) {
+        }
+        
+        document.addEventListener("click", function (e) {
             if (!e.target.closest(".dropdown")) {
                 document.querySelectorAll(".dropdown-menu").forEach(menu => {
                     menu.classList.remove("active");
                 });
             }
         });
-        /*DROPDOWN*/
+        // MOBILE MENU
         function toggleMenu() {
-            const menu = document.getElementById("menuOverlay");
-            const icon = document.getElementById("menuIcon");
-            const deliveryBar = document.querySelector(".Delivery-bar");
+    const menu = document.getElementById("menuOverlay");
+    const icon = document.getElementById("menuIcon");
+    const deliveryBar = document.querySelector(".Delivery-bar");
 
-            const isOpen = menu.classList.contains("active");
+    const isOpen = menu.classList.contains("active");
 
-            if (!isOpen) {
-                menu.classList.add("active");
-                icon.classList.replace("fa-bars", "fa-xmark");
+    if (!isOpen) {
+        scrollY = window.scrollY;
 
+        document.body.classList.add("no-scroll");
+        document.body.style.top = `-${scrollY}px`;
 
-                deliveryBar.style.display = "none";
+        menu.classList.add("active");
+        icon.classList.replace("fa-bars", "fa-xmark");
+        deliveryBar.style.display = "none";
 
+    } else {
+        menu.classList.remove("active");
+        icon.classList.replace("fa-xmark", "fa-bars");
+        deliveryBar.style.display = "flex";
 
-                document.body.style.overflow = "hidden";
+        document.body.classList.remove("no-scroll");
+        document.body.style.top = "";
 
-            } else {
-                menu.classList.remove("active");
-                icon.classList.replace("fa-xmark", "fa-bars");
-
-
-                deliveryBar.style.display = "flex";
-
-
-                document.body.style.overflow = "auto";
-            }
-        }
-
-        /*FILTER PANEL (MOBILE)*/
-        const filterOverlay = document.getElementById('filterOverlay');
-        const filterPanel = document.querySelector('.filter-panel');
-
-        if (filterOverlay) {
-    filterOverlay.addEventListener('click', function (e) {
-        if (e.target === filterOverlay) closeFilter();
-    });
+        window.scrollTo(0, scrollY);
+    }
 }
-        function openFilter() {
-            filterOverlay.classList.add('active');
-            filterPanel.classList.add('open');
+        // SEARCH OVERLAY OPEN/CLOS
+        function openSearch() {
+    scrollY = window.scrollY;
 
-            document.getElementById("mainFilter").style.display = "block";
-            document.getElementById("availabilityScreen").style.display = "none";
-        }
+    document.body.classList.add("no-scroll");
+    document.body.style.top = `-${scrollY}px`;
 
-        function closeFilter() {
-            filterOverlay.classList.remove('active');
-            filterPanel.classList.remove('open');
-        }
+    document.getElementById("searchOverlay").classList.add("active");
+    document.getElementById("searchInput").focus();
+}
 
-        filterOverlay.addEventListener('click', function (e) {
-            if (e.target === filterOverlay) closeFilter();
-        });
+function closeSearch(e) {
+    if (!e || e.target.id === "searchOverlay") {
 
-        /*  SORT */
-        function sortProducts(type) {
-            const container = document.querySelector('.products');
-            let products = Array.from(container.querySelectorAll('.product'));
+        document.getElementById("searchOverlay").classList.remove("active");
 
-            products.sort((a, b) => {
-                const nameA = a.querySelector('.product-name').innerText.toLowerCase();
-                const nameB = b.querySelector('.product-name').innerText.toLowerCase();
+        document.body.classList.remove("no-scroll");
+        document.body.style.top = "";
 
-                const priceA = parseInt(a.dataset.price);
-                const priceB = parseInt(b.dataset.price);
+        window.scrollTo(0, scrollY); // restore position
 
-                if (type === "az") return nameA.localeCompare(nameB);
-                if (type === "za") return nameB.localeCompare(nameA);
-                if (type === "low") return priceA - priceB;
-                if (type === "high") return priceB - priceA;
+        const input = document.getElementById("searchInput");
+        const results = document.getElementById("resultsContainer");
+
+        input.value = "";
+        results.innerHTML = "";
+        results.style.display = "none";
+    }
+}
+        // SEARCH DATA
+        const searchProducts = [
+            {
+                name: "Top Fragger Acid Wash T shirt",
+                image: "/images/acid/acid_1.jpg",
+                link: "product.html?id=1"
+            },
+            {
+                name: "Clutch Master Oversized Tshirt",
+                image: "/images/green/green1.jpg",
+                link: "product.html?id=2"
+            },
+            {
+                name: "Alt F4 Oversized Tshirt Brown",
+                image: "/images/brown/brown2.jpg",
+                link: "product.html?id=3"
+            },
+            {
+                name: "GGEZ Oversized Black Tshirt",
+                image: "/images/GGEZ/ggez_1.jpg",
+                link: "product.html?id=4"
+            },
+            {
+                name: "Oversized Box Fit Shirt-Brown",
+                image: "/images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg",
+                link: "product.html?id=5"
+            },
+            {
+                name: "AltF4 Oversized Tshirt-Navy Blue",
+                image: "/images/navy-blue/3.jpg",
+                link: "product.html?id=6"
+            },
+            {
+                name: "GOATED Sweatpants",
+                image: "/images/goat/1_1c851f70-491f-4f5c-bcfc-c42f84fc7859.jpg",
+                link: "product.html?id=7"
+            },
+            {
+                name: "HeadShot Oversized Tshirt-Grey",
+                image: "/images/headshot/13.jpg",
+                link: "product.html?id=8"
+            },
+            {
+                name: "One More Game Sweatpants",
+                image: "/images/one more/6.jpg",
+                link: "product.html?id=9"
+            },
+            {
+                name: "Viper Puffed Oversized Tshirt (Limited Edition)",
+                image: "/images/viper/viper1.jpg",
+                link: "product.html?id=10"
+            },
+            {
+                name: "Paav Gang Tshirt",
+                image: "/images/paav gang/paav_112_1.jpg",
+                link: "product.html?id=11"
+            },
+            {
+                name: "Rush B Oversized Tshirt",
+                image: "/images/rush b/lockin_back1.jpg",
+                link: "product.html?id=12"
+            },
+            {
+                name: "AFK HOODIE",
+                image: "/images/AFK HOODIE/1_0f62ae86-3000-44ae-bc80-c5e781719040.jpg",
+                link: "product.html?id=13"
+            },
+            {
+                name: "Alt F4 Sky Blue Hoodie",
+                image: "/images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg",
+                link: "product.html?id=14"
+            },
+            {
+                name: "GOAT Gamer Sweatshirt Blue - PRE ORDER | Limited Edition",
+                image: "/images/goatie/goatimerch11.jpg",
+                link: "product.html?id=15"
+            },
+            {
+                name: "GG - Black Double Zipper",
+                image: "/images/zipper/1_7578b4e9-81bc-437d-bca3-71362fde6f5c.jpg",
+                link: "product.html?id=16"
+            },
+            {
+                name: "Speed Run - Beige Hoodie",
+                image: "/images/speed run/2_fe6fef41-e142-4004-89ef-d289447250b8.jpg",
+                link: "product.html?id=17"
+            },
+            {
+                name: "Legend Acid Wash Hoodie",
+                image: "/images/acid wash/1.jpg",
+                link: "product.html?id=18"
+            },
+            {
+                name: "WASD White Hoodie",
+                image: "/images/wasd/1_12b83826-259d-46ae-ad97-6b397ace2e04.jpg",
+                link: "product.html?id=19"
+            },
+            {
+                name: "GOAT Gamer Sweatshirt Black",
+                image: "/images/goatgg/goati_merch_2222.jpg",
+                link: "product.html?id=20"
+            }
+        ];
+        // INIT (RUN AFTER PAGE LOAD)
+        document.addEventListener("DOMContentLoaded", () => {
+            // SEARCH FUNCTIONALITY
+        
+            const input = document.getElementById("searchInput");
+            const results = document.getElementById("resultsContainer");
+        
+            if (input && results) {
+                input.addEventListener("input", function () {
+                    const value = this.value.toLowerCase().trim();
+        
+                    results.innerHTML = "";
+        
+                    if (!value) {
+                        results.style.display = "none";
+                        return;
+                    }
+        
+                    const filtered = searchProducts.filter(product =>
+                        product.name.toLowerCase().includes(value)
+                    );
+        
+                    results.style.display = "block";
+        
+                    if (filtered.length === 0) {
+                        results.innerHTML = `<p style="color:#888;padding:10px;">No products found</p>`;
+                        return;
+                    }
+        
+                    filtered.forEach(product => {
+                        const item = document.createElement("div");
+                        item.className = "product-item";
+        
+                        item.innerHTML = `
+                            <img src="${product.image}" alt="">
+                            <span>${product.name}</span>
+                        `;
+        
+                        item.onclick = () => {
+                            window.location.href = product.link;
+                        };
+        
+                        results.appendChild(item);
+                    });
+                });
+            }
+            // FILTER SAFETY (ONLY IF EXISTS)
+            const availabilityChecks = document.querySelectorAll(".availability-check");
+        
+            availabilityChecks.forEach(cb => {
+                cb.addEventListener("change", () => {
+                    updateSelectedCount();
+                    applyFilters();
+                });
             });
-
-            container.innerHTML = "";
-            products.forEach(p => container.appendChild(p));
-        }
-
-        /* PRODUCT COUNT */
-        function updateProductCount() {
-            const countEl = document.getElementById("productCount");
-            const countMobileEl = document.getElementById("productCountMobile");
-
-            if (!countEl || !countMobileEl) return;
-
-            const visible = document.querySelectorAll('.product:not([style*="display: none"])').length;
-
-            countEl.innerText = visible + " products";
-            countMobileEl.innerText = visible + " products";
-        }
-
-        /* MAIN FILTER LOGIC (CLEAN)*/
+        
+        });
+        // FILTER FUNCTIONS (SAFE)
         function applyFilters() {
-
-            const minDesktop = parseInt(document.getElementById("minPriceDesktop")?.value) || 0;
-            const maxDesktop = parseInt(document.getElementById("maxPriceDesktop")?.value) || Infinity;
-
-            const minMobile = parseInt(document.getElementById("minPriceMobile")?.value) || 0;
-            const maxMobile = parseInt(document.getElementById("maxPriceMobile")?.value) || Infinity;
-
-            const finalMin = Math.max(minDesktop, minMobile);
-            const finalMax = Math.min(maxDesktop, maxMobile);
-
-            const availabilityChecks = document.querySelectorAll(".availability-check:checked");
-
-            let selectedStock = [];
-            availabilityChecks.forEach(cb => selectedStock.push(cb.value));
-
             const products = document.querySelectorAll(".product");
-
+            if (!products.length) return;
+        
+            const min = parseInt(document.getElementById("minPriceDesktop")?.value) || 0;
+            const max = parseInt(document.getElementById("maxPriceDesktop")?.value) || Infinity;
+        
+            const selectedStock = Array.from(document.querySelectorAll(".availability-check:checked"))
+                .map(cb => cb.value);
+        
             products.forEach(product => {
                 const price = parseInt(product.dataset.price);
                 const stock = product.dataset.stock;
-
+        
                 let show = true;
-
-                if (price < finalMin || price > finalMax) show = false;
-                if (selectedStock.length > 0 && !selectedStock.includes(stock)) show = false;
-
+        
+                if (price < min || price > max) show = false;
+                if (selectedStock.length && !selectedStock.includes(stock)) show = false;
+        
                 product.style.display = show ? "" : "none";
-                updateStockCounts();
             });
-
+        
             updateProductCount();
-
-            // Update price text (DESKTOP)
-            if (finalMin === 0 && finalMax === Infinity) {
-                document.getElementById("priceSelectedText").innerText =
-                    "The highest price is Rs. 1,499.00";
-            } else {
-                document.getElementById("priceSelectedText").innerText =
-                    "₹" + finalMin + " - ₹" + (finalMax === Infinity ? "∞" : finalMax);
+        }
+        
+        function updateProductCount() {
+            const countEl = document.getElementById("productCount");
+            const products = document.querySelectorAll(".product:not([style*='display: none'])");
+        
+            if (countEl) {
+                countEl.innerText = products.length + " products";
             }
         }
-
-        /*RESET */
-        function resetPrice() {
-            document.getElementById("minPriceDesktop").value = "";
-            document.getElementById("maxPriceDesktop").value = "";
-            document.getElementById("minPriceMobile").value = "";
-            document.getElementById("maxPriceMobile").value = "";
-
-            applyFilters();
-        }
-
-        function resetPriceDesktop() {
-            document.getElementById("minPriceDesktop").value = "";
-            document.getElementById("maxPriceDesktop").value = "";
-
-            applyFilters();
-        }
-
-        function resetAvailability() {
-            document.querySelectorAll(".availability-check").forEach(cb => cb.checked = false);
-            updateSelectedCount();
-            applyFilters();
-        }
-
-        /*  AVAILABILITY UI*/
+        
         function updateSelectedCount() {
-            const checked = document.querySelectorAll(".availability-check:checked").length;
-            document.getElementById("selectedCount").innerText = checked + " selected";
-        }
-
-        document.querySelectorAll(".availability-check").forEach(cb => {
-            cb.addEventListener("change", () => {
-                updateSelectedCount();
-                applyFilters();
-            });
-        });
-
-        /* MOBILE NAV*/
-        function openAvailabilityScreen() {
-            document.getElementById("mainFilter").style.display = "none";
-            document.getElementById("availabilityScreen").style.display = "block";
-        }
-
-        function backToMain() {
-            document.getElementById("availabilityScreen").style.display = "none";
-            document.getElementById("mainFilter").style.display = "block";
-        }
-
-        /* INPUT LISTENERS */
-        ["minPriceDesktop", "maxPriceDesktop", "minPriceMobile", "maxPriceMobile"].forEach(id => {
-            const el = document.getElementById(id);
+            const count = document.querySelectorAll(".availability-check:checked").length;
+            const el = document.getElementById("selectedCount");
+        
             if (el) {
-                el.addEventListener("input", applyFilters);
+                el.innerText = count + " selected";
             }
-        });
-        /* INIT*/
-        updateProductCount();
-        function updateStockCounts() {
-            const products = document.querySelectorAll(".product");
-
-            let inStock = 0;
-            let outStock = 0;
-
-            products.forEach(product => {
-    const stock = product.dataset.stock;
-
-    if (stock === "in") inStock++;
-    if (stock === "out") outStock++;
-});document.addEventListener("DOMContentLoaded", () => {
-
-const overlay = document.getElementById("searchOverlay");
-const input = document.getElementById("searchInput");
-const results = document.getElementById("resultsContainer");
-const searchText = document.getElementById("searchText");
-const closeBtn = document.getElementById("closeSearch");
-const clearBtn = document.getElementById("clearSearch");
-
-window.openSearch = function () {
-    overlay.style.display = "block";
-    document.body.style.overflow = "hidden";
-    input.focus();
-};
-
-function closeSearchOverlay() {
-    overlay.style.display = "none";
-    document.body.style.overflow = "auto";
-}
-
-closeBtn.addEventListener("click", closeSearchOverlay);
-
-clearBtn.addEventListener("click", () => {
-    input.value = "";
-    results.innerHTML = "";
-    searchText.innerText = `Search for ""`;
-});
-
-overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeSearchOverlay();
-});
-
-const searchProducts = [
-    {
-        name: "Top Fragger Acid Wash T shirt",
-        image: "images/product1.jpg",
-        link: "product1.html"
-    },
-    {
-        name: "Legend Acid Wash Hoodie",
-        image: "images/product2.jpg",
-        link: "product2.html"
-    }
-];
-
-input.addEventListener("input", () => {
-    const value = input.value.toLowerCase().trim();
-    results.innerHTML = "";
-
-    if (!value) {
-        searchText.innerText = `Search for ""`;
-        return;
-    }
-
-    const filtered = searchProducts.filter(p =>
-        p.name.toLowerCase().includes(value)
-    );
-
-    if (filtered.length === 0) {
-        results.innerHTML = `<p style="color:#888;">No products found</p>`;
-    }
-
-    filtered.forEach(p => {
-        const item = document.createElement("div");
-        item.className = "product-item";
-
-        item.innerHTML = `
-            <img src="${p.image}">
-            <span>${p.name}</span>
-        `;
-
-        item.onclick = () => window.location.href = p.link;
-
-        results.appendChild(item);
-    });
-
-    searchText.innerText = `Search for "${value}"`;
-});
-
-});
-
-            // DESKTOP
-            document.getElementById("inStockCount").innerText = inStock;
-            document.getElementById("outStockCount").innerText = outStock;
-
-            // MOBILE
-            document.getElementById("inStockCountMobile").innerText = inStock;
-            document.getElementById("outStockCountMobile").innerText = outStock;
         }
-        updateStockCounts();
-        console.log("Overlay:", overlay);
-        console.log("Input:", input);
-/* =========================
-SEARCH SYSTEM (FINAL FIX)
-========================= */
-/* =========================
-SEARCH SYSTEM (FIXED FINAL)
-========================= */
-
-const searchProducts = [
-    {
-        name: "Top Fragger Acid Wash T shirt",
-        image: "images/product1.jpg",
-        link: "product1.html"
-    },
-    {
-        name: "Legend Acid Wash Hoodie",
-        image: "images/product2.jpg",
-        link: "product2.html"
-    }
-];
-
-const overlay = document.getElementById("searchOverlay");
-const input = document.getElementById("searchInput");
-const results = document.getElementById("resultsContainer");
-const searchText = document.getElementById("searchText");
-const closeBtn = document.getElementById("closeSearch");
-const clearBtn = document.getElementById("clearSearch");
-
-/* ✅ OPEN SEARCH (GLOBAL FIX) */
-function openSearch() {
-    overlay.style.display = "block";
-    document.body.style.overflow = "hidden";
-    input.focus();
-}
-
-/* ✅ CLOSE SEARCH */
-function closeSearchOverlay() {
-    overlay.style.display = "none";
-    document.body.style.overflow = "auto";
-}
-
-/* CLOSE BUTTON */
-closeBtn.addEventListener("click", closeSearchOverlay);
-
-/* CLEAR BUTTON */
-clearBtn.addEventListener("click", () => {
-    input.value = "";
-    results.innerHTML = "";
-    searchText.innerText = `Search for ""`;
-});
-
-/* CLICK OUTSIDE */
-overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-        closeSearchOverlay();
-    }
-});
-
-/* LIVE SEARCH */
-input.addEventListener("input", () => {
-    const value = input.value.toLowerCase().trim();
-    results.innerHTML = "";
-
-    if (!value) {
-        searchText.innerText = `Search for ""`;
-        return;
-    }
-
-    const filtered = searchProducts.filter(p =>
-        p.name.toLowerCase().includes(value)
-    );
-
-    if (filtered.length === 0) {
-        results.innerHTML = `<p style="color:#888;">No products found</p>`;
-    }
-
-    filtered.forEach(p => {
-        const item = document.createElement("div");
-        item.className = "product-item";
-
-        item.innerHTML = `
-            <img src="${p.image}">
-            <span>${p.name}</span>
-        `;
-
-        item.addEventListener("click", () => {
-            window.location.href = p.link;
-        });
-
-        results.appendChild(item);
-    });
-
-    searchText.innerText = `Search for "${value}"`;
-});    </script>
+        </script>
 </body>
 
 </html>

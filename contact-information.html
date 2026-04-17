@@ -19,10 +19,17 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        body::-webkit-scrollbar {
+    display: none;
+}
         body {
             padding-top: 160px;
         }
-
+        /* PREVENT BACKGROUND SCROLL */
+        body.no-scroll {
+    position: fixed;
+    width: 100%;
+}
         .top-header {
             height: 120px;
             background: #0b0b0b;
@@ -194,59 +201,121 @@ color:#cfcfcf;
         line-height:2;
         color:#444;
         }
-                /* SEARCH OVERLAY */
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-opacity:0;
-visibility:hidden;
-transition:0.3s;
-z-index:1000;
+ /* =========================
+SEARCH OVERLAY
+========================= */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 5000;
 }
 
-.overlay:target{
-opacity:1;
-visibility:visible;
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-.overlay-close{
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-cursor:pointer;
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 90%;
+    max-width: 700px;
+    margin-top: 20px;
 }
 
-.search-box{
-position:relative;
-width:70%;
-max-width:900px;
-margin:80px auto;
-border:2px solid white;
-padding:12px 20px;
-display:flex;
-align-items:center;
+/* INPUT BOX */
+.search-box {
+    position: relative;
+    flex: 1;
 }
 
-.search-box input{
-flex:1;
-background:transparent;
-border:none;
-outline:none;
-color:white;
-font-size:18px;
+.search-box input {
+    width: 100%;
+    height: 50px;
+    padding: 18px 45px 5px 15px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 16px;
 }
 
-.close-icon{
-color:white;
-font-size:24px;
-text-decoration:none;
-margin-left:20px;
+/* LABEL */
+.search-box label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.25s;
+    padding: 0 6px;
+}
+
+/* ACTIVE STATE */
+.search-box input:focus + label,
+.search-box input:valid + label {
+    top: -1px;
+    font-size: 12px;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* SEARCH ICON */
+.search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
+
+/* CLOSE BUTTON */
+.search-cancel {
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* PRODUCT RESULTS */
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+}
+
+.product-item img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+
+.product-item span {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.product-item:hover {
+    background: #111;
 }
 /* MOBILE MENU BUTTON */
 .mobile-menu-btn {
@@ -431,7 +500,7 @@ body {
                 <div class="mobile-menu">
                     <a href="index.html">Home</a>
                     <a href="catalog.html">Catalog</a>
-                    <a href="contact.html" class="active">Contact</a>
+                    <a href="contact.html">Contact</a>
                     <a href="about us.html">About Us</a>
                 </div>
             
@@ -448,7 +517,7 @@ body {
             <div class="nav-left">
                 <a href="index.html">Home</a>
                 <a href="catalog.html">Catalog</a>
-                <a href="contact.html" class="active">Contact</a>
+                <a href="contact.html" >Contact</a>
                 <a href="about us.html">About Us</a>
             </div>
     
@@ -457,7 +526,9 @@ body {
             </div>
     
             <div class="nav-right">
-                <a href="#searchOverlay"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="javascript:void(0)" onclick="openSearch()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
                 <a href="user login page.html"><i class="fa-regular fa-user user-icon"></i></a>
                 <a href="add2cart.html"> <i class="fa-solid fa-bag-shopping"></i></a>
             </div>
@@ -467,16 +538,31 @@ body {
     
     
     <!-- SEARCH OVERLAY -->
-    <div id="searchOverlay" class="overlay">
+    <div id="searchOverlay" class="search-overlay" onclick="closeSearch(event)">
+        <div class="search-top"></div>
     
-        <!-- transparent background close -->
-        <a href="#" class="overlay-close"></a>
-    
-        <div class="search-box">
-            <input type="text" placeholder="Search">
-            <a href="#" class="close-icon">✕</a>
+        <div class="search-container" onclick="event.stopPropagation()">
+            <div class="search-box">
+                <input type="text" id="searchInput" required autocomplete="off">
+                <label>Search</label>
+            
+                <!-- RESULTS DROPDOWN -->
+                <div id="resultsContainer" style="
+                    position:absolute;
+                    top:60px;
+                    left:0;
+                    width:100%;
+                    background:black;
+                    border:1px solid #333;
+                    z-index:6000;
+                    display:none;
+                "></div>
+            
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </div>
-    
     </div>
     <div class="Delivery-bar">
         <p class="head">Free Delivery On Orders Above ₹799</p>
@@ -500,7 +586,7 @@ body {
             <h2 class="footer-title">Policies</h2>
             
             <div class="footer-links">
-                <a href="search.html">Search</a>
+                <a href="terms of service.html">Terms of Service</a>
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="refund-policy.html">Refund Policy</a>
                 <a href="Shipping-policy.html">Shipping Policy</a>
@@ -523,35 +609,136 @@ body {
             </div>
         </div>
         <script>
+            let scrollY = 0;
             let scrollPosition = 0;
             
             function toggleMenu() {
-                const menu = document.getElementById("menuOverlay");
-                const icon = document.getElementById("menuIcon");
-                const delivery = document.querySelector(".Delivery-bar");
-            
-                menu.classList.toggle("active");
-            
-                if (menu.classList.contains("active")) {
-                    scrollPosition = window.scrollY;
-            
-                    document.body.style.position = "fixed";
-                    document.body.style.top = `-${scrollPosition}px`;
-                    document.body.style.width = "100%";
-            
-                    icon.classList.replace("fa-bars", "fa-xmark");
-                    delivery.style.display = "none";
-                } else {
-                    document.body.style.position = "";
-                    document.body.style.top = "";
-                    document.body.style.width = "";
-            
-                    window.scrollTo(0, scrollPosition);
-            
-                    icon.classList.replace("fa-xmark", "fa-bars");
-                    delivery.style.display = "flex";
-                }
-            }
+    const menu = document.getElementById("menuOverlay");
+    const icon = document.getElementById("menuIcon");
+    const deliveryBar = document.querySelector(".Delivery-bar");
+
+    const isOpen = menu.classList.contains("active");
+
+    if (!isOpen) {
+        scrollY = window.scrollY;
+
+        document.body.classList.add("no-scroll");
+        document.body.style.top = `-${scrollY}px`;
+
+        menu.classList.add("active");
+        icon.classList.replace("fa-bars", "fa-xmark");
+        deliveryBar.style.display = "none";
+
+    } else {
+        menu.classList.remove("active");
+        icon.classList.replace("fa-xmark", "fa-bars");
+        deliveryBar.style.display = "flex";
+
+        document.body.classList.remove("no-scroll");
+        document.body.style.top = "";
+
+        window.scrollTo(0, scrollY);
+    }
+}
+            // =========================
+// OPEN / CLOSE
+// =========================
+function openSearch() {
+    scrollY = window.scrollY;
+
+    document.body.classList.add("no-scroll");
+    document.body.style.top = `-${scrollY}px`;
+
+    document.getElementById("searchOverlay").classList.add("active");
+    document.getElementById("searchInput").focus();
+}
+
+function closeSearch(e) {
+    if (!e || e.target.id === "searchOverlay") {
+
+        document.getElementById("searchOverlay").classList.remove("active");
+
+        document.body.classList.remove("no-scroll");
+        document.body.style.top = "";
+
+        window.scrollTo(0, scrollY); // restore position
+
+        const input = document.getElementById("searchInput");
+        const results = document.getElementById("resultsContainer");
+
+        input.value = "";
+        results.innerHTML = "";
+        results.style.display = "none";
+    }
+}
+// =========================
+// PRODUCT DATA (ALL)
+// =========================
+const searchProducts = [
+    { name: "Top Fragger Acid Wash T shirt", image: "/images/acid/acid_1.jpg", link: "product.html?id=1" },
+    { name: "Clutch Master Oversized Tshirt", image: "/images/green/green1.jpg", link: "product.html?id=2" },
+    { name: "Alt F4 Oversized Tshirt Brown", image: "/images/brown/brown2.jpg", link: "product.html?id=3" },
+    { name: "GGEZ Oversized Black Tshirt", image: "/images/GGEZ/ggez_1.jpg", link: "product.html?id=4" },
+    { name: "Oversized Box Fit Shirt-Brown", image: "/images/brown-shirt/1_d927e8b8-29c3-4791-8571-580e9f21e9b9.jpg", link: "product.html?id=5" },
+    { name: "AltF4 Oversized Tshirt-Navy Blue", image: "/images/navy-blue/3.jpg", link: "product.html?id=6" },
+    { name: "GOATED Sweatpants", image: "/images/goat/1.jpg", link: "product.html?id=7" },
+    { name: "HeadShot Oversized Tshirt-Grey", image: "/images/headshot/13.jpg", link: "product.html?id=8" },
+    { name: "One More Game Sweatpants", image: "/images/one more/6.jpg", link: "product.html?id=9" },
+    { name: "Viper Puffed Oversized Tshirt", image: "/images/viper/viper1.jpg", link: "product.html?id=10" },
+    { name: "Paav Gang Tshirt", image: "/images/paav gang/paav_112_1.jpg", link: "product.html?id=11" },
+    { name: "Rush B Oversized Tshirt", image: "/images/rush b/lockin_back1.jpg", link: "product.html?id=12" },
+    { name: "AFK HOODIE", image: "/images/AFK HOODIE/1.jpg", link: "product.html?id=13" },
+    { name: "Alt F4 Sky Blue Hoodie", image: "/images/sky blue hoodie/1_b51e4fe0-b789-4e7e-8cc7-cd3894792a09.jpg", link: "product.html?id=14" },
+    { name: "GOAT Gamer Sweatshirt Blue", image: "/images/goatie/goatimerch11.jpg", link: "product.html?id=15" },
+    { name: "GG - Black Double Zipper", image: "/images/zipper/1.jpg", link: "product.html?id=16" },
+    { name: "Speed Run Hoodie", image: "/images/speed run/2.jpg", link: "product.html?id=17" },
+    { name: "Legend Acid Wash Hoodie", image: "/images/acid wash/1.jpg", link: "product.html?id=18" },
+    { name: "WASD White Hoodie", image: "/images/wasd/1.jpg", link: "product.html?id=19" },
+    { name: "GOAT Gamer Sweatshirt Black", image: "/images/goatgg/goati_merch_2222.jpg", link: "product.html?id=20" }
+];
+
+// =========================
+// SEARCH LOGIC
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("searchInput");
+    const results = document.getElementById("resultsContainer");
+
+    input.addEventListener("input", () => {
+        const value = input.value.toLowerCase().trim();
+        results.innerHTML = "";
+
+        if (!value) {
+            results.style.display = "none";
+            return;
+        }
+
+        const filtered = searchProducts.filter(p =>
+            p.name.toLowerCase().includes(value)
+        );
+
+        results.style.display = "block";
+
+        if (filtered.length === 0) {
+            results.innerHTML = `<p style="color:#888;padding:10px;">No products found</p>`;
+            return;
+        }
+
+        filtered.forEach(product => {
+            const div = document.createElement("div");
+            div.className = "product-item";
+
+            div.innerHTML = `
+                <img src="${product.image}">
+                <span>${product.name}</span>
+            `;
+
+            div.onclick = () => window.location.href = product.link;
+
+            results.appendChild(div);
+        });
+    });
+});
             </script>
 </body>
 </html>
