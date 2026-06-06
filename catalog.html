@@ -1683,73 +1683,7 @@ MOBILE RESPONSIVE
     </div>
     <script>
         let scrollY = 0;
-        function toggleMenu() {
-    const menu = document.getElementById("menuOverlay");
-    const icon = document.getElementById("menuIcon");
-    const deliveryBar = document.querySelector(".Delivery-bar");
-
-    const isOpen = menu.classList.contains("active");
-
-    if (!isOpen) {
-        scrollY = window.scrollY;
-
-        document.body.classList.add("no-scroll");
-        document.body.style.top = `-${scrollY}px`;
-
-        menu.classList.add("active");
-        icon.classList.replace("fa-bars", "fa-xmark");
-        deliveryBar.style.display = "none";
-
-    } else {
-        menu.classList.remove("active");
-        icon.classList.replace("fa-xmark", "fa-bars");
-        deliveryBar.style.display = "flex";
-
-        document.body.classList.remove("no-scroll");
-        document.body.style.top = "";
-
-        window.scrollTo(0, scrollY);
-    }
-}
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            searchResults.innerHTML = '';
-        
-            if (!query) return; // nothing typed
-        
-            const products = document.querySelectorAll('.products .product');
-            let found = false;
-        
-            products.forEach(product => {
-                const name = product.querySelector('.product-name').innerText.toLowerCase();
-                const img = product.querySelector('img').src;
-                const link = product.querySelector('a').href;
-        
-                if (name.includes(query)) {
-                    found = true;
-                    const item = document.createElement('a');
-                    item.href = link;
-                    item.classList.add('search-item');
-                    item.innerHTML = `
-                        <img src="${img}">
-                        <p>${product.querySelector('.product-name').innerText}</p>
-                    `;
-                    searchResults.appendChild(item);
-                }
-            });
-        
-            if (!found) {
-                searchResults.innerHTML = `<p style="color:white; padding:10px;">No products found</p>`;
-            }
-        });
-        
-       // =========================
-// SEARCH OVERLAY OPEN/CLOSE
-// =========================
-function openSearch() {
+      function openSearch() {
     scrollY = window.scrollY;
 
     document.body.classList.add("no-scroll");
@@ -1777,6 +1711,252 @@ function closeSearch(e) {
         results.style.display = "none";
     }
 }
+        function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
+
+    // Close all other dropdowns
+    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+        if (menu.id !== id) menu.classList.remove("active");
+    });
+    document.addEventListener("click", function (e) {
+    if (!e.target.closest(".dropdown")) {
+        document.querySelectorAll(".dropdown-menu").forEach(menu => {
+            menu.classList.remove("active");
+        });
+    }
+});
+    // Toggle current
+    dropdown.classList.toggle("active");
+}
+        /* =========================
+        DROPDOWN
+        ========================= */
+        
+        
+        /* =========================
+        FILTER PANEL (MOBILE)
+        ========================= */
+        const filterOverlay = document.getElementById('filterOverlay');
+        const filterPanel = document.querySelector('.filter-panel');
+        
+        function openFilter() {
+            filterOverlay.classList.add('active');
+            filterPanel.classList.add('open');
+        
+            document.getElementById("mainFilter").style.display = "block";
+            document.getElementById("availabilityScreen").style.display = "none";
+        }
+        
+        function closeFilter() {
+            filterOverlay.classList.remove('active');
+            filterPanel.classList.remove('open');
+        }
+        
+        filterOverlay.addEventListener('click', function (e) {
+            if (e.target === filterOverlay) closeFilter();
+        });
+        
+        /* =========================
+        SORT
+        ========================= */
+        function sortProducts(type) {
+            const container = document.querySelector('.products');
+            let products = Array.from(container.querySelectorAll('.product'));
+        
+            products.sort((a, b) => {
+                const nameA = a.querySelector('.product-name').innerText.toLowerCase();
+                const nameB = b.querySelector('.product-name').innerText.toLowerCase();
+        
+                const priceA = parseInt(a.dataset.price);
+                const priceB = parseInt(b.dataset.price);
+        
+                if (type === "az") return nameA.localeCompare(nameB);
+                if (type === "za") return nameB.localeCompare(nameA);
+                if (type === "low") return priceA - priceB;
+                if (type === "high") return priceB - priceA;
+            });
+        
+            container.innerHTML = "";
+            products.forEach(p => container.appendChild(p));
+        }
+        
+        /* =========================
+        PRODUCT COUNT
+        ========================= */
+        function updateProductCount() {
+            const visible = document.querySelectorAll('.product:not([style*="display: none"])').length;
+        
+            document.getElementById("productCount").innerText = visible + " products";
+            document.getElementById("productCountMobile").innerText = visible + " products";
+        }
+        
+        /* =========================
+        MAIN FILTER LOGIC (CLEAN)
+        ========================= */
+        function applyFilters() {
+        
+            const minDesktop = parseInt(document.getElementById("minPriceDesktop")?.value) || 0;
+            const maxDesktop = parseInt(document.getElementById("maxPriceDesktop")?.value) || Infinity;
+        
+            const minMobile = parseInt(document.getElementById("minPriceMobile")?.value) || 0;
+            const maxMobile = parseInt(document.getElementById("maxPriceMobile")?.value) || Infinity;
+        
+            const finalMin = Math.max(minDesktop, minMobile);
+            const finalMax = Math.min(maxDesktop, maxMobile);
+        
+            const availabilityChecks = document.querySelectorAll(".availability-check:checked");
+        
+            let selectedStock = [];
+            availabilityChecks.forEach(cb => selectedStock.push(cb.value));
+        
+            const products = document.querySelectorAll(".product");
+        
+            products.forEach(product => {
+                const price = parseInt(product.dataset.price);
+                const stock = product.dataset.stock;
+        
+                let show = true;
+        
+                if (price < finalMin || price > finalMax) show = false;
+                if (selectedStock.length > 0 && !selectedStock.includes(stock)) show = false;
+        
+                product.style.display = show ? "" : "none";
+                updateStockCounts();
+            });
+        
+            updateProductCount();
+        
+            // Update price text (DESKTOP)
+            if (finalMin === 0 && finalMax === Infinity) {
+                document.getElementById("priceSelectedText").innerText =
+                    "The highest price is Rs. 1,499.00";
+            } else {
+                document.getElementById("priceSelectedText").innerText =
+                    "₹" + finalMin + " - ₹" + (finalMax === Infinity ? "∞" : finalMax);
+            }
+        }
+        
+        /* =========================
+        RESET
+        ========================= */
+        function resetPrice() {
+            document.getElementById("minPriceDesktop").value = "";
+            document.getElementById("maxPriceDesktop").value = "";
+            document.getElementById("minPriceMobile").value = "";
+            document.getElementById("maxPriceMobile").value = "";
+        
+            applyFilters();
+        }
+        
+        function resetPriceDesktop() {
+            document.getElementById("minPriceDesktop").value = "";
+            document.getElementById("maxPriceDesktop").value = "";
+        
+            applyFilters();
+        }
+        
+        function resetAvailability() {
+            document.querySelectorAll(".availability-check").forEach(cb => cb.checked = false);
+            updateSelectedCount();
+            applyFilters();
+        }
+        
+        /* =========================
+        AVAILABILITY UI
+        ========================= */
+        function updateSelectedCount() {
+            const checked = document.querySelectorAll(".availability-check:checked").length;
+            document.getElementById("selectedCount").innerText = checked + " selected";
+        }
+        
+        document.querySelectorAll(".availability-check").forEach(cb => {
+            cb.addEventListener("change", () => {
+                updateSelectedCount();
+                applyFilters();
+            });
+        });
+        
+        /* =========================
+        MOBILE NAV
+        ========================= */
+        function openAvailabilityScreen() {
+            document.getElementById("mainFilter").style.display = "none";
+            document.getElementById("availabilityScreen").style.display = "block";
+        }
+        
+        function backToMain() {
+            document.getElementById("availabilityScreen").style.display = "none";
+            document.getElementById("mainFilter").style.display = "block";
+        }
+        
+        /* =========================
+        INPUT LISTENERS
+        ========================= */
+        document.getElementById("minPriceDesktop").addEventListener("input", applyFilters);
+        document.getElementById("maxPriceDesktop").addEventListener("input", applyFilters);
+        document.getElementById("minPriceMobile").addEventListener("input", applyFilters);
+        document.getElementById("maxPriceMobile").addEventListener("input", applyFilters);
+        
+        /* =========================
+        INIT
+        ========================= */
+        updateProductCount();
+        /* =========================
+HAMBURGER MENU
+========================= */
+function toggleMenu() {
+    const menu = document.getElementById("menuOverlay");
+    const icon = document.getElementById("menuIcon");
+    const deliveryBar = document.querySelector(".Delivery-bar");
+
+    const isOpen = menu.classList.contains("active");
+
+    if (!isOpen) {
+        scrollY = window.scrollY;
+
+        document.body.classList.add("no-scroll");
+        document.body.style.top = `-${scrollY}px`;
+
+        menu.classList.add("active");
+        icon.classList.replace("fa-bars", "fa-xmark");
+        deliveryBar.style.display = "none";
+
+    } else {
+        menu.classList.remove("active");
+        icon.classList.replace("fa-xmark", "fa-bars");
+        deliveryBar.style.display = "flex";
+
+        document.body.classList.remove("no-scroll");
+        document.body.style.top = "";
+
+        window.scrollTo(0, scrollY);
+    }
+}
+function updateStockCounts() {
+    const products = document.querySelectorAll(".product");
+
+    let inStock = 0;
+    let outStock = 0;
+
+    products.forEach(product => {
+        const stock = product.dataset.stock;
+
+        if (product.style.display !== "none") {
+            if (stock === "in") inStock++;
+            if (stock === "out") outStock++;
+        }
+    });
+
+    // DESKTOP
+    document.getElementById("inStockCount").innerText = inStock;
+    document.getElementById("outStockCount").innerText = outStock;
+
+    // MOBILE
+    document.getElementById("inStockCountMobile").innerText = inStock;
+    document.getElementById("outStockCountMobile").innerText = outStock;
+}
+updateStockCounts();
+
 // =========================
 // SEARCH DATA
 // =========================
